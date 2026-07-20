@@ -27,6 +27,17 @@ const {
 
 const base = `/assets/photos/${name}`;
 const srcset = [640, 1000, 1600].map((w) => `${base}-${w}.webp ${w}w`).join(', ');
+
+// The width/height attributes must match the variant's real ratio, otherwise the
+// box the browser reserves before decoding is the wrong shape and the page jumps.
+const ratios: Record<string, number> = {
+  'photo-hero': 4.6 / 4,
+  'photo-tall': 4.6 / 4,
+  'photo-wide': 3 / 4,
+  'photo-svc': 3.2 / 4,
+};
+const w = 1000;
+const h = Math.round(w * (ratios[variant] ?? 3 / 4));
 ---
 
 <picture>
@@ -35,8 +46,8 @@ const srcset = [640, 1000, 1600].map((w) => `${base}-${w}.webp ${w}w`).join(', '
     src={`${base}.jpg`}
     alt={alt}
     class:list={['photo', variant, extra]}
-    width="1000"
-    height="1250"
+    width={w}
+    height={h}
     loading={priority ? 'eager' : 'lazy'}
     decoding={priority ? 'sync' : 'async'}
     fetchpriority={priority ? 'high' : undefined}

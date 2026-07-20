@@ -53,8 +53,8 @@ const related = (await getCollection('blog', ({ data }) => !data.draft))
 
     {
       d.cover && (
-        <div class="shell cover" data-rv>
-          <img src={d.cover} alt={d.coverAlt ?? ''} width="1000" height="750" loading="eager" />
+        <div class="shell-narrow cover" data-rv>
+          <img src={d.cover} alt={d.coverAlt ?? ''} width="1000" height="563" loading="eager" />
         </div>
       )
     }
@@ -125,6 +125,9 @@ const related = (await getCollection('blog', ({ data }) => !data.draft))
   }
   .cover img {
     width: 100%;
+    /* Same trap as the .photo rule in global.css: the height attribute arrives as
+       a presentational hint and pins the box unless height is set explicitly. */
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 24px;

@@ -404,23 +404,38 @@ a.card:hover {
 /* --------------------------------------------------------------- photos -- */
 .photo {
   width: 100%;
+  /* Without this the width/height ATTRIBUTES on the <img> land as presentational
+     hints and pin every photo to a literal 1250px tall, silently beating the
+     aspect-ratio below. The attributes still earn their keep — they reserve the
+     right box before the image decodes — but the ratio has to win the layout. */
+  height: auto;
   object-fit: cover;
   border-radius: 28px;
   display: block;
   background: var(--tint);
 }
+/* Portrait shots are capped so they stay a portrait beside the copy rather than a
+   full-height column of face. Without a cap a 0.95fr track on a wide monitor makes
+   them ~650px tall and they swallow the fold. */
 .photo-hero {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 4.6;
+  max-width: 430px;
   box-shadow: var(--lift-photo);
 }
 .photo-tall {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 4.6;
+  max-width: 430px;
+}
+/* Hero photo sits in the right-hand track — push it to the outer edge so the cap
+   reads as intentional framing, not a stray gap. */
+.hero-media .photo-hero {
+  margin-left: auto;
 }
 .photo-wide {
   aspect-ratio: 4 / 3;
 }
 .photo-svc {
-  aspect-ratio: 4 / 3.4;
+  aspect-ratio: 4 / 3.2;
 }
 
 /* ------------------------------------------------------------------ pills -- */
