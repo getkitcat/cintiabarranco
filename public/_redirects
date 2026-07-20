@@ -1,0 +1,18 @@
+# Redirect map for the Framer → Astro rebuild.
+#
+# Every page path on the old site (/, /servicios, /servicios/*, /sobre-mi,
+# /contacto, /blog, /aviso-legal, /politica-de-privacidad, /cookies) is preserved
+# at the SAME path, so no rule is needed for those. The four /servicios/* URLs are
+# the valuable ones — they target "terapia X en Granada" — and are unchanged.
+#
+# Only the old blog slugs move. They were empty placeholder pages on Framer with
+# no body content, so nothing of value is being redirected away; the closest live
+# article is used where one exists, otherwise the blog index.
+
+/blog/cuando-pedir-ayuda-psicol%C3%B3gica   /blog/cuando-ir-al-psicologo   301
+/blog/cuando-pedir-ayuda-psicológica        /blog/cuando-ir-al-psicologo   301
+/blog/c%C3%B3mo-gestionar-la-ansiedad-d%C3%ADa-a-d%C3%ADa   /blog   301
+/blog/cómo-gestionar-la-ansiedad-día-a-día                  /blog   301
+/blog/duelo-cu%C3%A1nto-tiempo-es-normal-sentirse-as%C3%AD   /blog   301
+/blog/duelo-cuánto-tiempo-es-normal-sentirse-así             /blog   301
+/blog/building-resilience-in-challenging-times               /blog   301

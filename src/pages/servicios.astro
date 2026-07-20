@@ -1,0 +1,219 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import ServiceBlock from '../components/ServiceBlock.astro';
+import { services } from '../data/site';
+import { faqSchema, serviceSchema, breadcrumbSchema } from '../data/schema';
+
+const faqs = [
+  {
+    q: '¿Cuánto dura cada sesión de terapia?',
+    a: 'Las sesiones tienen una duración de 50 a 60 minutos, pensadas para trabajar en profundidad sin que resulte agotador.',
+  },
+  {
+    q: '¿Cuántas sesiones necesitaré?',
+    a: 'Depende de cada persona y de los objetivos que establezcamos juntas. Algunas personas notan mejoras significativas en 8–12 sesiones.',
+  },
+  {
+    q: '¿Presencial u online, qué diferencia hay?',
+    a: 'La calidad terapéutica es la misma en ambos formatos. La terapia online se realiza por videollamada segura.',
+  },
+  {
+    q: '¿Cómo sé qué tipo de terapia necesito?',
+    a: 'No te preocupes por elegir antes de venir. En la primera sesión evaluaremos juntas tu situación y te recomendaré el enfoque más adecuado.',
+  },
+  {
+    q: '¿Trabajas con seguros médicos?',
+    a: 'Actualmente trabajo como profesional privada. Puedo proporcionarte facturas que algunos seguros reembolsan.',
+  },
+  {
+    q: '¿Qué pasa si necesito cancelar una cita?',
+    a: 'Solo te pido que me avises con al menos 24 horas de antelación para poder reorganizar la agenda.',
+  },
+] as const;
+
+const reasons = [
+  {
+    h: 'Claridad emocional',
+    p: 'Entiende qué sientes, por qué lo sientes y cómo esas emociones influyen en tu día a día.',
+  },
+  {
+    h: 'Herramientas prácticas',
+    p: 'Técnicas basadas en evidencia que puedes aplicar en tu vida cotidiana para gestionar el estrés y la ansiedad.',
+  },
+  {
+    h: 'Relaciones más sanas',
+    p: 'Mejora tu comunicación, establece límites saludables y construye vínculos más auténticos.',
+  },
+  {
+    h: 'Autoconocimiento',
+    p: 'Descubre patrones que te limitan y desarrolla una relación más amable y compasiva contigo.',
+  },
+  {
+    h: 'Espacio seguro',
+    p: 'Un lugar libre de juicios donde puedes ser tú con total honestidad, a tu ritmo.',
+  },
+  {
+    h: 'Cambio duradero',
+    p: 'No buscamos soluciones rápidas: construimos un bienestar que se mantenga en el tiempo.',
+  },
+];
+---
+
+<Base
+  title="Tipos de Terapia Psicológica en Granada | Cintia Barranco"
+  description="Terapia individual, de pareja, infantil y familiar en Granada, presencial y online. Elige el acompañamiento que encaja contigo. Primera consulta gratuita."
+  path="/servicios"
+  loaderName="Servicios"
+  jsonld={[
+    faqSchema(faqs),
+    ...services.map((s) => serviceSchema(s)),
+    breadcrumbSchema([
+      { name: 'Inicio', path: '/' },
+      { name: 'Servicios', path: '/servicios' },
+    ]),
+  ]}
+>
+  <header class="shell-narrow head">
+    <div data-rv>
+      <div class="kicker">Primera consulta gratuita · 15 min</div>
+      <h1 class="h1-sm">Terapias de psicología en Granada</h1>
+      <p class="lead">
+        ¿Te sientes triste y no sabes por qué? ¿Estás atravesando una situación personal o laboral
+        que te genera malestar? Ofrezco terapias presenciales y online adaptadas a ti.
+      </p>
+      <div class="btns btns-center">
+        <a href="/contacto" class="btn btn-solid">Empieza hoy →</a>
+        <a href="#terapias" class="btn btn-ghost">Ver terapias</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ------------------------------------------------------ "who is it for" -- -->
+  <section class="shell chooser">
+    <div class="center-head" data-rv>
+      <div class="kicker">¿No sabes por dónde empezar?</div>
+      <h2 class="h2-sm">Cuéntame quién necesita el espacio</h2>
+      <p class="note center-note">
+        Elige la situación con la que más te identificas y te llevo a la terapia que mejor encaja. Si
+        dudas entre varias, <a href="/contacto">contáctame directamente</a>.
+      </p>
+    </div>
+
+    <div class="grid-4" data-rv>
+      {
+        services.map((s) => (
+          <a class="card who" href={s.path}>
+            <div class="italic who-t">{s.who}</div>
+            <p>{s.whoText}</p>
+            <span class="arrow">Ver detalles →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------- the four -- -->
+  <div id="terapias">
+    {
+      services.map((s, i) => (
+        <section
+          id={s.slug}
+          class:list={[i % 2 === 0 ? 'band-top' : '']}
+          style={i % 2 === 0 ? '' : 'background: var(--bg)'}
+        >
+          <ServiceBlock service={s} flip={i % 2 === 1} label={`Servicio ${s.n}`} />
+        </section>
+      ))
+    }
+  </div>
+
+  <!-- ------------------------------------------------------------ reasons -- -->
+  <section class="band">
+    <div class="shell sect">
+      <div class="center-head" data-rv>
+        <div class="kicker">¿Por qué la terapia?</div>
+        <h2 class="h2-sm">Razones por las que puede cambiar tu vida</h2>
+        <p class="note center-note">
+          La terapia no es solo para momentos de crisis. Es una herramienta poderosa para entenderse
+          mejor, gestionar las emociones y vivir con más plenitud.
+        </p>
+      </div>
+
+      <div class="grid-3 reasons" data-rv>
+        {
+          reasons.map((r) => (
+            <div class="step no-num">
+              <h3 class="h3">{r.h}</h3>
+              <p>{r.p}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------------- faq -- -->
+  <section class="shell-narrow sect">
+    <Faq items={faqs} heading="Todo lo que necesitas saber antes de empezar" />
+  </section>
+</Base>
+
+<style>
+  .head {
+    text-align: center;
+    padding-top: clamp(56px, 8vw, 86px);
+    padding-bottom: clamp(36px, 5vw, 70px);
+  }
+  .head .lead {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .chooser {
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+  .center-head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+  .center-head .h2-sm {
+    margin-bottom: 16px;
+  }
+  .center-note {
+    max-width: 640px;
+    margin-inline: auto;
+    font-size: 16px;
+  }
+
+  .who-t {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+  .who p {
+    margin-bottom: 18px;
+  }
+
+  .reasons {
+    gap: 40px 48px;
+  }
+  .no-num {
+    padding-top: 22px;
+  }
+  .no-num h3 {
+    font-size: clamp(19px, 1.8vw, 21px);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 900px) {
+    .reasons {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 32px;
+    }
+  }
+  @media (max-width: 560px) {
+    .reasons {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

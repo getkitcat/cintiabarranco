@@ -1,0 +1,311 @@
+---
+/**
+ * AVISO LEGAL — LSSI-CE.
+ *
+ * Fuentes primarias consultadas y verificadas el 2026-07-20 (no se ha copiado
+ * texto de plantillas de despachos ni de agregadores):
+ *
+ *  · Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y
+ *    de comercio electrónico (LSSI-CE), texto consolidado en el BOE
+ *    — https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758
+ *    Art. 10.1: obligación de informar de forma permanente, fácil, directa y
+ *    gratuita sobre a) nombre y domicilio y datos de contacto directo y efectivo,
+ *    b) datos registrales, c) autorización administrativa cuando proceda,
+ *    d) PROFESIONES REGULADAS: colegio profesional, número de colegiado, título
+ *    académico y Estado que lo expidió, y normas profesionales aplicables,
+ *    e) NIF, f) precios. De ahí los marcadores [PENDIENTE] de esta página: sin
+ *    NIF, sin número de colegiada y sin el Colegio concreto el aviso NO cumple.
+ *
+ *  · Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del
+ *    paciente — https://www.boe.es/buscar/act.php?id=BOE-A-2002-22188
+ *    (secreto profesional y documentación clínica; se detalla en /politica-de-privacidad).
+ *
+ *  · Reglamento (UE) 2016/679 (RGPD) y Ley Orgánica 3/2018 (LOPDGDD)
+ *    — https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673
+ *
+ *  · Real Decreto Legislativo 1/1996 (Texto Refundido de la Ley de Propiedad
+ *    Intelectual) — https://www.boe.es/buscar/act.php?id=BOE-A-1996-8930
+ *
+ * NOTA DE BUILD (no publicar sin resolver): `site.url` apunta todavía a un
+ * dominio no confirmado; se toma siempre de `Astro.site` / `site`, nunca escrito
+ * a mano, para que el cambio de dominio no deje texto legal desfasado.
+ */
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const UPDATED = '20 de julio de 2026';
+const domain = new URL(site.url).host;
+---
+
+<Base
+  title="Aviso legal | Cintia Barranco González, psicóloga en Granada"
+  description="Información legal del sitio web de Cintia Barranco González, psicóloga general sanitaria en Granada, conforme al artículo 10 de la LSSI-CE."
+  path="/aviso-legal"
+  loaderName="Aviso legal"
+  noindex={false}
+>
+  <article class="shell-narrow sect doc">
+    <header class="doc-head">
+      <div class="kicker"><span class="rule"></span>Información legal</div>
+      <h1 class="h1-sm">Aviso legal</h1>
+      <p class="prose">
+        Este aviso recoge la información que la titular de este sitio web está obligada a poner a
+        disposición de los usuarios en virtud del artículo 10 de la Ley 34/2002, de 11 de julio, de
+        servicios de la sociedad de la información y de comercio electrónico (LSSI-CE), así como las
+        condiciones de uso del sitio.
+      </p>
+      <p class="stamp">Última actualización: {UPDATED}</p>
+    </header>
+
+    <section data-rv>
+      <h2 class="h2">1. Titular del sitio web</h2>
+      <dl class="idcard">
+        <div>
+          <dt>Titular</dt>
+          <dd>{site.name}</dd>
+        </div>
+        <div>
+          <dt>Actividad</dt>
+          <dd>{site.role} (profesional autónoma)</dd>
+        </div>
+        <div>
+          <dt>NIF</dt>
+          <dd class="pending">{'[PENDIENTE: NIF]'}</dd>
+        </div>
+        <div>
+          <dt>Domicilio profesional</dt>
+          <dd>{site.addressLine}, {site.region}, España</dd>
+        </div>
+        <div>
+          <dt>Correo electrónico</dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></dd>
+        </div>
+        <div>
+          <dt>Sitio web</dt>
+          <dd><a href={site.url}>{domain}</a></dd>
+        </div>
+      </dl>
+      <p class="prose">
+        La titular no está inscrita en el Registro Mercantil por ejercer como persona física
+        (profesional autónoma), por lo que no procede facilitar datos registrales mercantiles.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">2. Profesión regulada</h2>
+      <p class="prose">
+        La psicología general sanitaria es una profesión sanitaria regulada en España. En
+        cumplimiento del artículo 10.1.d) de la LSSI-CE se informa de lo siguiente:
+      </p>
+      <dl class="idcard">
+        <div>
+          <dt>Título académico oficial</dt>
+          <dd>Máster en Psicología General Sanitaria (Grado en Psicología)</dd>
+        </div>
+        <div>
+          <dt>Estado que expide el título</dt>
+          <dd>España</dd>
+        </div>
+        <div>
+          <dt>Colegio profesional</dt>
+          <dd class="pending">{'[PENDIENTE: Colegio Oficial de Psicología — indicar la sede colegial exacta]'}</dd>
+        </div>
+        <div>
+          <dt>Número de colegiada</dt>
+          <dd class="pending">{'[PENDIENTE: número de colegiada]'}</dd>
+        </div>
+        <div>
+          <dt>Registro sanitario del centro</dt>
+          <dd class="pending">{'[PENDIENTE: número de autorización o registro sanitario de la consulta (Consejería de Salud y Consumo de la Junta de Andalucía), si la actividad se presta en consulta propia]'}</dd>
+        </div>
+      </dl>
+      <p class="prose">
+        Normas profesionales aplicables y lugar de consulta: Ley 44/2003, de 21 de noviembre, de
+        ordenación de las profesiones sanitarias; Ley 41/2002, de 14 de noviembre, básica reguladora
+        de la autonomía del paciente y de derechos y obligaciones en materia de información y
+        documentación clínica; y el Código Deontológico del Colegio Oficial de Psicología
+        correspondiente. Todas ellas pueden consultarse en el Boletín Oficial del Estado
+        (<a href="https://www.boe.es" rel="noopener" target="_blank">www.boe.es</a>) y en la web del
+        Colegio.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">3. Objeto del sitio y condiciones de uso</h2>
+      <p class="prose">
+        Este sitio web tiene una finalidad informativa: dar a conocer los servicios de psicología que
+        presta la titular y facilitar el contacto para solicitar cita. El acceso al sitio es gratuito
+        y no requiere registro.
+      </p>
+      <p class="prose">
+        El usuario se compromete a utilizar el sitio conforme a la ley, a este aviso legal y a la
+        buena fe, absteniéndose de emplearlo con fines ilícitos, de dañar o sobrecargar sus sistemas,
+        de intentar acceder a áreas restringidas o de introducir programas o códigos susceptibles de
+        causar daños.
+      </p>
+      <p class="prose">
+        Los precios de los servicios no se publican en este sitio; se informan de forma clara y
+        exacta, con indicación de los impuestos aplicables, en la consulta informativa previa y antes
+        de la contratación de cualquier servicio.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">4. Aviso sanitario importante</h2>
+      <p class="prose">
+        Los contenidos de este sitio, incluidos los artículos del blog, tienen carácter divulgativo y
+        <strong>no constituyen diagnóstico, tratamiento ni asesoramiento psicológico o médico
+        individualizado</strong>, ni sustituyen a una consulta profesional. La relación asistencial
+        solo nace tras la aceptación expresa de las condiciones del servicio y, cuando procede, la
+        firma del consentimiento informado.
+      </p>
+      <p class="prose">
+        En caso de urgencia o riesgo para la vida, llame al <a href="tel:112">112</a> o acuda al
+        servicio de urgencias más cercano. Este sitio web no es un canal de atención urgente y los
+        mensajes recibidos por el formulario, correo o redes sociales no se atienden de forma
+        inmediata ni continuada.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">5. Propiedad intelectual e industrial</h2>
+      <p class="prose">
+        Los textos, imágenes, logotipo, diseño, estructura de navegación y demás elementos de este
+        sitio son titularidad de {site.name} o de terceros que han autorizado su uso, y están
+        protegidos por el Real Decreto Legislativo 1/1996, por el que se aprueba el Texto Refundido
+        de la Ley de Propiedad Intelectual, y por la normativa de marcas.
+      </p>
+      <p class="prose">
+        Queda prohibida su reproducción, distribución, comunicación pública o transformación sin
+        autorización previa y por escrito de la titular, salvo los usos permitidos por la ley. Se
+        permite la cita parcial de los artículos siempre que se indique la autoría y se enlace a la
+        página original.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">6. Responsabilidad y enlaces</h2>
+      <p class="prose">
+        La titular procura mantener la información actualizada y libre de errores, pero no garantiza
+        la disponibilidad continua del sitio ni la ausencia de interrupciones o fallos técnicos
+        ajenos a su control, sin perjuicio de las responsabilidades que la ley le atribuye de forma
+        imperativa.
+      </p>
+      <p class="prose">
+        Este sitio puede contener enlaces a webs de terceros —por ejemplo, el perfil de
+        <a href={site.instagram} rel="noopener" target="_blank">Instagram</a> de la consulta o el mapa
+        de Google Maps de la página de contacto—. La titular no controla sus contenidos ni sus
+        políticas de privacidad y no asume responsabilidad por ellos. El uso de dichos servicios se
+        rige por las condiciones de sus respectivos proveedores.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">7. Protección de datos y cookies</h2>
+      <p class="prose">
+        El tratamiento de los datos personales de los usuarios y pacientes se describe en la
+        <a href="/politica-de-privacidad">Política de privacidad</a>, que presta especial atención a
+        los datos de salud por tratarse de una categoría especial de datos (artículo 9 del RGPD). El
+        uso de cookies y tecnologías similares se describe en la
+        <a href="/cookies">Política de cookies</a>.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">8. Legislación aplicable y jurisdicción</h2>
+      <p class="prose">
+        Este aviso legal se rige por la legislación española. Para cualquier controversia derivada
+        del acceso o uso de este sitio web serán competentes los juzgados y tribunales que determine
+        la normativa aplicable, sin perjuicio del derecho del usuario que tenga la condición de
+        consumidor a acudir a los tribunales de su propio domicilio conforme al Real Decreto
+        Legislativo 1/2007, por el que se aprueba el Texto Refundido de la Ley General para la
+        Defensa de los Consumidores y Usuarios.
+      </p>
+      <p class="prose">
+        La titular se reserva el derecho a modificar este aviso legal para adaptarlo a cambios
+        normativos o a la actividad de la consulta. La versión vigente es siempre la publicada en
+        esta página.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  /* Ritmo de lectura para texto largo. Solo espaciado y tamaños: los colores,
+     tipografías y tokens vienen de global.css. */
+  .doc {
+    max-width: 820px;
+  }
+  .doc-head {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .doc .stamp {
+    margin: 20px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .doc section {
+    margin-top: clamp(36px, 5vw, 52px);
+  }
+  .doc h2 {
+    font-size: clamp(22px, 2.6vw, 30px);
+    margin-bottom: 16px;
+  }
+  .doc p {
+    margin: 0;
+  }
+  .doc p + p,
+  .doc dl + p,
+  .doc ul + p,
+  .doc ol + p {
+    margin-top: 14px;
+  }
+  .doc a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Ficha de datos identificativos: etiqueta arriba, valor debajo, en columnas
+     cuando hay sitio. */
+  .idcard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px 28px;
+    margin: 24px 0;
+    padding: clamp(20px, 3vw, 28px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--card);
+  }
+  .idcard dt {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .idcard dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* Marcador visible de dato legal aún no facilitado. Debe cantar. */
+  .pending {
+    font-weight: 700;
+    color: #8a2f2f;
+    background: #fdeceb;
+    border: 1px dashed #d08b86;
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-block;
+  }
+</style>

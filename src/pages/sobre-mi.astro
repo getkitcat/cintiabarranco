@@ -1,0 +1,306 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Faq from '../components/Faq.astro';
+import { faqSchema, breadcrumbSchema } from '../data/schema';
+
+const faqs = [
+  {
+    q: '¿Cuál es tu formación?',
+    a: 'Grado en Psicología por la Universidad de Granada, Máster en Psicología General Sanitaria y formación en Terapia Cognitivo-Conductual, Terapia de Pareja y Familia y EMDR.',
+  },
+  {
+    q: '¿Qué enfoque utilizas en terapia?',
+    a: 'Un enfoque integrador: técnicas cognitivo-conductuales con base humanista y mindfulness, adaptándome a lo que necesitas en cada momento de tu proceso.',
+  },
+  {
+    q: '¿Con qué tipo de casos trabajas?',
+    a: 'Ansiedad, autoestima, duelo, trauma, dificultades de pareja y familiares, y acompañamiento infantil. Si dudas de si puedo ayudarte, escríbeme y lo vemos juntas.',
+  },
+  {
+    q: '¿Estás colegiada?',
+    a: 'Sí, soy Psicóloga General Sanitaria colegiada, lo que me habilita legalmente para ejercer la psicología sanitaria en España.',
+  },
+] as const;
+
+const approach = [
+  {
+    n: '01',
+    h: 'Escucha activa',
+    p: 'Cada persona es única. La terapia empieza por escuchar de verdad tu historia y tu momento.',
+  },
+  {
+    n: '02',
+    h: 'Evidencia científica',
+    p: 'Utilizo técnicas y metodologías respaldadas por la investigación en psicología clínica.',
+  },
+  {
+    n: '03',
+    h: 'Espacio seguro',
+    p: 'Mi consulta es un lugar libre de juicios donde puedes ser tú con total honestidad.',
+  },
+  {
+    n: '04',
+    h: 'A tu ritmo',
+    p: 'Respeto tu proceso y tus tiempos. Avanzamos con objetivos claros pero flexibles.',
+  },
+];
+
+const training = [
+  'Grado en Psicología — Universidad de Granada',
+  'Máster en Psicología General Sanitaria',
+  'Formación en Terapia Cognitivo-Conductual',
+  'Especialización en Terapia de Pareja y Familia',
+  'Formación en Terapia EMDR',
+];
+
+const methods = [
+  'Terapia Cognitivo-Conductual',
+  'Psicología Humanista',
+  'Mindfulness',
+  'EMDR',
+  'Terapia Sistémica',
+];
+---
+
+<Base
+  title="Sobre mí — Cintia Barranco González | Psicóloga en Granada"
+  description="Psicóloga general sanitaria colegiada en Granada. Mi formación, mi enfoque y por qué decidí acompañar a otras personas en su proceso de cambio."
+  path="/sobre-mi"
+  loaderName="Sobre mí"
+  jsonld={[
+    faqSchema(faqs),
+    breadcrumbSchema([
+      { name: 'Inicio', path: '/' },
+      { name: 'Sobre mí', path: '/sobre-mi' },
+    ]),
+  ]}
+>
+  <!-- ------------------------------------------------------------- hero -- -->
+  <header class="shell hero">
+    <div data-rv>
+      <div class="kicker"><span class="rule"></span>Atiendo en Granada · También online</div>
+      <h1 class="h1-sm name">Cintia Barranco González</h1>
+      <div class="italic sub">Psicóloga sanitaria · Especializada en vínculos y autoestima</div>
+      <p class="lead hero-lead">
+        Soy psicóloga sanitaria colegiada en Granada, especializada en terapia individual, de pareja
+        y familiar. Creo que todas las personas merecen un espacio seguro donde hablar, sanar y
+        crecer.
+      </p>
+      <a href="/contacto" class="btn btn-solid">Pedir cita</a>
+    </div>
+
+    <div data-rv>
+      <Photo
+        name="cintia-consulta"
+        alt="Cintia Barranco González, psicóloga en Granada"
+        variant="photo-hero"
+        sizes="(max-width: 760px) 100vw, 45vw"
+        priority
+      />
+    </div>
+  </header>
+
+  <!-- -------------------------------------------------------- mi historia -- -->
+  <section class="band">
+    <div class="shell sect duo">
+      <div data-rv>
+        <Photo
+          name="cintia-trabajando"
+          alt="Cintia trabajando en su consulta de Granada"
+          variant="photo-tall"
+          sizes="(max-width: 760px) 100vw, 40vw"
+        />
+      </div>
+
+      <div data-rv>
+        <div class="kicker">Mi historia</div>
+        <h2 class="h2 mb">Por qué decidí ser psicóloga</h2>
+        <p class="prose mb-sm">
+          Desde joven me interesó entender cómo funcionan las relaciones humanas y por qué sentimos
+          lo que sentimos. Esa curiosidad se convirtió en vocación: acompañar a otras personas en su
+          proceso de cambio.
+        </p>
+        <p class="prose mb">
+          Tras años de formación y experiencia clínica, acompaño a quienes quieren superar la
+          ansiedad, mejorar sus relaciones y encontrar claridad emocional.
+        </p>
+        <blockquote>
+          «Creo que el espacio terapéutico es, sobre todo, un lugar para sentirse vista — sin prisa y
+          sin juicio.»
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- mi enfoque -- -->
+  <section class="shell sect">
+    <div class="center-head" data-rv>
+      <div class="kicker">Mi enfoque</div>
+      <h2 class="h2">Cómo trabajo</h2>
+    </div>
+
+    <div class="grid-4-wide">
+      {
+        approach.map((a) => (
+          <div class="step" data-rv>
+            <div class="num small">{a.n}</div>
+            <h3 class="h3">{a.h}</h3>
+            <p>{a.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- formación -- -->
+  <section class="band">
+    <div class="shell sect duo even">
+      <div data-rv>
+        <div class="kicker">Formación</div>
+        <h2 class="h2 mb-lg">Mi formación y experiencia</h2>
+
+        <div class="ticks">
+          {
+            training.map((line) => (
+              <div class="tick">
+                <span class="dot" aria-hidden="true">
+                  ✓
+                </span>
+                {line}
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="pills top">
+          {methods.map((m) => <span class="pill">{m}</span>)}
+        </div>
+      </div>
+
+      <div data-rv>
+        <Photo
+          name="cintia-marca"
+          alt="Cintia Barranco, psicóloga en Granada"
+          variant="photo-tall"
+          sizes="(max-width: 760px) 100vw, 45vw"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- cta -- -->
+  <section class="shell sect" data-rv>
+    <div class="slab center">
+      <h2>¿Damos el primer paso juntas?</h2>
+      <p class="mid">
+        Si sientes que necesitas apoyo profesional, no dudes en contactarme. La primera consulta es
+        gratuita.
+      </p>
+      <a href="/contacto" class="btn btn-light">Reserva tu primera cita →</a>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------- faq -- -->
+  <section class="band-top">
+    <div class="shell-narrow sect-sm">
+      <Faq items={faqs} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(36px, 5vw, 64px);
+    align-items: center;
+    padding-top: clamp(56px, 8vw, 76px);
+    padding-bottom: clamp(48px, 6vw, 80px);
+  }
+  .name {
+    margin-bottom: 18px;
+  }
+  .sub {
+    font-size: clamp(18px, 2vw, 21px);
+    margin-bottom: 22px;
+  }
+  .hero-lead {
+    max-width: 500px;
+  }
+
+  .mb {
+    margin-bottom: 24px;
+  }
+  .mb-sm {
+    margin-bottom: 18px;
+  }
+  .mb-lg {
+    margin-bottom: 32px;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 24px 28px;
+    background: var(--tint);
+    border-radius: 20px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.5;
+    color: var(--brand);
+  }
+
+  .center-head {
+    text-align: center;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+
+  .grid-4-wide {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(24px, 3vw, 40px);
+  }
+  .num.small {
+    font-size: clamp(36px, 3.6vw, 44px);
+  }
+
+  /* The formación block is text-left / photo-right at an even split. */
+  .even {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pills.top {
+    margin-top: 28px;
+  }
+
+  .center {
+    text-align: center;
+  }
+  .center .mid {
+    max-width: 520px;
+    margin-inline: auto;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .hero > div:last-child {
+      max-width: 460px;
+    }
+    .grid-4-wide {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .even {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .grid-4-wide {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

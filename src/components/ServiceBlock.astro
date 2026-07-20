@@ -1,0 +1,105 @@
+---
+import Photo from './Photo.astro';
+import type { services } from '../data/site';
+
+interface Props {
+  service: (typeof services)[number];
+  /** Photo on the left (default) or right — the hub alternates them. */
+  flip?: boolean;
+  /** Hub links out to the detail page; the detail page itself doesn't. */
+  linkOut?: boolean;
+  /** `h2` on the hub, `h1` on the detail page. */
+  as?: 'h1' | 'h2';
+  label?: string;
+}
+const { service: s, flip = false, linkOut = true, as = 'h2', label } = Astro.props;
+const Heading = as;
+---
+
+<div class:list={['shell sect-sm', 'duo', { 'duo-flip': flip }]}>
+  {
+    !flip && (
+      <div data-rv>
+        <Photo
+          name={s.photo}
+          alt={s.alt}
+          variant="photo-svc"
+          sizes="(max-width: 760px) 100vw, 42vw"
+        />
+      </div>
+    )
+  }
+
+  <div data-rv>
+    {label && <div class="kicker">{label}</div>}
+    <Heading class={as === 'h1' ? 'h1-sm tight' : 'h2 tight'}>{s.title}</Heading>
+    <div class="italic sub">{s.kicker}</div>
+
+    <p class="prose body">{s.body}</p>
+
+    <div class="signs">
+      {
+        s.signs.map((line) => (
+          <div>
+            <span class="em" aria-hidden="true">
+              —
+            </span>
+            {line}
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="pill-meta">{s.meta}</div>
+
+    <div class="act">
+      {
+        linkOut ? (
+          <a href={s.path}><strong>Ver {s.title} →</strong></a>
+        ) : (
+          <a href="/contacto"><strong>Pedir cita para {s.title} →</strong></a>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    flip && (
+      <div data-rv>
+        <Photo
+          name={s.photo}
+          alt={s.alt}
+          variant="photo-svc"
+          sizes="(max-width: 760px) 100vw, 42vw"
+        />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .tight {
+    margin-bottom: 8px;
+  }
+  .sub {
+    font-size: clamp(17px, 1.9vw, 19px);
+    margin-bottom: 20px;
+  }
+  .body {
+    margin: 0 0 24px;
+    font-size: clamp(15px, 1.5vw, 16px);
+  }
+  .pill-meta {
+    margin-bottom: 24px;
+  }
+  .act {
+    font-size: 15px;
+  }
+
+  /* On a phone the photo leads regardless of which column it occupied. */
+  @media (max-width: 760px) {
+    .duo-flip > div:last-child {
+      order: -1;
+    }
+  }
+</style>

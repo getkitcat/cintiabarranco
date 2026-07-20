@@ -1,0 +1,88 @@
+backend:
+  name: github
+  repo: getkitcat/cintiabarranco
+  branch: main
+  base_url: https://sveltia-cms-auth.quenangm.workers.dev
+
+# Where Sveltia commits uploaded images, and the URL they end up served from.
+media_folder: "public/assets/blog"
+public_folder: "/assets/blog"
+
+publish_mode: simple
+locale: es
+
+collections:
+  - name: blog
+    label: Artículos del blog
+    label_singular: Artículo
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}} — {{date | date('DD/MM/YYYY')}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: Borradores
+        field: draft
+        pattern: true
+    # ⚠️ These fields MUST mirror src/content.config.ts exactly. If they drift,
+    # a save from this panel commits frontmatter the build rejects — and because
+    # Sveltia commits straight to main, that breaks the live deploy.
+    fields:
+      - name: title
+        label: Título
+        widget: string
+        hint: El titular del artículo. Aparece en Google, así que sé clara y concreta.
+
+      - name: description
+        label: Descripción
+        widget: text
+        hint: Una frase (máx. ~155 caracteres). Es el texto que se lee bajo el título en Google.
+
+      - name: category
+        label: Categoría
+        widget: select
+        options:
+          - Bienestar emocional
+          - Ansiedad y bienestar
+          - Terapia infantil
+          - Relaciones y pareja
+
+      - name: date
+        label: Fecha de publicación
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "DD/MM/YYYY"
+        time_format: false
+
+      - name: updated
+        label: Última actualización
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "DD/MM/YYYY"
+        time_format: false
+        required: false
+        hint: Rellénalo solo si revisas un artículo antiguo.
+
+      - name: draft
+        label: Borrador
+        widget: boolean
+        default: true
+        hint: Mientras esté activado, el artículo NO aparece en la web.
+
+      - name: cover
+        label: Imagen de portada
+        widget: image
+        required: false
+
+      - name: coverAlt
+        label: Descripción de la imagen
+        widget: string
+        required: false
+        hint: Qué se ve en la foto. Lo leen los buscadores y las personas ciegas.
+
+      - name: body
+        label: Contenido
+        widget: markdown

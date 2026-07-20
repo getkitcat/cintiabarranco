@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import { nav } from '../data/site';
+---
+
+<Base
+  title="Página no encontrada | Cintia Barranco"
+  description="La página que buscas no existe o ha cambiado de dirección."
+  path="/404"
+  loaderName="404"
+  noindex
+>
+  <section class="shell wrap">
+    <div class="kicker">Error 404</div>
+    <h1 class="h1-sm">Esta página no existe</h1>
+    <p class="lead">
+      Puede que el enlace esté roto o que la página haya cambiado de dirección con el nuevo diseño.
+      Desde aquí puedes seguir:
+    </p>
+    <div class="btns btns-center">
+      <a href="/" class="btn btn-solid">Volver al inicio</a>
+      {nav.map((i) => <a href={i.href} class="btn btn-ghost">{i.label}</a>)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wrap {
+    text-align: center;
+    padding-block: clamp(72px, 14vw, 160px);
+    max-width: 640px;
+  }
+  .wrap .kicker {
+    justify-content: center;
+  }
+  .wrap .lead {
+    margin-inline: auto;
+  }
+</style>

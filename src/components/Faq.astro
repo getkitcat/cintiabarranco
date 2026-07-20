@@ -1,0 +1,61 @@
+---
+/** Accordion block. Pure <details> — no JS, works before hydration and without it. */
+interface Props {
+  items: readonly { q: string; a: string }[];
+  kicker?: string;
+  heading?: string;
+  /** Closing line under the list; omit on pages that already end in a CTA. */
+  footLink?: boolean;
+}
+const {
+  items,
+  kicker = 'Preguntas frecuentes',
+  heading = 'Resuelve tus dudas',
+  footLink = true,
+} = Astro.props;
+---
+
+<div class="head" data-rv>
+  <div class="kicker">{kicker}</div>
+  <h2 class="h2-sm">{heading}</h2>
+</div>
+
+<div class="list" data-rv>
+  {
+    items.map((i) => (
+      <details class="faq">
+        <summary>
+          {i.q}
+          <span class="sign" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <p>{i.a}</p>
+      </details>
+    ))
+  }
+</div>
+
+{
+  footLink && (
+    <div class="foot" data-rv>
+      <a href="/contacto"><strong>¿Tienes otra pregunta? Escríbeme →</strong></a>
+    </div>
+  )
+}
+
+<style>
+  .head {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .list {
+    display: grid;
+    gap: 12px;
+  }
+  .foot {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 15px;
+  }
+</style>

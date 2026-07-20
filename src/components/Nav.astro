@@ -1,0 +1,181 @@
+---
+import { nav, site } from '../data/site';
+
+interface Props {
+  /** Pathname of the current page, so its nav item lights up. */
+  current?: string;
+}
+const { current = '' } = Astro.props;
+---
+
+<nav class="bar" aria-label="Navegación principal">
+  <a href="/" class="brand" aria-label={`${site.shortName} — inicio`}>
+    <img src="/assets/logo.png" alt={site.shortName} width="604" height="160" />
+  </a>
+
+  <button class="burger" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="sr">Abrir menú</span>
+    <span class="bars" aria-hidden="true"></span>
+  </button>
+
+  <div class="menu" id="menu">
+    {
+      nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['link', { on: current === item.href }]}
+          aria-current={current === item.href ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a href="/contacto" class="btn btn-solid btn-sm cta">Pedir cita</a>
+  </div>
+</nav>
+
+<style>
+  .bar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px var(--pad);
+    background: rgba(251, 250, 248, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .brand img {
+    height: 46px;
+    width: auto;
+    display: block;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 2.6vw, 36px);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .link {
+    color: var(--ink);
+  }
+  .link:hover,
+  .link.on {
+    color: var(--brand-light);
+  }
+
+  .burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    place-items: center;
+  }
+  /* Three lines drawn from one element: the middle is the box, the outer two are
+     pseudo-elements that rotate into an X when the menu opens. */
+  .bars,
+  .bars::before,
+  .bars::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.28s var(--ease), opacity 0.2s;
+  }
+  .bars::before,
+  .bars::after {
+    content: '';
+    position: absolute;
+  }
+  .bars::before {
+    transform: translateY(-6px);
+  }
+  .bars::after {
+    transform: translateY(6px);
+  }
+  .burger[aria-expanded='true'] .bars {
+    background: transparent;
+  }
+  .burger[aria-expanded='true'] .bars::before {
+    transform: rotate(45deg);
+  }
+  .burger[aria-expanded='true'] .bars::after {
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 860px) {
+    .burger {
+      display: grid;
+      position: relative;
+    }
+    .menu {
+      position: fixed;
+      inset: 74px 0 auto 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px var(--pad) 24px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 24px 40px -30px rgba(43, 40, 64, 0.5);
+      /* Collapsed by default; `display` stays flex so the open state is a single
+         property flip and the links keep their layout. */
+      transform: translateY(-12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.28s var(--ease), opacity 0.22s, visibility 0.22s;
+    }
+    .menu.open {
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+    }
+    .link {
+      padding: 16px 4px;
+      border-bottom: 1px solid var(--hair);
+      font-size: 17px;
+    }
+    .cta {
+      margin-top: 18px;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>('.burger');
+  const menu = document.querySelector<HTMLElement>('#menu');
+
+  if (burger && menu) {
+    const setOpen = (open: boolean) => {
+      burger.setAttribute('aria-expanded', String(open));
+      menu.classList.toggle('open', open);
+      burger.querySelector('.sr')!.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    };
+
+    burger.addEventListener('click', () =>
+      setOpen(burger.getAttribute('aria-expanded') !== 'true')
+    );
+    // Tapping a link navigates; close so the panel isn't left open behind a
+    // same-page anchor jump.
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+</script>

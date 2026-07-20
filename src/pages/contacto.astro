@@ -1,0 +1,578 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site';
+import { faqSchema, breadcrumbSchema } from '../data/schema';
+
+const faqs = [
+  {
+    q: '¿Cuánto tardas en responder?',
+    a: 'Respondo en menos de 24 horas laborables, tanto por email como por WhatsApp o el formulario.',
+  },
+  {
+    q: '¿Cómo reservo la primera consulta gratuita?',
+    a: 'Escríbeme por WhatsApp, llámame o envía el formulario contándome brevemente tu situación. Buscamos un hueco para una llamada de 15 minutos sin compromiso.',
+  },
+  {
+    q: '¿Puedo cancelar o cambiar mi cita?',
+    a: 'Sí, solo te pido que me avises con al menos 24 horas de antelación para poder reorganizar la agenda.',
+  },
+  {
+    q: '¿Dónde está la consulta?',
+    a: 'En Cl. el Guerra, 17, barrio de Beiro, 18014 Granada — una zona tranquila y bien comunicada. También atiendo online desde cualquier lugar.',
+  },
+] as const;
+
+// No key configured → render the direct-contact panel instead of a form that
+// would accept a patient's message and silently discard it.
+const formLive = site.web3formsKey.length > 0;
+---
+
+<Base
+  title="Contacto | Cintia Barranco, Psicóloga en Granada"
+  description="Escríbeme sin compromiso. Consulta en Cl. el Guerra 17, Granada, y sesiones online. Primera consulta informativa gratuita de 15 minutos."
+  path="/contacto"
+  loaderName="Contacto"
+  jsonld={[
+    faqSchema(faqs),
+    breadcrumbSchema([
+      { name: 'Inicio', path: '/' },
+      { name: 'Contacto', path: '/contacto' },
+    ]),
+  ]}
+>
+  <header class="shell-narrow head">
+    <div data-rv>
+      <div class="kicker">Respondo en menos de 24h</div>
+      <h1 class="h1-sm">Contacta con tu psicóloga en Granada</h1>
+      <p class="lead">
+        Dar el primer paso es lo más importante. Escríbeme sin compromiso y te responderé lo antes
+        posible.
+      </p>
+    </div>
+  </header>
+
+  <section class="shell grid" id="formulario">
+    <!-- ------------------------------------------------------- left rail -- -->
+    <div class="rail" data-rv>
+      <div class="intro">
+        <img src="/assets/photos/cintia-retrato.jpg" alt={site.name} width="78" height="78" />
+        <h2>{site.name}</h2>
+        <div class="intro-role">Psicóloga sanitaria · Especializada en vínculos y autoestima</div>
+        <div class="tags">
+          <span>✓ 1ª consulta gratuita</span>
+          <span>✓ Sin compromiso</span>
+        </div>
+      </div>
+
+      <div class="card details">
+        <a href={`tel:${site.phone}`}>
+          <div class="d-label">Teléfono</div>
+          <div class="d-val">{site.phoneDisplay}</div>
+        </a>
+        <a href={`mailto:${site.email}`}>
+          <div class="d-label">Email</div>
+          <div class="d-val break">{site.email}</div>
+        </a>
+        <a href={site.mapsLink} target="_blank" rel="noopener">
+          <div class="d-label">Dirección</div>
+          <div class="d-val">{site.addressLine}</div>
+        </a>
+        <div class="quick">
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-wa btn-sm">
+            WhatsApp
+          </a>
+          <a href={`tel:${site.phone}`} class="btn btn-ghost btn-sm">Llámame</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------ form -- -->
+    <div class="card formcard" data-rv>
+      <h2 class="h2-sm">Escríbeme</h2>
+      <p class="note intro-note">
+        Cuéntame brevemente tu situación y te responderé lo antes posible para agendar tu primera
+        cita.
+      </p>
+
+      {
+        formLive ? (
+          <form class="lead-form" novalidate>
+            <input type="hidden" name="access_key" value={site.web3formsKey} />
+            <input type="hidden" name="subject" value="Nueva consulta desde la web" />
+            <input type="hidden" name="from_name" value="Web Cintia Barranco" />
+            {/* Honeypot — bots fill it, people never see it. */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="sr"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+
+            <div class="two">
+              <div class="field">
+                <label for="f-nombre">Nombre *</label>
+                <input id="f-nombre" name="nombre" type="text" required placeholder="Tu nombre" />
+              </div>
+              <div class="field">
+                <label for="f-email">Email *</label>
+                <input id="f-email" name="email" type="email" required placeholder="tu@email.com" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-tel">Teléfono (opcional)</label>
+              <input id="f-tel" name="telefono" type="tel" placeholder="600 000 000" />
+            </div>
+
+            <div class="field">
+              <label for="f-msg">Mensaje *</label>
+              <textarea
+                id="f-msg"
+                name="mensaje"
+                rows="5"
+                required
+                placeholder="Cuéntame brevemente qué te trae por aquí…"
+              />
+            </div>
+
+            <label class="consent">
+              <input type="checkbox" name="consentimiento" required />
+              <span>
+                He leído y acepto la <a href="/politica-de-privacidad">política de privacidad</a>.
+              </span>
+            </label>
+
+            {/*
+              A contact form on a psychologist's site invites people to describe
+              why they need therapy — health data under Art. 9 RGPD. Saying so
+              plainly is both the honest thing and the compliant one.
+            */}
+            <p class="warn">
+              Por tu privacidad, no incluyas detalles clínicos o de salud en este formulario. Con
+              contarme brevemente el motivo basta — el resto lo hablamos en consulta.
+            </p>
+
+            <button type="submit" class="btn btn-solid submit">Enviar mensaje →</button>
+            <p class="status" role="status" aria-live="polite" hidden />
+            <div class="fineprint">Tu mensaje es privado y solo lo leo yo. No comparto tus datos.</div>
+          </form>
+        ) : (
+          <div class="nokey">
+            <p class="note">
+              El formulario todavía no está conectado. Mientras tanto puedes escribirme
+              directamente — respondo igual de rápido por cualquiera de estas vías:
+            </p>
+            <div class="btns">
+              <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-wa">
+                Escríbeme por WhatsApp
+              </a>
+              <a href={`mailto:${site.email}`} class="btn btn-ghost">Enviar un email</a>
+              <a href={`tel:${site.phone}`} class="btn btn-ghost">{site.phoneDisplay}</a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- mapa -- -->
+  <section class="band-top">
+    <div class="shell sect-sm">
+      <div class="center-head" data-rv>
+        <div class="kicker">Ubicación</div>
+        <h2 class="h2-sm">¿Dónde encontrarme?</h2>
+        <p class="note center-note">
+          Mi consulta está en el barrio de Beiro, una zona tranquila y accesible de Granada.
+        </p>
+      </div>
+
+      {/*
+        Click-to-load. Embedding the Google Maps iframe directly would set
+        third-party cookies on arrival — prior consent is required under Art. 22.2
+        LSSI-CE, and asking for it with a banner just to show a map is a bad trade.
+        Pressing the button IS the consent, for that purpose only, and the address
+        is fully usable without ever loading it.
+      */}
+      <div class="map" data-rv data-embed={site.mapsEmbed}>
+        <div class="map-ask">
+          <div class="map-addr">
+            <div class="d-label">Consulta</div>
+            <div class="map-street">{site.street}, {site.district}</div>
+            <div class="map-city">{site.postal} {site.city}</div>
+          </div>
+          <p class="map-note">
+            El mapa lo carga Google y puede instalar cookies en tu dispositivo. Se muestra solo si
+            tú lo pides.
+          </p>
+          <div class="btns">
+            <button type="button" class="btn btn-solid btn-sm map-load">Ver el mapa aquí</button>
+            <a href={site.mapsLink} target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
+              Abrir en Google Maps →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-top">
+    <div class="shell-narrow sect-sm">
+      <Faq items={faqs} footLink={false} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    text-align: center;
+    padding-top: clamp(56px, 8vw, 86px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+  }
+  .head .lead {
+    max-width: 600px;
+    margin-inline: auto;
+    margin-bottom: 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 24px;
+    align-items: start;
+    padding-top: 40px;
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+
+  .rail {
+    display: grid;
+    gap: 24px;
+  }
+
+  .intro {
+    background: var(--brand);
+    border-radius: var(--card-lg);
+    padding: clamp(28px, 3.4vw, 36px) clamp(24px, 3vw, 34px);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(169, 155, 216, 0.25);
+  }
+  .intro > * {
+    position: relative;
+    z-index: 1;
+  }
+  .intro img {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.4);
+  }
+  .intro h2 {
+    font-weight: 500;
+    font-size: clamp(22px, 2.4vw, 26px);
+    color: #fff;
+    margin: 0 0 6px;
+  }
+  .intro-role {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 18px;
+  }
+  .tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tags span {
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 7px 15px;
+  }
+
+  .details {
+    border-radius: var(--card-lg);
+    display: grid;
+    gap: 20px;
+  }
+  .details a {
+    display: block;
+    color: var(--ink);
+  }
+  .details a:hover .d-val {
+    color: var(--brand);
+  }
+  .d-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .d-val {
+    font-size: 17px;
+    font-weight: 600;
+    transition: color 0.25s;
+  }
+  .break {
+    word-break: break-word;
+  }
+  .quick {
+    display: flex;
+    gap: 12px;
+    padding-top: 4px;
+  }
+  .quick .btn {
+    flex: 1;
+  }
+
+  /* ------------------------------------------------------------- form -- */
+  .formcard {
+    border-radius: var(--card-lg);
+    padding: clamp(28px, 4vw, 44px) clamp(24px, 3.4vw, 42px);
+  }
+  .intro-note {
+    margin: 10px 0 30px;
+  }
+
+  .lead-form {
+    display: grid;
+    gap: 18px;
+  }
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .field {
+    display: grid;
+    gap: 8px;
+  }
+  .field label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .field input,
+  .field textarea {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    font-size: 15px;
+    font-family: var(--sans);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--brand-light);
+  }
+  .field input:user-invalid,
+  .field textarea:user-invalid {
+    border-color: #c2536b;
+  }
+
+  .consent {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: var(--body);
+    cursor: pointer;
+  }
+  .consent input {
+    margin-top: 3px;
+    accent-color: var(--brand);
+    flex-shrink: 0;
+  }
+
+  .warn {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--body);
+    background: var(--tint);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 0;
+  }
+
+  .submit {
+    justify-self: start;
+  }
+  .status {
+    margin: 0;
+    font-size: 15px;
+    border-radius: 12px;
+    padding: 14px 18px;
+  }
+  .status.ok {
+    background: #f0f7f2;
+    border: 1px solid rgba(76, 175, 125, 0.4);
+    color: #2e7d53;
+  }
+  .status.bad {
+    background: #fdf2f4;
+    border: 1px solid rgba(194, 83, 107, 0.4);
+    color: #a63b52;
+  }
+  .fineprint {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .nokey .btns {
+    margin-top: 20px;
+  }
+
+  /* -------------------------------------------------------------- map -- */
+  .center-head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+  .center-note {
+    max-width: 560px;
+    margin-inline: auto;
+    font-size: 16px;
+  }
+  .map {
+    border-radius: var(--card-lg);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--tint);
+    line-height: 0;
+  }
+  .map :global(iframe) {
+    border: 0;
+    display: block;
+  }
+  .map-ask {
+    line-height: 1.6;
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    text-align: center;
+    padding: clamp(40px, 7vw, 76px) var(--pad);
+  }
+  .map-addr {
+    display: grid;
+    gap: 2px;
+  }
+  .map-street {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--ink);
+  }
+  .map-city {
+    font-size: 15px;
+    color: var(--body);
+  }
+  .map-note {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 380px;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .two {
+      grid-template-columns: 1fr;
+    }
+    .quick {
+      flex-direction: column;
+    }
+    .submit {
+      justify-self: stretch;
+    }
+  }
+</style>
+
+<script>
+  // ---- map: load Google's iframe only once the visitor asks for it -----------
+  const map = document.querySelector<HTMLElement>('.map');
+  map?.querySelector<HTMLButtonElement>('.map-load')?.addEventListener('click', () => {
+    const frame = document.createElement('iframe');
+    frame.src = map.dataset.embed!;
+    frame.width = '100%';
+    frame.height = '420';
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'no-referrer-when-downgrade';
+    frame.title = 'Mapa de la consulta de Cintia Barranco en Granada';
+    map.replaceChildren(frame);
+  });
+
+  // ---- contact form ---------------------------------------------------------
+  const form = document.querySelector<HTMLFormElement>('form.lead-form');
+
+  if (form) {
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const status = form.querySelector<HTMLParagraphElement>('.status')!;
+    const label = btn.textContent;
+
+    const say = (msg: string, ok: boolean) => {
+      status.hidden = false;
+      status.textContent = msg;
+      status.classList.toggle('ok', ok);
+      status.classList.toggle('bad', !ok);
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // novalidate is set so we control the message; run the check ourselves.
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.reset();
+          say('Mensaje enviado. Gracias por escribir — te responderé en menos de 24 horas.', true);
+        } else {
+          say('No se ha podido enviar. Escríbeme por WhatsApp o llámame al 644 21 45 95.', false);
+        }
+      } catch {
+        say('No se ha podido enviar. Escríbeme por WhatsApp o llámame al 644 21 45 95.', false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = label;
+      }
+    });
+  }
+</script>

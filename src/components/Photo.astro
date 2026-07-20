@@ -1,0 +1,50 @@
+---
+/**
+ * Practice photography. The originals were 5–10 MB camera JPEGs; scripts/optimize-images.mjs
+ * pre-builds a 640/1000/1600 WebP ladder plus a JPEG fallback, and this picks the
+ * right rung per viewport. Serving the originals would have cost ~52 MB a page.
+ */
+interface Props {
+  /** Base filename under /assets/photos, without width or extension. */
+  name: string;
+  alt: string;
+  /** Layout class(es): photo-hero | photo-tall | photo-wide | photo-svc */
+  variant?: string;
+  /** Rendered width hint for the browser's source selection. */
+  sizes?: string;
+  /** The LCP image on a page should be eager + high priority; everything else lazy. */
+  priority?: boolean;
+  class?: string;
+}
+const {
+  name,
+  alt,
+  variant = 'photo-wide',
+  sizes = '(max-width: 760px) 100vw, 50vw',
+  priority = false,
+  class: extra = '',
+} = Astro.props;
+
+const base = `/assets/photos/${name}`;
+const srcset = [640, 1000, 1600].map((w) => `${base}-${w}.webp ${w}w`).join(', ');
+---
+
+<picture>
+  <source type="image/webp" srcset={srcset} sizes={sizes} />
+  <img
+    src={`${base}.jpg`}
+    alt={alt}
+    class:list={['photo', variant, extra]}
+    width="1000"
+    height="1250"
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : undefined}
+  />
+</picture>
+
+<style>
+  picture {
+    display: block;
+  }
+</style>

@@ -1,0 +1,76 @@
+---
+import { site } from '../data/site';
+import { practiceSchema, personSchema, websiteSchema } from '../data/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  jsonld?: object[];
+  image?: string;
+  noindex?: boolean;
+}
+const { title, description, path, jsonld = [], image, noindex = false } = Astro.props;
+
+const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL(image ?? site.ogImage, Astro.site).href;
+// Site-wide graphs ride on every page; pages add their own (Service, FAQ, …).
+const graphs = [practiceSchema(), personSchema(), websiteSchema(), ...jsonld];
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{/* Single-language site: one self-referencing hreflang, no x-default fan-out. */}
+<link rel="alternate" hreflang="es" href={canonical} />
+<link rel="alternate" hreflang="es-ES" href={canonical} />
+
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<meta
+  name="robots"
+  content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'}
+/>
+<meta name="author" content={site.name} />
+<meta name="theme-color" content="#fbfaf8" />
+<meta name="geo.region" content="ES-AN" />
+<meta name="geo.placename" content={site.city} />
+<meta name="geo.position" content={`${site.lat};${site.lon}`} />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+{/*
+  Fonts are self-hosted (see scripts/fonts.mjs). Serving them from Google would
+  hand every visitor's IP to a third party before consent — on a psychologist's
+  site, the visit itself is the sensitive fact. Preloading the two faces that
+  paint above the fold keeps the swap invisible.
+*/}
+<link
+  rel="preload"
+  href="/assets/fonts/dm-sans-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/assets/fonts/playfair-display-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+{graphs.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}

@@ -1,0 +1,189 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import { site } from '../../data/site';
+import { faqSchema, breadcrumbSchema } from '../../data/schema';
+import { fmtDate, readingTime } from '../../lib/format';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const faqs = [
+  {
+    q: '¿Cada cuánto publicas artículos nuevos?',
+    a: 'Publico de forma regular, normalmente varias veces al mes. Puedes seguirme en Instagram para enterarte de cada artículo nuevo.',
+  },
+  {
+    q: '¿Puedo sugerir temas para el blog?',
+    a: '¡Claro! Escríbeme por el formulario de contacto o Instagram con el tema que te gustaría leer y lo tendré en cuenta.',
+  },
+  {
+    q: '¿Leer estos artículos sustituye a la terapia?',
+    a: 'No. Los artículos son recursos de divulgación y acompañamiento, pero no reemplazan un proceso terapéutico personalizado con una profesional.',
+  },
+  {
+    q: '¿Puedo compartir los artículos?',
+    a: 'Sí, puedes compartirlos libremente siempre que cites la fuente. Si quieres usarlos en otro medio, contáctame antes.',
+  },
+] as const;
+---
+
+<Base
+  title="Blog de psicología en Granada | Cintia Barranco"
+  description="Artículos sobre salud mental, ansiedad, relaciones y bienestar emocional, escritos desde la consulta y para el día a día."
+  path="/blog"
+  loaderName="Blog"
+  jsonld={[
+    faqSchema(faqs),
+    breadcrumbSchema([
+      { name: 'Inicio', path: '/' },
+      { name: 'Blog', path: '/blog' },
+    ]),
+  ]}
+>
+  <header class="shell-narrow head">
+    <div data-rv>
+      <div class="kicker">Nuestro blog</div>
+      <h1 class="h1-sm">Recursos de psicología para avanzar a tu ritmo</h1>
+      <p class="lead">
+        Artículos sobre salud mental, ansiedad, relaciones y bienestar emocional, escritos desde la
+        consulta y para el día a día.
+      </p>
+    </div>
+  </header>
+
+  <section class="shell list">
+    {
+      posts.length > 0 ? (
+        <div class="grid-2" data-rv>
+          {posts.map((p) => (
+            <a class="card post" href={`/blog/${p.id}`}>
+              <div class="meta">
+                <span class="cat">{p.data.category}</span>
+                <span>{fmtDate(p.data.date)}</span>
+                <span>{readingTime(p.body ?? '')}</span>
+              </div>
+              <h2>{p.data.title}</h2>
+              <p>{p.data.description}</p>
+              <span class="arrow push">Leer artículo →</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="empty card" data-rv>
+          <h2 class="h2-sm">Los primeros artículos están en camino</h2>
+          <p class="note">
+            Estoy preparando contenido sobre ansiedad, autoestima, duelo y relaciones. Mientras
+            tanto, puedes escribirme directamente si hay algo que te preocupa.
+          </p>
+          <a href="/contacto" class="btn btn-solid btn-sm">Hablemos</a>
+        </div>
+      )
+    }
+  </section>
+
+  <!-- ----------------------------------------------------------- follow -- -->
+  {/*
+    The prototype had a newsletter signup here. There is no email provider behind
+    it, and a subscribe box that quietly drops addresses is worse than none — it
+    also collects personal data with nowhere compliant to put it. Swapped for the
+    channel Cintia actually posts on. Restore the form the day a provider exists.
+  */}
+  <section class="shell sect-sm" data-rv>
+    <div class="slab slab-duo">
+      <div>
+        <div class="kicker light">Sígueme</div>
+        <h2>Recursos de bienestar, también en tu día a día</h2>
+        <p>
+          Comparto reflexiones y herramientas prácticas sobre salud mental en Instagram. Y si
+          prefieres hablar directamente, la primera consulta es gratuita.
+        </p>
+      </div>
+      <div class="btns">
+        <a href={site.instagram} target="_blank" rel="noopener" class="btn btn-light">
+          {site.instagramHandle}
+        </a>
+        <a href="/contacto" class="btn btn-outline-light">Pedir cita</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-top">
+    <div class="shell-narrow sect-sm">
+      <Faq items={faqs} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    text-align: center;
+    padding-top: clamp(56px, 8vw, 86px);
+    padding-bottom: clamp(28px, 4vw, 60px);
+  }
+  .head .lead {
+    max-width: 620px;
+    margin-inline: auto;
+    margin-bottom: 0;
+  }
+
+  .list {
+    padding-bottom: clamp(40px, 6vw, 60px);
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--card-lg);
+    padding: clamp(28px, 3.4vw, 40px) clamp(24px, 3vw, 36px);
+  }
+  .meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .cat {
+    color: var(--brand-light);
+    font-weight: 600;
+  }
+  .post h2 {
+    font-weight: 500;
+    font-size: clamp(23px, 2.8vw, 30px);
+    line-height: 1.2;
+    margin: 0 0 18px;
+  }
+  .post p {
+    margin-bottom: 26px;
+  }
+  .push {
+    margin-top: auto;
+  }
+
+  .empty {
+    text-align: center;
+    padding: clamp(40px, 6vw, 64px) var(--pad);
+  }
+  .empty .note {
+    max-width: 460px;
+    margin: 16px auto 26px;
+  }
+
+  .light {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .slab-duo .btns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  @media (max-width: 760px) {
+    .slab-duo .btns {
+      flex-direction: row;
+    }
+  }
+</style>

@@ -1,0 +1,498 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import Faq from '../components/Faq.astro';
+import { site, services } from '../data/site';
+import { faqSchema, serviceSchema } from '../data/schema';
+import { fmtDate } from '../lib/format';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const faqs = [
+  {
+    q: '¿Cómo empiezo la terapia?',
+    a: 'Muy fácil: reserva una consulta informativa gratuita de 15 minutos por WhatsApp, teléfono o el formulario de contacto. Hablamos de lo que te preocupa y decidimos juntas el mejor camino.',
+  },
+  {
+    q: '¿Las sesiones son presenciales u online?',
+    a: 'Ambas. Puedes venir a mi consulta en el barrio de Beiro (Granada) o hacer las sesiones por videollamada segura, con la misma calidad terapéutica.',
+  },
+  {
+    q: '¿Cuánto cuesta una sesión?',
+    a: 'La primera consulta informativa es gratuita y sin compromiso. En ella te explico las tarifas y modalidades para que decidas con toda la información.',
+  },
+  {
+    q: '¿Es confidencial lo que hablamos?',
+    a: 'Totalmente. Todo lo que compartas está protegido por el secreto profesional y el código deontológico del Colegio Oficial de Psicología.',
+  },
+] as const;
+
+const marquee = [
+  'Ansiedad',
+  'Terapia de pareja',
+  'Infancia',
+  'Trauma',
+  'Autoestima',
+  'Duelo',
+  'Bienestar emocional',
+];
+---
+
+<Base
+  title="Psicóloga en Granada | Cintia Barranco González"
+  description="Psicóloga general sanitaria en Granada. Terapia individual, de pareja, infantil y familiar, presencial y online. Primera consulta informativa gratuita."
+  path="/"
+  jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
+>
+  <!-- ------------------------------------------------------------- hero -- -->
+  <header class="shell hero">
+    <div>
+      <div class="kicker"><span class="rule"></span>Psicóloga General Sanitaria · Granada</div>
+      <h1 class="h1">Un espacio seguro donde iniciar el camino hacia el cambio</h1>
+      <p class="lead hero-lead">
+        Terapia psicológica presencial y online. Aprende a conocerte, gestionar lo que sientes y dar
+        sentido a tu vida — a tu ritmo y con acompañamiento profesional.
+      </p>
+      <div class="btns">
+        <a href="/contacto" class="btn btn-solid">Primera consulta gratuita</a>
+        <a href="/servicios" class="btn btn-ghost">Ver servicios</a>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <Photo
+        name="cintia-retrato"
+        alt="Cintia Barranco, psicóloga en Granada"
+        variant="photo-hero"
+        sizes="(max-width: 760px) 100vw, 45vw"
+        priority
+      />
+      <div class="badge">
+        <span class="live" aria-hidden="true"></span>
+        <span>Disponible presencial y online</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ---------------------------------------------------------- marquee -- -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      {
+        [0, 1].map(() => (
+          <div class="run">
+            {marquee.map((w) => (
+              <>
+                <span>{w}</span>
+                <span>·</span>
+              </>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- -------------------------------------------------------- servicios -- -->
+  <section class="shell sect" id="servicios">
+    <div class="sect-head" data-rv>
+      <div>
+        <div class="kicker">Mis servicios</div>
+        <h2 class="h2">Terapias de psicología en Granada</h2>
+      </div>
+      <p class="sect-note">
+        Que todas las personas que den el primer paso tengan la oportunidad de construir una vida
+        plena, en consulta o desde casa.
+      </p>
+    </div>
+
+    <div class="grid-4">
+      {
+        services.map((s) => (
+          <a class="card" href={s.path} data-rv>
+            <div class="num">{s.n}</div>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="arrow">Saber más →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------- triptych -- -->
+  <section class="shell trip" data-rv>
+    <Photo name="terapia-pareja" alt="Sesión de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+    <Photo
+      name="terapia-infantil"
+      alt="Consulta de Cintia Barranco"
+      sizes="(max-width: 760px) 100vw, 33vw"
+      class="offset"
+    />
+    <Photo name="terapia-familiar" alt="Terapia de pareja en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+  </section>
+
+  <!-- --------------------------------------------------------- sobre mí -- -->
+  <section class="band" id="sobre-mi">
+    <div class="shell sect duo">
+      <div data-rv>
+        <Photo
+          name="cintia-consulta"
+          alt="Cintia Barranco González, psicóloga sanitaria en Granada"
+          variant="photo-tall"
+          sizes="(max-width: 760px) 100vw, 40vw"
+        />
+      </div>
+
+      <div data-rv>
+        <div class="kicker">Conoce a tu psicóloga</div>
+        <h2 class="h2 mb">Soy Cintia Barranco González</h2>
+        <p class="prose mb-sm">
+          Psicóloga sanitaria colegiada en Granada. Creo firmemente que todas las personas merecen un
+          espacio seguro donde hablar, sanar y crecer. Acompaño a quienes quieren superar la
+          ansiedad, mejorar sus relaciones y encontrar claridad emocional.
+        </p>
+        <p class="prose mb">
+          Mi enfoque integra técnicas cognitivo-conductuales con una base humanista, adaptándome
+          siempre a lo que necesitas en cada momento de tu proceso.
+        </p>
+
+        <div class="pills mb">
+          {services.map((s) => <span class="pill">{s.title}</span>)}
+        </div>
+
+        <div class="creds">
+          <div><span class="dot" aria-hidden="true">✓</span>Psicóloga Sanitaria Colegiada</div>
+          <div><span class="dot" aria-hidden="true">✓</span>Máster en Psicología General Sanitaria</div>
+        </div>
+
+        <a href="/contacto" class="btn btn-solid btn-sm">Hablemos de tu proceso</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- proceso -- -->
+  <section class="shell sect" id="proceso">
+    <div class="center-head" data-rv>
+      <div class="kicker">Cómo trabajamos</div>
+      <h2 class="h2">Cercano, cuidado y a tu ritmo</h2>
+    </div>
+
+    <div class="grid-3">
+      <div class="step" data-rv>
+        <div class="num">01</div>
+        <h3 class="h3">Contacto inicial</h3>
+        <p>
+          Reserva una consulta informativa gratuita de 15 minutos para hablar de lo que te preocupa.
+          Sin presión — solo una conversación.
+        </p>
+      </div>
+      <div class="step" data-rv>
+        <div class="num">02</div>
+        <h3 class="h3">Plan personalizado</h3>
+        <p>
+          Crearé un plan alineado con tus objetivos, ya sea gestionar la ansiedad, mejorar tu
+          relación o encontrar claridad emocional.
+        </p>
+      </div>
+      <div class="step" data-rv>
+        <div class="num">03</div>
+        <h3 class="h3">Sesiones presenciales u online</h3>
+        <p>
+          Desde cualquier lugar o en mi consulta de Granada. Juntas superaremos los retos, paso a
+          paso.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- blog -- -->
+  {
+    posts.length > 0 && (
+      <section class="band" id="blog">
+        <div class="shell sect">
+          <div class="sect-head tight" data-rv>
+            <div>
+              <div class="kicker">Del blog</div>
+              <h2 class="h2">Recursos para tu bienestar</h2>
+            </div>
+            <a href="/blog" class="arrow">Ver todos los artículos →</a>
+          </div>
+
+          <div class="rows" data-rv>
+            {posts.map((p) => (
+              <a class="row" href={`/blog/${p.id}`}>
+                <span class="row-cat">{p.data.category}</span>
+                <span class="row-title">{p.data.title}</span>
+                <span class="row-date">{fmtDate(p.data.date)} →</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- --------------------------------------------------------- contacto -- -->
+  <section class="shell sect" id="contacto" data-rv>
+    <div class="slab slab-duo">
+      <div>
+        <h2>Da el primer paso. La primera consulta es gratuita.</h2>
+        <p>
+          15 minutos para conocernos, resolver tus dudas y decidir juntas el mejor camino. Sin
+          compromiso.
+        </p>
+        <div class="btns">
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-light">
+            Escríbeme por WhatsApp
+          </a>
+          <a href={`tel:${site.phone}`} class="btn btn-outline-light">{site.phoneDisplay}</a>
+        </div>
+      </div>
+
+      <div class="meta-list">
+        <div>
+          <div class="meta-label">Consulta</div>
+          {site.street}, {site.district}<br />{site.postal} {site.city}
+        </div>
+        <div>
+          <div class="meta-label">Email</div>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+        <div>
+          <div class="meta-label">Instagram</div>
+          <a href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------------faq -- -->
+  <section class="band-top">
+    <div class="shell-narrow sect-sm">
+      <Faq items={faqs} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ------------------------------------------------------------- hero -- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(36px, 5vw, 64px);
+    align-items: center;
+    padding-top: clamp(56px, 8vw, 76px);
+    padding-bottom: clamp(48px, 6vw, 70px);
+  }
+  .hero-lead {
+    max-width: 520px;
+  }
+  .hero-media {
+    position: relative;
+  }
+
+  .badge {
+    position: absolute;
+    left: clamp(-12px, -2vw, -28px);
+    bottom: 36px;
+    background: var(--surface);
+    border: 1px solid var(--edge-2);
+    border-radius: 16px;
+    padding: 14px 20px;
+    box-shadow: 0 18px 45px -12px rgba(43, 40, 64, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(13px, 1.4vw, 15px);
+    font-weight: 700;
+    color: var(--ink);
+    animation: floatY 5s ease-in-out infinite;
+  }
+  .live {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ok);
+    flex-shrink: 0;
+  }
+  @keyframes floatY {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* ---------------------------------------------------------- marquee -- */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+    background: var(--surface);
+  }
+  .track {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+  .run {
+    display: flex;
+    gap: clamp(28px, 5vw, 56px);
+    padding-right: clamp(28px, 5vw, 56px);
+    font-family: var(--serif);
+    font-size: clamp(16px, 2vw, 20px);
+    font-style: italic;
+    color: var(--brand-light);
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ----------------------------------------------------------- blocks -- */
+  .sect-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+  .sect-head.tight {
+    margin-bottom: 40px;
+  }
+  .sect-note {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+    max-width: 400px;
+    margin: 0;
+  }
+  .center-head {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  .trip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-block: clamp(40px, 6vw, 70px);
+  }
+  .trip :global(.offset) {
+    margin-top: 32px;
+  }
+
+  .mb {
+    margin-bottom: 24px;
+  }
+  .mb-sm {
+    margin-bottom: 18px;
+  }
+
+  .creds {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .creds div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .creds .dot {
+    transform: none;
+  }
+
+  /* ------------------------------------------------------- blog rows -- */
+  .rows {
+    display: grid;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 32px;
+    align-items: baseline;
+    padding: 26px 8px;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    transition: background 0.25s;
+  }
+  .row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .row:hover {
+    background: var(--tint-2);
+    color: var(--ink);
+  }
+  .row-cat,
+  .row-date {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .row-title {
+    font-family: var(--serif);
+    font-size: clamp(19px, 2.2vw, 24px);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  /* -------------------------------------------------------- responsive -- */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .hero-media {
+      max-width: 460px;
+    }
+    .creds {
+      grid-template-columns: 1fr;
+    }
+    .sect-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+    .trip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .trip :global(picture:last-child) {
+      display: none;
+    }
+    .row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .badge {
+      left: 0;
+      bottom: 14px;
+      padding: 12px 16px;
+    }
+    .trip {
+      grid-template-columns: 1fr;
+    }
+    .trip :global(.offset) {
+      margin-top: 0;
+    }
+    .trip :global(picture:last-child) {
+      display: block;
+    }
+  }
+</style>

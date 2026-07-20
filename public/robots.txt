@@ -1,0 +1,21 @@
+# Cintia Barranco González — Psicóloga General Sanitaria, Granada
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# AI assistants are a real referral channel for a local practice — people ask
+# ChatGPT and Perplexity for a psychologist in Granada. Explicitly welcome.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://cintiabarranco.es/sitemap-index.xml

@@ -1,0 +1,516 @@
+---
+/**
+ * POLÍTICA DE PRIVACIDAD — RGPD / LOPDGDD, con datos de salud (categoría especial).
+ *
+ * Fuentes primarias verificadas el 2026-07-20. Nada de este texto procede de
+ * plantillas de despachos ni de agregadores; los plazos y las bases jurídicas se
+ * han comprobado contra la norma.
+ *
+ *  · Reglamento (UE) 2016/679 (RGPD) — arts. 6, 9, 13, 15-22, 28, 44-49, 77.
+ *    En particular art. 9.2.h (asistencia sanitaria por profesional sujeto a
+ *    secreto) y art. 9.3 (obligación de secreto profesional).
+ *    https://eur-lex.europa.eu/eli/reg/2016/679/oj
+ *
+ *  · Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y
+ *    garantía de los derechos digitales (LOPDGDD) — texto consolidado BOE:
+ *    https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673
+ *    Art. 9 (categorías especiales), art. 12 (ejercicio de derechos, gratuito),
+ *    disposición adicional decimoséptima (datos de salud e investigación).
+ *
+ *  · PLAZO DE CONSERVACIÓN DE LA HISTORIA CLÍNICA — verificado, no estimado:
+ *    Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del
+ *    paciente, ART. 17.1: la documentación clínica debe conservarse "el tiempo
+ *    adecuado a cada caso y, como mínimo, CINCO AÑOS contados desde la fecha del
+ *    alta de cada proceso asistencial"; además se conserva a efectos judiciales
+ *    conforme a la legislación vigente.
+ *    https://www.boe.es/buscar/act.php?id=BOE-A-2002-22188
+ *    Andalucía no ha fijado por norma autonómica un plazo superior al mínimo
+ *    estatal (a diferencia de, p. ej., Cataluña o País Vasco), por lo que rige el
+ *    mínimo de cinco años de la Ley 41/2002 — que es un MÍNIMO, no un máximo.
+ *
+ *  · Plazos fiscales y contables de la facturación: art. 66 de la Ley 58/2003,
+ *    General Tributaria (prescripción de 4 años) y art. 30 del Código de Comercio
+ *    (6 años de conservación de libros y documentación).
+ *    https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186
+ *    https://www.boe.es/buscar/act.php?id=BOE-A-1885-6627
+ *
+ *  · Transferencias internacionales: Decisión de Ejecución (UE) 2023/1795 de la
+ *    Comisión (Marco de Privacidad de Datos UE-EE. UU.). Sigue formalmente en
+ *    vigor: el Tribunal General desestimó el recurso Latombe (T-553/23) el
+ *    3-9-2025, si bien el recurso de casación ante el TJUE (C-703/25 P) está
+ *    pendiente. Por eso esta política no afirma que el proveedor esté certificado:
+ *    lo marca como pendiente de verificar.
+ *
+ *  · Reclamación ante la autoridad de control: Agencia Española de Protección de
+ *    Datos, C/ Jorge Juan 6, 28001 Madrid — www.aepd.es / sedeagpd.gob.es
+ */
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+const UPDATED = '20 de julio de 2026';
+---
+
+<Base
+  title="Política de privacidad | Cintia Barranco González, psicóloga en Granada"
+  description="Cómo se tratan sus datos personales y sus datos de salud en la consulta de Cintia Barranco González, psicóloga general sanitaria en Granada, conforme al RGPD y la LOPDGDD."
+  path="/politica-de-privacidad"
+  loaderName="Privacidad"
+  noindex={false}
+>
+  <article class="shell-narrow sect doc">
+    <header class="doc-head">
+      <div class="kicker"><span class="rule"></span>Protección de datos</div>
+      <h1 class="h1-sm">Política de privacidad</h1>
+      <p class="prose">
+        Su intimidad es parte del tratamiento. Esta política explica, con el detalle que exigen los
+        artículos 13 y 14 del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD),
+        qué datos personales se tratan en esta consulta, con qué finalidad y base jurídica, durante
+        cuánto tiempo y qué derechos tiene usted. Se presta atención específica a los
+        <strong>datos de salud</strong>, que el artículo 9 del RGPD protege como categoría especial.
+      </p>
+      <p class="stamp">Última actualización: {UPDATED}</p>
+    </header>
+
+    <section data-rv>
+      <h2 class="h2">1. Responsable del tratamiento</h2>
+      <dl class="idcard">
+        <div>
+          <dt>Responsable</dt>
+          <dd>{site.name} — {site.role}</dd>
+        </div>
+        <div>
+          <dt>NIF</dt>
+          <dd class="pending">{'[PENDIENTE: NIF]'}</dd>
+        </div>
+        <div>
+          <dt>Número de colegiada</dt>
+          <dd class="pending">{'[PENDIENTE: número de colegiada y Colegio Oficial de Psicología]'}</dd>
+        </div>
+        <div>
+          <dt>Dirección</dt>
+          <dd>{site.addressLine}, {site.region}, España</dd>
+        </div>
+        <div>
+          <dt>Correo electrónico</dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></dd>
+        </div>
+      </dl>
+      <p class="prose">
+        No se ha designado delegado de protección de datos, al no concurrir ninguno de los supuestos
+        del artículo 37 del RGPD ni del artículo 34 de la LOPDGDD: se trata de una consulta
+        individual y el tratamiento de datos de salud no se realiza a gran escala. Para cualquier
+        cuestión sobre esta política puede dirigirse directamente a la responsable en la dirección de
+        correo indicada.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">2. Qué datos se tratan</h2>
+      <ul class="list">
+        <li>
+          <strong>Datos identificativos y de contacto:</strong> nombre y apellidos, teléfono, correo
+          electrónico y, cuando procede para la facturación, DNI/NIE y dirección postal.
+        </li>
+        <li>
+          <strong>Datos de salud (categoría especial, art. 9 RGPD):</strong> el motivo de consulta,
+          los antecedentes que usted comparta, la evaluación psicológica, las notas de sesión, la
+          hipótesis diagnóstica, el plan de intervención y su evolución. Estos datos únicamente se
+          generan cuando existe una relación asistencial; nunca se recogen a través de la web.
+        </li>
+        <li>
+          <strong>Datos de menores de edad y de terceros:</strong> en terapia infantil, familiar o de
+          pareja pueden tratarse datos de personas distintas de quien solicita la cita. Quien los
+          facilita garantiza estar legitimado para hacerlo.
+        </li>
+        <li>
+          <strong>Datos de navegación:</strong> los estrictamente necesarios para servir el sitio y
+          los que generen los servicios de terceros descritos en la
+          <a href="/cookies">Política de cookies</a>.
+        </li>
+      </ul>
+      <p class="prose">
+        <strong>No facilite datos de salud a través del formulario de contacto, de WhatsApp, del
+        correo electrónico ni de mensajes en redes sociales.</strong> Ninguno de esos canales es un
+        entorno clínico seguro. Para iniciar el contacto basta con su nombre, un dato de contacto y
+        una indicación general del motivo.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">3. Finalidades y bases jurídicas</h2>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tratamiento</th>
+              <th>Base jurídica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Atender su solicitud de cita o de información enviada por el formulario, teléfono, WhatsApp o correo.</td>
+              <td>Art. 6.1.b RGPD — medidas precontractuales a petición del interesado.</td>
+            </tr>
+            <tr>
+              <td>Prestar la asistencia psicológica contratada: evaluación, intervención y seguimiento.</td>
+              <td>Art. 6.1.b RGPD (ejecución del contrato de servicios) y, para los datos de salud, art. 9.2.h RGPD — fines de diagnóstico y prestación de asistencia sanitaria por profesional sujeto a la obligación de secreto del art. 9.3 RGPD, en relación con la Ley 41/2002 y la Ley 44/2003.</td>
+            </tr>
+            <tr>
+              <td>Elaborar y custodiar la historia clínica.</td>
+              <td>Art. 6.1.c y art. 9.2.h RGPD — obligación legal derivada de los artículos 14 a 19 de la Ley 41/2002.</td>
+            </tr>
+            <tr>
+              <td>Emitir facturas y cumplir obligaciones fiscales y contables.</td>
+              <td>Art. 6.1.c RGPD — obligación legal (Ley 58/2003 General Tributaria y Código de Comercio).</td>
+            </tr>
+            <tr>
+              <td>Emitir informes psicológicos a petición del paciente o de su representante legal.</td>
+              <td>Art. 6.1.a y art. 9.2.a RGPD — consentimiento explícito, revocable en cualquier momento.</td>
+            </tr>
+            <tr>
+              <td>Comunicaciones no asistenciales (recordatorios de cita, avisos organizativos).</td>
+              <td>Art. 6.1.f RGPD — interés legítimo en la gestión de la agenda, o su consentimiento cuando se solicite.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="prose">
+        El consentimiento informado que usted firma al iniciar el tratamiento cumple una función
+        clínica y deontológica propia (Ley 41/2002 y Código Deontológico) y es adicional —no
+        sustitutivo— de las bases jurídicas anteriores. Retirar el consentimiento en un tratamiento
+        que se basa en él no afecta a la licitud del tratamiento previo ni a las obligaciones legales
+        de conservación de la historia clínica.
+      </p>
+      <p class="prose">
+        No se realizan decisiones automatizadas ni elaboración de perfiles con efectos jurídicos o
+        significativos sobre usted.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">4. Plazos de conservación</h2>
+      <ul class="list">
+        <li>
+          <strong>Historia clínica y documentación asistencial:</strong> se conserva el tiempo
+          adecuado a cada caso y, <strong>como mínimo, cinco años desde la fecha del alta de cada
+          proceso asistencial</strong>, según el artículo 17.1 de la Ley 41/2002, de 14 de noviembre,
+          básica reguladora de la autonomía del paciente. Se conservará más tiempo cuando lo exijan
+          razones judiciales, epidemiológicas, de investigación o de organización del sistema
+          sanitario, o cuando resulte necesaria para su propia asistencia futura. La normativa
+          andaluza no establece un plazo superior, por lo que rige ese mínimo estatal.
+        </li>
+        <li>
+          <strong>Facturación y documentación contable:</strong> cuatro años desde el fin del plazo
+          de declaración del impuesto correspondiente (prescripción tributaria, art. 66 de la Ley
+          58/2003) y seis años en el caso de los libros y documentación mercantil (art. 30 del Código
+          de Comercio).
+        </li>
+        <li>
+          <strong>Consultas y solicitudes que no derivan en tratamiento:</strong> se eliminan una vez
+          atendidas y, a más tardar, transcurrido un año desde el último contacto.
+        </li>
+        <li>
+          <strong>Consentimientos y ejercicio de derechos:</strong> mientras siga vigente el
+          tratamiento y durante los plazos de prescripción de las posibles responsabilidades.
+        </li>
+      </ul>
+      <p class="prose">
+        Cumplidos los plazos, los datos se destruyen de forma segura o se bloquean conforme al
+        artículo 32 de la LOPDGDD, quedando a disposición exclusiva de jueces, tribunales,
+        Ministerio Fiscal y administraciones competentes hasta que prescriban las acciones.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">5. Destinatarios y encargados del tratamiento</h2>
+      <p class="prose">
+        Sus datos <strong>no se venden, no se ceden con fines comerciales y no se comunican a
+        terceros</strong> salvo en los supuestos siguientes:
+      </p>
+      <ul class="list">
+        <li>
+          <strong>Obligación legal:</strong> juzgados y tribunales, Ministerio Fiscal, Fuerzas y
+          Cuerpos de Seguridad, administraciones sanitarias o tributarias, cuando la ley lo imponga.
+        </li>
+        <li>
+          <strong>Deber de protección:</strong> en los supuestos excepcionales en que exista un
+          riesgo grave e inminente para su vida o la de terceros, o indicios de desprotección de un
+          menor o de una persona vulnerable, en los términos que exigen la ley y el Código
+          Deontológico. El secreto profesional se mantiene en todo lo demás.
+        </li>
+        <li>
+          <strong>Asesoría fiscal y contable</strong> de la responsable, como encargada del
+          tratamiento, únicamente respecto de los datos de facturación.
+        </li>
+        <li>
+          <strong>Proveedor de alojamiento del sitio web:</strong>
+          <span class="pending">{'[PENDIENTE: nombre del proveedor de alojamiento y contrato de encargado de tratamiento firmado]'}</span>
+        </li>
+        <li>
+          <strong>Web3Forms</strong>, proveedor del formulario de contacto, que procesa y almacena
+          temporalmente los mensajes enviados desde la web (véase el apartado 6).
+        </li>
+        <li>
+          <strong>Google</strong>, por la fuente tipográfica y el mapa incorporados al sitio, en los
+          términos descritos en la <a href="/cookies">Política de cookies</a>.
+        </li>
+      </ul>
+      <p class="prose">
+        Con todos los encargados del tratamiento se suscribe el contrato exigido por el artículo 28
+        del RGPD.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">6. Formulario de contacto y transferencias internacionales</h2>
+      <p class="prose">
+        El formulario de este sitio se envía a través de <strong>Web3Forms</strong>, un servicio de
+        terceros con infraestructura alojada en Estados Unidos que recibe el mensaje, lo almacena de
+        forma temporal y lo reenvía al correo de la consulta. Ello implica una
+        <strong>transferencia internacional de datos fuera del Espacio Económico Europeo</strong>.
+      </p>
+      <p class="prose">
+        Dicha transferencia debe ampararse en alguna de las garantías del capítulo V del RGPD: la
+        Decisión de Ejecución (UE) 2023/1795, que declara la adecuación del Marco de Privacidad de
+        Datos UE-EE. UU. para las entidades certificadas —decisión que continúa en vigor, si bien
+        está pendiente de resolución el recurso de casación ante el Tribunal de Justicia de la Unión
+        Europea en el asunto Latombe—, o bien las cláusulas contractuales tipo del artículo 46.2.c)
+        del RGPD.
+      </p>
+      <p class="callout">
+        <span class="pending">{'[PENDIENTE: verificar y hacer constar aquí la garantía concreta aplicable a Web3Forms — certificación en el EU-US Data Privacy Framework o cláusulas contractuales tipo — y firmar el contrato de encargado del tratamiento del art. 28 RGPD. No publicar la web con el formulario activo sin resolver este punto.]'}</span>
+      </p>
+      <p class="prose">
+        Por este motivo, el formulario solicita únicamente los datos mínimos para poder responderle y
+        se le advierte expresamente de que no incluya información sobre su salud. Si prefiere no
+        utilizar un proveedor externo, puede escribir directamente a
+        <a href={`mailto:${site.email}`}>{site.email}</a> o llamar al
+        <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>.
+      </p>
+      <p class="prose">
+        Los mensajes recibidos se conservan en el sistema del proveedor durante el periodo limitado
+        que este establece en sus condiciones y se eliminan de la bandeja de la consulta una vez
+        atendida la solicitud, conforme al apartado 4.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">7. Confidencialidad y secreto profesional</h2>
+      <p class="prose">
+        Además de las obligaciones del RGPD, la responsable está sujeta al secreto profesional
+        previsto en el artículo 9.3 del RGPD, en la Ley 41/2002 y en el Código Deontológico de la
+        profesión. Ese deber persiste indefinidamente, también una vez finalizada la relación
+        asistencial.
+      </p>
+      <p class="prose">
+        Se aplican medidas técnicas y organizativas apropiadas conforme al artículo 32 del RGPD:
+        acceso restringido a la documentación clínica, cifrado y contraseña en los dispositivos y
+        soportes utilizados, videollamada sobre conexión cifrada en las sesiones online y
+        conservación de la documentación en papel, si la hubiera, bajo llave.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">8. Sus derechos</h2>
+      <p class="prose">
+        Puede ejercer <strong>de forma gratuita</strong> (artículo 12 de la LOPDGDD) los siguientes
+        derechos:
+      </p>
+      <ul class="list">
+        <li><strong>Acceso</strong> a sus datos y a la información sobre su tratamiento.</li>
+        <li><strong>Rectificación</strong> de los datos inexactos o incompletos.</li>
+        <li>
+          <strong>Supresión</strong>, cuando ya no sean necesarios. Este derecho no alcanza a la
+          historia clínica mientras esté vigente el deber legal de conservación descrito en el
+          apartado 4.
+        </li>
+        <li><strong>Limitación</strong> del tratamiento en los supuestos del artículo 18 del RGPD.</li>
+        <li><strong>Oposición</strong> a los tratamientos basados en el interés legítimo.</li>
+        <li>
+          <strong>Portabilidad</strong> de los datos que usted haya facilitado, en formato
+          estructurado y de uso común.
+        </li>
+        <li>
+          <strong>Retirar el consentimiento</strong> en cualquier momento, sin que ello afecte a la
+          licitud del tratamiento anterior.
+        </li>
+      </ul>
+      <p class="prose">
+        Para ejercerlos, escriba a <a href={`mailto:${site.email}`}>{site.email}</a> o a
+        {site.addressLine}, indicando el derecho que ejerce y acompañando copia de un documento que
+        acredite su identidad. Se responderá en el plazo de un mes, prorrogable por dos meses más si
+        la solicitud es compleja. En el caso de menores de catorce años, los derechos los ejercen sus
+        titulares de la patria potestad o tutela.
+      </p>
+      <p class="prose">
+        El acceso a la historia clínica por parte del paciente se rige además por el artículo 18 de
+        la Ley 41/2002: no alcanza a las anotaciones subjetivas de la profesional ni puede
+        perjudicar el derecho de terceros a la confidencialidad.
+      </p>
+      <p class="prose">
+        Si considera que el tratamiento no se ajusta a la normativa, puede presentar una reclamación
+        ante la <strong>Agencia Española de Protección de Datos</strong> (C/ Jorge Juan, 6, 28001
+        Madrid — <a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>,
+        sede electrónica
+        <a href="https://sedeagpd.gob.es" rel="noopener" target="_blank">sedeagpd.gob.es</a>). Le
+        agradecemos que, si lo prefiere, nos plantee antes la cuestión para intentar resolverla.
+      </p>
+    </section>
+
+    <section data-rv>
+      <h2 class="h2">9. Exactitud de los datos y cambios en esta política</h2>
+      <p class="prose">
+        Le rogamos que comunique cualquier variación en sus datos para mantenerlos actualizados. Las
+        personas que facilitan datos de terceros —por ejemplo, de un menor o de la pareja— garantizan
+        haberles informado previamente de los extremos de esta política.
+      </p>
+      <p class="prose">
+        Esta política puede modificarse para adaptarla a cambios normativos, a nuevos servicios o a
+        criterios de la autoridad de control. La versión vigente es la publicada en esta página, con
+        la fecha de actualización indicada arriba.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  /* Ritmo de lectura para texto largo. Solo espaciado y tamaños: los colores,
+     tipografías y tokens vienen de global.css. */
+  .doc {
+    max-width: 820px;
+  }
+  .doc-head {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .doc .stamp {
+    margin: 20px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .doc section {
+    margin-top: clamp(36px, 5vw, 52px);
+  }
+  .doc h2 {
+    font-size: clamp(22px, 2.6vw, 30px);
+    margin-bottom: 16px;
+  }
+  .doc p {
+    margin: 0;
+  }
+  .doc p + p,
+  .doc dl + p,
+  .doc ul + p,
+  .doc div + p {
+    margin-top: 14px;
+  }
+  .doc a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .list {
+    margin: 18px 0 0;
+    padding-left: 22px;
+    display: grid;
+    gap: 12px;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.7;
+    color: var(--body);
+  }
+  .list ::marker,
+  .list li::marker {
+    color: var(--lav);
+  }
+  .list strong {
+    color: var(--ink);
+  }
+
+  .idcard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px 28px;
+    margin: 24px 0;
+    padding: clamp(20px, 3vw, 28px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--card);
+  }
+  .idcard dt {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .idcard dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* La tabla de bases jurídicas es la parte más densa; en móvil se desplaza
+     dentro de su propio contenedor en lugar de romper el ancho de la página. */
+  .tablewrap {
+    margin: 22px 0 0;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--card);
+    background: var(--surface);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 520px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--hair);
+  }
+  th {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  td {
+    color: var(--body);
+  }
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .doc .callout {
+    margin-top: 18px;
+    padding: clamp(16px, 2.4vw, 22px);
+    background: var(--tint);
+    border-left: 3px solid var(--brand-light);
+    border-radius: 12px;
+  }
+
+  /* Marcador visible de dato legal aún no facilitado. Debe cantar. */
+  .pending {
+    font-weight: 700;
+    color: #8a2f2f;
+    background: #fdeceb;
+    border: 1px dashed #d08b86;
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-block;
+  }
+</style>

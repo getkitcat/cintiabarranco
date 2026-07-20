@@ -1,0 +1,139 @@
+---
+import { site, services } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="shell top">
+    <div>
+      <img src="/assets/logo.png" alt={site.shortName} width="604" height="160" class="mark" />
+      <p class="blurb">{site.tagline}</p>
+      <a href={site.instagram} class="ig" rel="me noopener" target="_blank">
+        {site.instagramHandle}
+      </a>
+    </div>
+
+    <div class="col">
+      <div class="col-label">Enlaces</div>
+      <a href="/">Inicio</a>
+      <a href="/servicios">Servicios</a>
+      <a href="/sobre-mi">Sobre mí</a>
+      <a href="/blog">Blog</a>
+      <a href="/contacto">Contacto</a>
+    </div>
+
+    <div class="col">
+      <div class="col-label">Servicios</div>
+      {services.map((s) => <a href={s.path}>{s.title}</a>)}
+    </div>
+
+    <div class="col">
+      <div class="col-label">Contacto</div>
+      <a href={site.mapsLink} rel="noopener" target="_blank">{site.addressLine}</a>
+      <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+  </div>
+
+  <div class="shell base">
+    <span>© {year} {site.name}. Todos los derechos reservados.</span>
+    <span class="legal">
+      <a href="/aviso-legal">Aviso legal</a>
+      <a href="/politica-de-privacidad">Privacidad</a>
+      <a href="/cookies">Cookies</a>
+      <a href="https://getkitcat.com" rel="noopener" target="_blank">Diseñado por KitCat Agency</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    gap: clamp(28px, 4vw, 48px);
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .mark {
+    height: 52px;
+    width: auto;
+    display: block;
+    margin-bottom: 16px;
+  }
+  .blurb {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 300px;
+    margin: 0 0 14px;
+  }
+  .ig {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .col {
+    display: grid;
+    gap: 10px;
+    font-size: 14px;
+    align-content: start;
+  }
+  .col a {
+    color: var(--ink);
+  }
+  .col a:hover {
+    color: var(--brand-light);
+  }
+  .col-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 32px;
+    padding-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--hair);
+  }
+  .legal {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .legal a {
+    color: var(--muted);
+  }
+  .legal a:hover {
+    color: var(--brand-light);
+  }
+
+  @media (max-width: 860px) {
+    .top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .top {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .base {
+      justify-content: flex-start;
+    }
+  }
+</style>
