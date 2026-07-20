@@ -211,7 +211,9 @@ const reasons = [
       gap: 28px 32px;
     }
   }
-  @media (max-width: 560px) {
+  /* Same phone cut-off as .grid-4 in global.css — 560px left large phones with a
+     cramped 2-up. */
+  @media (max-width: 720px) {
     .reasons {
       grid-template-columns: 1fr;
     }

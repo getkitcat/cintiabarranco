@@ -650,6 +650,23 @@ details.faq p {
   }
 }
 
+/* Single column on anything phone-sized.
+   The old cut-off was 460px, which is below where large Android phones actually
+   report (they land around 480–500 CSS px), so those got a 2-up grid with ~199px
+   columns: "Terapia Individual" wrapped to two lines and the cards stretched to
+   uneven heights, leaving ragged gaps. Two columns of these cards only start
+   working around 560px, and even then they're tight — so phones get one. */
+@media (max-width: 720px) {
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  /* Full-width cards don't need the tall gap that gave the number room to
+     breathe in a narrow column. */
+  .card .num {
+    margin-bottom: 16px;
+  }
+}
+
 @media (max-width: 760px) {
   html {
     scroll-padding-top: 76px;
@@ -678,12 +695,6 @@ details.faq p {
   }
   .slab {
     border-radius: 24px;
-  }
-}
-
-@media (max-width: 460px) {
-  .grid-4 {
-    grid-template-columns: 1fr;
   }
 }
 

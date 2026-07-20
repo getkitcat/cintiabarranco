@@ -298,7 +298,9 @@ const methods = [
       grid-template-columns: 1fr;
     }
   }
-  @media (max-width: 520px) {
+  /* Same phone cut-off as .grid-4 in global.css — 520px left large phones with a
+     cramped 2-up. */
+  @media (max-width: 720px) {
     .grid-4-wide {
       grid-template-columns: 1fr;
     }
