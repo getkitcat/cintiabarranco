@@ -80,7 +80,7 @@ body {
 a {
   color: var(--brand);
   text-decoration: none;
-  transition: color 0.25s;
+  transition: color 0.25s var(--ease);
 }
 a:hover {
   color: var(--brand-light);
@@ -262,7 +262,11 @@ p {
   text-align: center;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background 0.25s, transform 0.25s, border-color 0.25s, color 0.25s;
+  transition:
+    background 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
 }
 .btn-solid {
   background: var(--brand);
@@ -337,7 +341,10 @@ p {
 }
 a.card {
   display: block;
-  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  transition:
+    transform 0.42s var(--ease),
+    box-shadow 0.42s var(--ease),
+    border-color 0.42s var(--ease);
 }
 a.card:hover {
   transform: translateY(-6px);
@@ -595,15 +602,10 @@ details.faq > summary {
 details.faq > summary::-webkit-details-marker {
   display: none;
 }
+/* The +/− marker is drawn from two bars inside Faq.astro, which owns its motion.
+   Nothing to style here beyond keeping it from being squashed by the flex row. */
 details.faq > summary .sign {
-  color: var(--brand-light);
-  font-size: 22px;
-  font-weight: 400;
   flex-shrink: 0;
-  transition: transform 0.25s var(--ease);
-}
-details.faq[open] > summary .sign {
-  transform: rotate(45deg);
 }
 details.faq p {
   font-size: 15px;
@@ -617,7 +619,9 @@ details.faq p {
    nothing above it can be left invisible waiting on an observer. */
 .rv {
   opacity: 0;
-  transform: translateY(28px);
+  /* Shorter travel than before. 28px reads as a lurch at this duration; 18px plus
+     the faintest scale settles instead of sliding. */
+  transform: translate3d(0, 18px, 0) scale(0.994);
 }
 .rv.on,
 .on {
@@ -625,7 +629,12 @@ details.faq p {
   transform: none;
 }
 [data-rv] {
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  /* Opacity leads and finishes early so text is readable while the movement is
+     still settling — the thing that makes a reveal feel slow is waiting to read. */
+  transition:
+    opacity 0.5s var(--ease) var(--rvd, 0ms),
+    transform 0.75s var(--ease) var(--rvd, 0ms);
+  /* Siblings in a group are staggered by Base.astro via --rvd. */
 }
 
 /* ------------------------------------------------------------ responsive -- */

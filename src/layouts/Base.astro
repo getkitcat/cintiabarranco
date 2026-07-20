@@ -233,6 +233,18 @@ const brandLoader = !loaderName;
       if (reduced) {
         items.forEach((el) => el.classList.add('on'));
       } else {
+        // Stagger siblings within the same parent. A row of four cards arriving
+        // together lands as one slab; 70ms apart it cascades, which is most of
+        // what "smooth" means here. Capped so a long list never crawls.
+        const seen = new Map<Element, number>();
+        items.forEach((el) => {
+          const parent = el.parentElement;
+          if (!parent) return;
+          const i = seen.get(parent) ?? 0;
+          seen.set(parent, i + 1);
+          if (i > 0) el.style.setProperty('--rvd', `${Math.min(i, 5) * 70}ms`);
+        });
+
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
@@ -242,7 +254,10 @@ const brandLoader = !loaderName;
               }
             });
           },
-          { threshold: 0.08, rootMargin: '0px 0px -6% 0px' }
+          // Fire a little before the element is fully in view, so the motion is
+          // finishing as it reaches comfortable reading position rather than
+          // starting there.
+          { threshold: 0.01, rootMargin: '0px 0px -4% 0px' }
         );
 
         items.forEach((el) => {

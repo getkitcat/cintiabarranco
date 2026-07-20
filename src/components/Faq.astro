@@ -1,10 +1,16 @@
 ---
-/** Accordion block. Pure <details> — no JS, works before hydration and without it. */
+/**
+ * Accordion block.
+ *
+ * The markup is still <details>/<summary>, so it works with JS off, is keyboard
+ * accessible for free and stays readable to screen readers. The script below only
+ * *enhances* it: a bare <details> snaps open in a single frame, which is what made
+ * this section feel rough next to everything else on the page.
+ */
 interface Props {
   items: readonly { q: string; a: string }[];
   kicker?: string;
   heading?: string;
-  /** Closing line under the list; omit on pages that already end in a CTA. */
   footLink?: boolean;
 }
 const {
@@ -25,12 +31,17 @@ const {
     items.map((i) => (
       <details class="faq">
         <summary>
-          {i.q}
+          <span class="q">{i.q}</span>
           <span class="sign" aria-hidden="true">
-            +
+            <span class="bar" />
+            <span class="bar" />
           </span>
         </summary>
-        <p>{i.a}</p>
+        {/* Wrapper exists purely to be measurable — you cannot animate the height
+            of <details>' anonymous content box directly. */}
+        <div class="body">
+          <p>{i.a}</p>
+        </div>
       </details>
     ))
   }
@@ -58,4 +69,130 @@ const {
     margin-top: 32px;
     font-size: 15px;
   }
+
+  .list :global(details.faq) {
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease),
+      background 0.3s var(--ease);
+  }
+  .list :global(details.faq:hover),
+  .list :global(details.faq[open]) {
+    border-color: var(--edge-2);
+    box-shadow: 0 18px 34px -24px rgba(68, 60, 143, 0.4);
+  }
+
+  .list :global(details.faq > summary) {
+    /* Keeps the tap target honest on a phone without moving the text. */
+    padding: 2px 0;
+  }
+  .list :global(.q) {
+    transition: color 0.25s var(--ease);
+  }
+  .list :global(details.faq[open] > summary .q) {
+    color: var(--brand);
+  }
+
+  /* The +/− is drawn from two bars so it can rotate into a minus rather than
+     swapping a glyph — a character swap is the kind of jump that reads as cheap. */
+  .list :global(.sign) {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: block;
+  }
+  .list :global(.sign .bar) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--brand-light);
+    transition: transform 0.42s var(--ease), opacity 0.3s var(--ease);
+  }
+  .list :global(.sign .bar:first-child) {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  .list :global(.sign .bar:last-child) {
+    transform: translateY(-50%) rotate(90deg);
+  }
+  .list :global(details.faq[open] .sign .bar:first-child) {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .list :global(details.faq[open] .sign .bar:last-child) {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .list :global(.body) {
+    overflow: hidden;
+  }
+  .list :global(.body p) {
+    margin: 14px 0 0;
+  }
 </style>
+
+<script>
+  // Progressive enhancement over <details>. Without this the panel appears in one
+  // frame; with it, height and opacity are animated by the compositor.
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduced) {
+    document.querySelectorAll<HTMLDetailsElement>('details.faq').forEach((d) => {
+      const summary = d.querySelector('summary')!;
+      const body = d.querySelector<HTMLElement>('.body')!;
+      let running: Animation | null = null;
+
+      const EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Reverse mid-flight instead of queueing — double-clicking a question
+        // should feel responsive, not stack two animations.
+        running?.cancel();
+        running = null;
+        body.style.height = '';
+
+        // NEVER measure this element while the <details> is closed. Browsers put
+        // content-visibility: hidden on ::details-content, which stops the content
+        // rendering but leaves descendants reporting their last laid-out size — so
+        // offsetHeight comes back as the OPEN height even when collapsed. Reading
+        // it here made the opening tween run from 50px to 50px, i.e. nothing moved.
+        // Each branch below only measures while the element is genuinely open.
+        if (d.open) {
+          const start = body.offsetHeight;
+          running = body.animate(
+            [
+              { height: `${start}px`, opacity: 1 },
+              { height: '0px', opacity: 0 },
+            ],
+            // Quicker to close than to open: collapsing is just getting out of
+            // the way, expanding reveals text the reader has to find.
+            { duration: 260, easing: EASE }
+          );
+          running.onfinish = () => {
+            d.open = false;
+            body.style.height = '';
+            running = null;
+          };
+        } else {
+          d.open = true;
+          const end = body.scrollHeight;
+          running = body.animate(
+            [
+              { height: '0px', opacity: 0 },
+              { height: `${end}px`, opacity: 1 },
+            ],
+            { duration: 380, easing: EASE }
+          );
+          running.onfinish = () => {
+            // Drop the inline height so the panel can reflow if the window
+            // resizes or the font swaps in later.
+            body.style.height = '';
+            running = null;
+          };
+        }
+      });
+    });
+  }
+</script>
