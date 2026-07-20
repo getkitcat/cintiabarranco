@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Faq from '../components/Faq.astro';
+import Ambient from '../components/Ambient.astro';
+import WhatsappBand from '../components/WhatsappBand.astro';
 import { site, services } from '../data/site';
 import { faqSchema, serviceSchema } from '../data/schema';
 import { fmtDate } from '../lib/format';
@@ -48,7 +50,9 @@ const marquee = [
   jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
 >
   <!-- ------------------------------------------------------------- hero -- -->
-  <header class="shell hero">
+  <div class="hero-wrap">
+    <Ambient variant="hero" />
+    <header class="shell hero">
     <div>
       <div class="kicker"><span class="rule"></span>Psicóloga General Sanitaria · Granada</div>
       <h1 class="h1">Un espacio seguro donde iniciar el camino hacia el cambio</h1>
@@ -75,7 +79,14 @@ const marquee = [
         <span>Disponible presencial y online</span>
       </div>
     </div>
-  </header>
+    </header>
+
+    {/* Now that the hero is shorter, the page can look like it ends at the fold. */}
+    <a class="cue" href="#servicios">
+      <span class="cue-txt">Descubre más</span>
+      <span class="cue-line" aria-hidden="true"></span>
+    </a>
+  </div>
 
   <!-- ---------------------------------------------------------- marquee -- -->
   <div class="marquee" aria-hidden="true">
@@ -96,7 +107,8 @@ const marquee = [
   </div>
 
   <!-- -------------------------------------------------------- servicios -- -->
-  <section class="shell sect" id="servicios">
+  <section class="shell sect amb" id="servicios">
+    <Ambient />
     <div class="sect-head" data-rv>
       <div>
         <div class="kicker">Mis servicios</div>
@@ -134,8 +146,11 @@ const marquee = [
     <Photo name="terapia-familiar" alt="Terapia de pareja en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
   </section>
 
+  <WhatsappBand />
+
   <!-- --------------------------------------------------------- sobre mí -- -->
-  <section class="band" id="sobre-mi">
+  <section class="band amb" id="sobre-mi">
+    <Ambient />
     <div class="shell sect duo">
       <div data-rv>
         <Photo
@@ -182,7 +197,7 @@ const marquee = [
 
     <div class="grid-3">
       <div class="step" data-rv>
-        <div class="num">01</div>
+        <div class="num">01<span class="emo" aria-hidden="true">👋</span></div>
         <h3 class="h3">Contacto inicial</h3>
         <p>
           Reserva una consulta informativa gratuita de 15 minutos para hablar de lo que te preocupa.
@@ -190,7 +205,7 @@ const marquee = [
         </p>
       </div>
       <div class="step" data-rv>
-        <div class="num">02</div>
+        <div class="num">02<span class="emo" aria-hidden="true">🎯</span></div>
         <h3 class="h3">Plan personalizado</h3>
         <p>
           Crearé un plan alineado con tus objetivos, ya sea gestionar la ansiedad, mejorar tu
@@ -198,7 +213,7 @@ const marquee = [
         </p>
       </div>
       <div class="step" data-rv>
-        <div class="num">03</div>
+        <div class="num">03<span class="emo" aria-hidden="true">💬</span></div>
         <h3 class="h3">Sesiones presenciales u online</h3>
         <p>
           Desde cualquier lugar o en mi consulta de Granada. Juntas superaremos los retos, paso a
@@ -278,6 +293,62 @@ const marquee = [
 </Base>
 
 <style>
+  /* ---------------------------------------------------------- ambient -- */
+  /* The blob layer is absolutely positioned, so every host needs a positioning
+     context and its own content lifted above it. */
+  .hero-wrap,
+  .amb {
+    position: relative;
+  }
+  .hero-wrap > .shell,
+  .hero-wrap > .cue,
+  .amb > *:not(.ambient) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ------------------------------------------------------------- cue -- */
+  .cue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 28px;
+    color: var(--muted);
+  }
+  .cue:hover {
+    color: var(--brand-light);
+  }
+  .cue-txt {
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  /* A hairline with a travelling highlight — reads as "keep going" without an
+     arrow glyph that would fight the serif type. */
+  .cue-line {
+    position: relative;
+    width: 1px;
+    height: 46px;
+    background: var(--line-2);
+    overflow: hidden;
+  }
+  .cue-line::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: -60%;
+    height: 60%;
+    background: linear-gradient(to bottom, transparent, var(--brand-light));
+    animation: cueRun 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+  @keyframes cueRun {
+    to {
+      top: 100%;
+    }
+  }
+
   /* ------------------------------------------------------------- hero -- */
   .hero {
     display: grid;
@@ -398,6 +469,35 @@ const marquee = [
   }
   .mb-sm {
     margin-bottom: 18px;
+  }
+
+  /* Emoji sits on the baseline of the big serif numeral, warming up what is
+     otherwise the coldest section on the page. */
+  .step .num {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .emo {
+    font-size: 26px;
+    line-height: 1;
+    /* Colour emoji ignore the numeral's tint; give it its own gentle motion. */
+    animation: emoBob 4.5s ease-in-out infinite;
+  }
+  .step:nth-child(2) .emo {
+    animation-delay: 0.6s;
+  }
+  .step:nth-child(3) .emo {
+    animation-delay: 1.2s;
+  }
+  @keyframes emoBob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-5px) rotate(-6deg);
+    }
   }
 
   .creds {
