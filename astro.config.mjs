@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import trailingSlashLinks from './src/lib/trailingSlashLinks.mjs';
 
 // Cintia Barranco González — psicóloga general sanitaria, Granada.
 // Spanish-only by design: the practice is local (Granada) plus online within Spain,
@@ -8,10 +9,11 @@ import sitemap from '@astrojs/sitemap';
 // weigh against the real ones.
 export default defineConfig({
   site: 'https://cintiabarranco.es',
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/admin') && !page.includes('/404'),
     }),
+    trailingSlashLinks(),
   ],
 });

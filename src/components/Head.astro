@@ -12,7 +12,11 @@ interface Props {
 }
 const { title, description, path, jsonld = [], image, noindex = false } = Astro.props;
 
-const canonical = new URL(path, Astro.site).href;
+// Canonical must match the trailing-slash form the sitemap lists and the server
+// serves as 200 (a no-slash canonical points at a 3xx redirect, which leaves pages
+// stuck as "Alternate page with proper canonical tag" and unindexed).
+const toCanon = (p: string) => { const u = new URL(p, Astro.site); if (!u.pathname.endsWith('/')) u.pathname += '/'; return u.href; };
+const canonical = toCanon(path);
 const ogImage = new URL(image ?? site.ogImage, Astro.site).href;
 // Site-wide graphs ride on every page; pages add their own (Service, FAQ, …).
 const graphs = [practiceSchema(), personSchema(), websiteSchema(), ...jsonld];
