@@ -1,5 +1,6 @@
 ---
 import Photo from './Photo.astro';
+import { site } from '../data/site';
 import type { service as serviceType } from '../data/site';
 
 interface Props {
@@ -57,7 +58,9 @@ const Heading = as;
         linkOut ? (
           <a href={s.path}><strong>Ver {s.title} →</strong></a>
         ) : (
-          <a href="/contacto"><strong>Pedir cita para {s.title} →</strong></a>
+          <a href={site.whatsapp} target="_blank" rel="noopener">
+            <strong>Escríbeme por WhatsApp →</strong>
+          </a>
         )
       }
     </div>

@@ -10,8 +10,8 @@ const faqs = [
     a: 'Respondo en menos de 24 horas laborables, tanto por email como por WhatsApp o el formulario.',
   },
   {
-    q: '¿Cómo reservo la primera consulta gratuita?',
-    a: 'Escríbeme por WhatsApp, llámame o envía el formulario contándome brevemente tu situación. Buscamos un hueco para una llamada de 15 minutos sin compromiso.',
+    q: '¿Cómo reservo la primera cita?',
+    a: 'Escríbeme por WhatsApp, llámame o envía el formulario contándome brevemente tu situación, y buscamos un hueco para una primera conversación sin compromiso.',
   },
   {
     q: '¿Puedo cancelar o cambiar mi cita?',
@@ -30,7 +30,7 @@ const formLive = site.web3formsKey.length > 0;
 
 <Base
   title="Contacto | Cintia Barranco, Psicóloga en Granada"
-  description="Escríbeme sin compromiso. Consulta en Cl. el Guerra 17, Granada, y sesiones online. Primera consulta informativa gratuita de 15 minutos."
+  description="Escríbeme sin compromiso por WhatsApp, teléfono o el formulario. Consulta en Cl. el Guerra 17, Granada, y sesiones online en toda España."
   path="/contacto"
   loaderName="Contacto"
   jsonld={[
@@ -60,7 +60,7 @@ const formLive = site.web3formsKey.length > 0;
         <h2>{site.name}</h2>
         <div class="intro-role">Psicóloga sanitaria · Especializada en vínculos y autoestima</div>
         <div class="tags">
-          <span>✓ 1ª consulta gratuita</span>
+          <span>✓ Presencial u online</span>
           <span>✓ Sin compromiso</span>
         </div>
       </div>
@@ -92,7 +92,7 @@ const formLive = site.web3formsKey.length > 0;
       <h2 class="h2-sm">Agenda tu cita</h2>
       <p class="note intro-note">
         Tres pasos rápidos y sin compromiso. Cuando lo envíes, te escribo en menos de 24 horas para
-        cerrar tu primera consulta informativa gratuita.
+        agendar tu primera cita. ¿Prefieres WhatsApp? También puedes escribirme directamente.
       </p>
 
       {
@@ -211,7 +211,7 @@ const formLive = site.web3formsKey.length > 0;
               */}
               <p class="warn">
                 Por tu privacidad, no incluyas detalles clínicos o de salud aquí. El resto lo hablamos
-                en la consulta informativa.
+                en la primera sesión.
               </p>
 
               <label class="consent">
@@ -842,7 +842,7 @@ const formLive = site.web3formsKey.length > 0;
         const data = await res.json();
         if (data.success) {
           say(
-            'Recibido. Gracias por dar el paso — te escribo en menos de 24 horas para cerrar tu consulta gratuita.',
+            'Recibido. Gracias por dar el paso — te escribo en menos de 24 horas para agendar tu primera cita.',
             true
           );
           // Hide the fields, leave the confirmation.

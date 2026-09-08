@@ -64,4 +64,4 @@ Y si después de leer esto sigues sin tenerlo claro, eso también está bien. La
 
 **Nota importante:** este artículo tiene una finalidad divulgativa y de orientación general. No es un diagnóstico, no sustituye una valoración profesional ni reemplaza un proceso terapéutico personal, donde tu historia y tu contexto concretos son lo que realmente importa.
 
-Si algo de lo que has leído te ha resonado, puedes [escribirme desde la página de contacto](/contacto). La primera toma de contacto es una llamada informativa de 15 minutos, gratuita y sin compromiso, para resolver dudas y ver si te encaja. Sin prisa y sin presión.
+Si algo de lo que has leído te ha resonado, puedes [escribirme desde la página de contacto](/contacto) o por WhatsApp, sin compromiso, para resolver dudas y ver si te encaja. Sin prisa y sin presión.

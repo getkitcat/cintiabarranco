@@ -2,17 +2,13 @@
 import { individualConcerns, site } from '../data/site';
 
 /**
- * "Consulta individual" block — inspired by the reference site Cintia liked
- * (juliamorenopsicologa.com), rebuilt in her warm cream + aubergine palette
- * rather than the reference's stark monochrome.
+ * "Consulta individual" block — the motivos de consulta, in Cintia's own words
+ * (see individualConcerns in site.ts). Structure follows her brief: the five she
+ * wants to be known for lead as a highlighted "especialidad" (vínculos y
+ * relaciones), always visible; the rest sit below in an expandable two-column
+ * list. Warm cream + aubergine, not the reference's monochrome.
  *
- * A two-column list of the things people actually come to individual therapy for.
- * Each row expands to a one-line "is this you?" on click — <details>/<summary>,
- * so it works with no JS and reveals to screen readers. The point is to let a
- * visitor recognise themselves in a concrete motivo instead of a service label,
- * which is exactly why individual therapy is now the hero of the site.
- *
- * `as` controls the heading level so this can lead a page (h1) or sit inside one (h2).
+ * `as` controls the heading level so this can lead a page (h1) or sit inside one.
  */
 interface Props {
   as?: 'h1' | 'h2';
@@ -23,12 +19,14 @@ const { as = 'h2', kicker = 'Consulta individual', heading = 'Un espacio para vo
   Astro.props;
 const Heading = as;
 
-// Split into two independent column stacks. NOT CSS `columns`: opening a <details>
-// inside a multicolumn makes the browser re-balance the whole thing and report a
-// bogus scrollHeight (measured 306px for a one-line answer). Two real stacks also
-// match the reference — opening a row pushes only its own column down.
-const half = Math.ceil(individualConcerns.length / 2);
-const columns = [individualConcerns.slice(0, half), individualConcerns.slice(half)];
+const featured = individualConcerns.filter((c) => 'featured' in c && c.featured);
+const rest = individualConcerns.filter((c) => !('featured' in c && c.featured));
+
+// Two independent column stacks for the accordion — NOT CSS `columns` (opening a
+// <details> inside a multicolumn makes the browser re-balance and report a bogus
+// scrollHeight). Two real stacks also let a row push only its own column.
+const half = Math.ceil(rest.length / 2);
+const columns = [rest.slice(0, half), rest.slice(half)];
 ---
 
 <section class="ci" id="motivos">
@@ -46,6 +44,26 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
       </p>
     </div>
 
+    {/* -------------------------------------------------- especialidad -- */}
+    <div class="spec-head" data-rv>
+      <div class="tag">Mi especialidad</div>
+      <h3 class="spec-title">Vínculos y relaciones</h3>
+    </div>
+    <div class="feat" data-rv>
+      {
+        featured.map((c) => (
+          <article class="fcard">
+            <h4>{c.t}</h4>
+            <p>{c.d}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    {/* -------------------------------------------------------- también -- */}
+    <div class="rest-head" data-rv>
+      <h3 class="rest-title">También te acompaño en</h3>
+    </div>
     <div class="grid" data-rv>
       {
         columns.map((col) => (
@@ -70,10 +88,10 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
     </div>
 
     <div class="cta" data-rv>
-      <a href="/contacto" class="btn btn-solid">Quiero iniciar el cambio</a>
-      <a href={site.whatsapp} target="_blank" rel="noopener" class="soft">
-        ¿Dudas si es para ti? Escríbeme →
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">
+        Escríbeme por WhatsApp
       </a>
+      <a href="/contacto" class="soft">¿Prefieres el formulario? Pide cita aquí →</a>
     </div>
   </div>
 </section>
@@ -88,13 +106,74 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
 
   .intro {
     max-width: 720px;
-    margin-bottom: clamp(36px, 5vw, 52px);
+    margin-bottom: clamp(32px, 5vw, 48px);
   }
   .intro .lead {
     margin-bottom: 14px;
   }
   .sub {
     margin: 0;
+  }
+
+  /* ----------------------------------------------------- especialidad -- */
+  .spec-head {
+    margin-bottom: 20px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--brand);
+    background: var(--tint);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 12px;
+  }
+  .spec-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(24px, 3vw, 34px);
+    color: var(--ink);
+  }
+
+  .feat {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(16px, 2vw, 22px);
+    margin-bottom: clamp(44px, 7vw, 72px);
+  }
+  .fcard {
+    background: var(--tint);
+    border: 1px solid rgba(68, 60, 143, 0.14);
+    border-left: 3px solid var(--brand);
+    border-radius: 16px;
+    padding: clamp(22px, 2.6vw, 28px);
+  }
+  .fcard h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(18px, 1.9vw, 21px);
+    color: var(--brand);
+    margin: 0 0 10px;
+  }
+  .fcard p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body);
+    margin: 0;
+  }
+
+  /* ---------------------------------------------------------- también -- */
+  .rest-head {
+    margin-bottom: 8px;
+  }
+  .rest-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 26px);
+    color: var(--ink);
   }
 
   /* Two independent column stacks so an open row pushes only its own column. */
@@ -125,7 +204,7 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
     cursor: pointer;
     list-style: none;
     font-family: var(--serif);
-    font-size: clamp(17px, 1.9vw, 20px);
+    font-size: clamp(16px, 1.8vw, 19px);
     color: var(--ink);
     transition: color 0.25s var(--ease);
   }
@@ -140,7 +219,6 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
     font-style: italic;
   }
 
-  /* +/− built from two bars so it rotates into a minus instead of swapping glyph. */
   .sign {
     position: relative;
     width: 16px;
@@ -197,8 +275,6 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
     .grid {
       grid-template-columns: 1fr;
     }
-    /* Second column's first row would double the border against the first
-       column's last row; drop it so the single stack reads as one list. */
     .col + .col .row:first-child {
       border-top: 0;
     }
@@ -206,10 +282,8 @@ const columns = [individualConcerns.slice(0, half), individualConcerns.slice(hal
 </style>
 
 <script>
-  // Same smooth expand as the FAQ: a bare <details> snaps in one frame. Animate
-  // height + opacity on the compositor, and never measure while closed (the
-  // browser leaves content-visibility:hidden descendants reporting their open
-  // size, which would make the opening tween a no-op).
+  // Smooth expand for the accordion rows (see FAQ for the same pattern + the
+  // content-visibility measurement trap it avoids).
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduced) {

@@ -17,7 +17,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 const faqs = [
   {
     q: '¿Cómo empiezo la terapia?',
-    a: 'Muy fácil: reserva una consulta informativa gratuita de 15 minutos por WhatsApp, teléfono o el formulario de contacto. Hablamos de lo que te preocupa y decidimos juntas el mejor camino.',
+    a: 'Muy fácil: escríbeme por WhatsApp, llámame o usa el formulario de contacto y cuéntame brevemente qué te preocupa. Hablamos y decidimos juntas el mejor camino.',
   },
   {
     q: '¿Las sesiones son presenciales u online?',
@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: '¿Cuánto cuesta una sesión?',
-    a: 'La primera consulta informativa es gratuita y sin compromiso. En ella te explico las tarifas y modalidades para que decidas con toda la información.',
+    a: 'Escríbeme sin compromiso y te explico las tarifas y modalidades, para que decidas con toda la información antes de empezar.',
   },
   {
     q: '¿Es confidencial lo que hablamos?',
@@ -46,7 +46,7 @@ const marquee = [
 
 <Base
   title="Psicóloga en Granada | Cintia Barranco González"
-  description="Psicóloga general sanitaria en Granada. Terapia individual presencial y online para la ansiedad, la autoestima, el duelo y tus relaciones. Primera consulta gratuita."
+  description="Psicóloga general sanitaria en Granada. Terapia individual presencial y online para la ansiedad, la autoestima, el duelo y tus relaciones. Escríbeme sin compromiso."
   path="/"
   jsonld={[faqSchema(faqs), serviceSchema(service)]}
 >
@@ -62,7 +62,7 @@ const marquee = [
         sentido a tu vida — a tu ritmo y con acompañamiento profesional.
       </p>
       <div class="btns">
-        <a href="/contacto" class="btn btn-solid">Primera consulta gratuita</a>
+        <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">Escríbeme por WhatsApp</a>
         <a href="/servicios" class="btn btn-ghost">Ver servicios</a>
       </div>
     </div>
@@ -178,8 +178,8 @@ const marquee = [
         <div class="num">01<span class="emo" aria-hidden="true">👋</span></div>
         <h3 class="h3">Contacto inicial</h3>
         <p>
-          Reserva una consulta informativa gratuita de 15 minutos para hablar de lo que te preocupa.
-          Sin presión — solo una conversación.
+          Escríbeme por WhatsApp o por el formulario y cuéntame lo que te preocupa. Sin presión —
+          solo una primera conversación.
         </p>
       </div>
       <div class="step" data-rv>
@@ -232,9 +232,9 @@ const marquee = [
   <section class="shell sect" id="contacto" data-rv>
     <div class="slab slab-duo">
       <div>
-        <h2>Da el primer paso. La primera consulta es gratuita.</h2>
+        <h2>Da el primer paso. Escríbeme y lo vemos juntas.</h2>
         <p>
-          15 minutos para conocernos, resolver tus dudas y decidir juntas el mejor camino. Sin
+          Una primera conversación para conocernos, resolver tus dudas y decidir el mejor camino. Sin
           compromiso.
         </p>
         <div class="btns">

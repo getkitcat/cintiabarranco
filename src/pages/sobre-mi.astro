@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
 import Faq from '../components/Faq.astro';
+import { site } from '../data/site';
 import { faqSchema, breadcrumbSchema } from '../data/schema';
 
 const faqs = [
@@ -87,7 +88,7 @@ const methods = [
         y familiar. Creo que todas las personas merecen un espacio seguro donde hablar, sanar y
         crecer.
       </p>
-      <a href="/contacto" class="btn btn-solid">Pedir cita</a>
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">Escríbeme por WhatsApp</a>
     </div>
 
     <div data-rv>
@@ -194,10 +195,10 @@ const methods = [
     <div class="slab center">
       <h2>¿Damos el primer paso juntas?</h2>
       <p class="mid">
-        Si sientes que necesitas apoyo profesional, no dudes en contactarme. La primera consulta es
-        gratuita.
+        Si sientes que necesitas apoyo profesional, no dudes en contactarme. Escríbeme y vemos juntas
+        por dónde empezar.
       </p>
-      <a href="/contacto" class="btn btn-light">Reserva tu primera cita →</a>
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-light">Escríbeme por WhatsApp →</a>
     </div>
   </section>
 

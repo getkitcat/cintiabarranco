@@ -7,6 +7,26 @@ Build verde: 13 páginas. `npm run build` antes de cada push.
 
 ---
 
+## Cambios 2026-09-08 (3) — WhatsApp como CTA + copia real de motivos
+
+Restauración previa: tag `v3-before-whatsapp-cta`.
+
+- **CTA = WhatsApp en todo el sitio.** Los botones "Primera consulta gratuita" /
+  "Empieza hoy" / "Reserva tu primera cita" / "Quiero iniciar el cambio" / "Pedir
+  cita para…" pasan a **"Escríbeme por WhatsApp"** (→ `site.whatsapp`, externo). El
+  botón "Pedir cita" del nav y del footer sigue apuntando a `/contacto` (para no
+  dejar huérfano el formulario, que se mantiene). El formulario de 3 pasos sigue ahí.
+- **Retirado el reclamo "consulta gratuita / informativa / 15 minutos"** de toda la
+  copia visible: hero, FAQs, slabs, proceso, meta descripciones, llms.txt, tags del
+  contacto. NO se tocó lo legal (acceso gratuito al sitio, derechos RGPD gratuitos,
+  024/112 gratuitos del blog — todo eso es correcto y se queda).
+- **Motivos de consulta = copia REAL de Cintia** (PDF `Web.pdf`, en su voz, 18
+  temas) en `individualConcerns`. Los 5 que pidió destacar (Autoestima, Rupturas y
+  duelo, Patrones relacionales, Dependencia emocional, Miedo a la soledad y al
+  abandono) van como bloque destacado "Mi especialidad — Vínculos y relaciones"
+  (tarjetas siempre visibles); los otros 13, en el acordeón de dos columnas.
+  Posiciona a Cintia como especialista en vínculos, como ella quería.
+
 ## Cambios 2026-09-08 (2) — solo terapia individual
 
 Cintia solo ofrece **terapia individual**. Retiradas pareja y familiar (infantil ya
