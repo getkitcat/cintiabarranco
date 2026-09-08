@@ -3,7 +3,28 @@
 Astro + Cloudflare Pages + Sveltia CMS. Español, una sola lengua.
 Sustituye a `cintiabarranco.framer.website`.
 
-Build verde: 14 páginas. `npm run build` antes de cada push.
+Build verde: 13 páginas. `npm run build` antes de cada push.
+
+---
+
+## Cambios 2026-09-08 (rediseño estilo Julia Moreno)
+
+Punto de restauración antes de estos cambios (por si hay que volver atrás):
+`git reset --hard v1-pre-julia-redesign` — también la rama `backup/pre-julia-redesign`.
+Ambos están en GitHub.
+
+- **Terapia Infantil retirada.** La consulta se centra ahora en individual, con
+  pareja y familiar al lado. Su URL con posicionamiento (`/servicios/terapia-infantil-en-granada`)
+  se redirige 301 a la de individual (ver `public/_redirects`), así no se pierde el SEO.
+- **Bloque "Consulta individual"** (`ConcernList.astro`) — inspirado en el sitio que
+  le gusta a Cintia (juliamorenopsicologa.com) pero en su paleta cálida, no en el
+  blanco y negro de la referencia. Lista en dos columnas de motivos de consulta
+  (ansiedad, autoestima, duelo…), cada uno se abre a una línea. Está en la home y,
+  completo, en la página de terapia individual. Los motivos están en `site.ts`
+  (`individualConcerns`) — Cintia puede añadir o quitar; **conviene que los revise**.
+- **Formulario de cita en 3 pasos** (`/contacto`) — datos → tipo/modalidad → mensaje
+  + consentimiento. Sigue enviando por Web3Forms (recoge todos los campos aunque
+  estén en pasos distintos) y mantiene el aviso RGPD y el fallback sin clave.
 
 ---
 

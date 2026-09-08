@@ -56,7 +56,9 @@ export const nav = [
   { href: '/contacto', label: 'Contacto' },
 ];
 
-/** The four therapies, used by the home cards, the footer and the services page. */
+/** The therapies, used by the home cards, the footer and the services page.
+ *  Terapia Infantil was retired 2026-09 — the practice now focuses on individual
+ *  work, with pareja and familiar alongside. */
 export const services = [
   {
     slug: 'terapia-individual',
@@ -101,31 +103,10 @@ export const services = [
     alt: 'Terapia de pareja en Granada',
   },
   {
-    slug: 'terapia-infantil',
-    // Ranking URL inherited from the Framer site — must not change.
-    path: '/servicios/terapia-infantil-en-granada',
-    n: '03',
-    title: 'Terapia Infantil',
-    kicker: 'Acompañar a los más pequeños',
-    short: 'Herramientas para que tu hijo/a crezca y se convierta en un adulto feliz y sano.',
-    who: 'Por mi hijo/a',
-    whoText: 'Hay algo que me preocupa de su comportamiento o emociones y necesita acompañamiento.',
-    body: 'Los niños también sienten y merecen un espacio donde expresarse. Trabajo con juego terapéutico, dibujo y narrativa para que tu hijo o hija pueda elaborar lo que siente con calidez y seguridad.',
-    signs: [
-      'Notas cambios en su conducta, sueño o estado de ánimo',
-      'Hay dificultades en el colegio o con compañeros',
-      'La familia atraviesa un momento difícil (separación, duelo, mudanza)',
-      'Quieres darle herramientas emocionales desde pequeño/a',
-    ],
-    meta: '45 min · Sesiones con el niño/a + seguimiento con la familia',
-    photo: 'terapia-infantil',
-    alt: 'Terapia infantil en Granada',
-  },
-  {
     slug: 'terapia-familiar',
     // Ranking URL inherited from the Framer site — must not change.
     path: '/servicios/terapia-familiar',
-    n: '04',
+    n: '03',
     title: 'Terapia Familiar',
     kicker: 'Cuidar el vínculo que os une',
     short: 'Mejora la dinámica familiar, resuelve conflictos y crea un hogar más armonioso.',
@@ -142,4 +123,25 @@ export const services = [
     photo: 'terapia-familiar',
     alt: 'Terapia familiar en Granada',
   },
+] as const;
+
+/**
+ * Motivos de consulta para la terapia individual — el bloque expandible al estilo
+ * del sitio de referencia (Julia Moreno), pero escrito para lo que Cintia atiende
+ * de verdad. Deliberadamente NO incluye ítems muy específicos (TCA, sexología,
+ * alto rendimiento) que ella no anuncia. Cada motivo abre a una línea en tú.
+ */
+export const individualConcerns = [
+  { t: 'Ansiedad', d: 'Vives con una tensión o una preocupación constante que te cuesta soltar.' },
+  { t: 'Autoestima', d: 'Quieres dejar de exigirte tanto y aprender a valorarte tal y como eres.' },
+  { t: 'Estado de ánimo bajo', d: 'Te sientes apagada/o, sin energía o sin ilusión desde hace tiempo.' },
+  { t: 'Duelo', d: 'Estás atravesando una pérdida y necesitas un espacio para elaborarla.' },
+  { t: 'Rupturas', d: 'Una relación ha terminado y te cuesta reencontrarte contigo.' },
+  { t: 'Dependencia emocional', d: 'Sientes que necesitas a la otra persona para estar bien.' },
+  { t: 'Heridas del pasado', d: 'Hay experiencias que siguen pesando en tu presente y en tus relaciones.' },
+  { t: 'Poner límites', d: 'Te cuesta decir que no y acabas cargando con lo que no te toca.' },
+  { t: 'Estrés y agobio', d: 'Vas a mil, no llegas a todo y sientes que la situación puede contigo.' },
+  { t: 'Cambios vitales', d: 'Atraviesas una etapa de incertidumbre y no sabes qué camino tomar.' },
+  { t: 'Gestión emocional', d: 'Las emociones te desbordan y quieres aprender a acompañarlas.' },
+  { t: 'Autoconocimiento', d: 'Quieres entenderte mejor y construir una relación más amable contigo.' },
 ] as const;

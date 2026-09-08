@@ -16,3 +16,9 @@
 /blog/duelo-cu%C3%A1nto-tiempo-es-normal-sentirse-as%C3%AD   /blog   301
 /blog/duelo-cuánto-tiempo-es-normal-sentirse-así             /blog   301
 /blog/building-resilience-in-challenging-times               /blog   301
+
+# Terapia Infantil retired (2026-09) — the practice now focuses on individual,
+# pareja and familiar. Its ranking URL is sent to the individual page, the closest
+# high-intent match, so the inherited SEO isn't dropped on the floor.
+/servicios/terapia-infantil-en-granada       /servicios/terapia-individual-en-granada   301
+/servicios/terapia-infantil-en-granada/      /servicios/terapia-individual-en-granada/   301

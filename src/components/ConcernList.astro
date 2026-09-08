@@ -1,0 +1,260 @@
+---
+import { individualConcerns, site } from '../data/site';
+
+/**
+ * "Consulta individual" block — inspired by the reference site Cintia liked
+ * (juliamorenopsicologa.com), rebuilt in her warm cream + aubergine palette
+ * rather than the reference's stark monochrome.
+ *
+ * A two-column list of the things people actually come to individual therapy for.
+ * Each row expands to a one-line "is this you?" on click — <details>/<summary>,
+ * so it works with no JS and reveals to screen readers. The point is to let a
+ * visitor recognise themselves in a concrete motivo instead of a service label,
+ * which is exactly why individual therapy is now the hero of the site.
+ *
+ * `as` controls the heading level so this can lead a page (h1) or sit inside one (h2).
+ */
+interface Props {
+  as?: 'h1' | 'h2';
+  kicker?: string;
+  heading?: string;
+}
+const { as = 'h2', kicker = 'Consulta individual', heading = 'Un espacio para volver a ti' } =
+  Astro.props;
+const Heading = as;
+
+// Split into two independent column stacks. NOT CSS `columns`: opening a <details>
+// inside a multicolumn makes the browser re-balance the whole thing and report a
+// bogus scrollHeight (measured 306px for a one-line answer). Two real stacks also
+// match the reference — opening a row pushes only its own column down.
+const half = Math.ceil(individualConcerns.length / 2);
+const columns = [individualConcerns.slice(0, half), individualConcerns.slice(half)];
+---
+
+<section class="ci" id="motivos">
+  <div class="shell inner">
+    <div class="intro" data-rv>
+      <div class="kicker"><span class="rule"></span>{kicker}</div>
+      <Heading class={as === 'h1' ? 'h1-sm' : 'h2'}>{heading}</Heading>
+      <p class="lead">
+        Un espacio íntimo para explorar tu historia, aprender a relacionarte de otra manera con lo
+        que sientes y recuperar tu fuerza interna.
+      </p>
+      <p class="prose sub">
+        Trabajamos sin quedarnos en la etiqueta: lo importante no es el nombre del problema, sino
+        qué función cumple lo que te pasa y cómo está influyendo en tu vida y en tus relaciones.
+      </p>
+    </div>
+
+    <div class="grid" data-rv>
+      {
+        columns.map((col) => (
+          <div class="col">
+            {col.map((c) => (
+              <details class="row">
+                <summary>
+                  <span class="t">{c.t}</span>
+                  <span class="sign" aria-hidden="true">
+                    <span class="bar" />
+                    <span class="bar" />
+                  </span>
+                </summary>
+                <div class="body">
+                  <p>{c.d}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="cta" data-rv>
+      <a href="/contacto" class="btn btn-solid">Quiero iniciar el cambio</a>
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="soft">
+        ¿Dudas si es para ti? Escríbeme →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ci {
+    background: var(--surface);
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    padding-block: clamp(56px, 9vw, 110px);
+  }
+
+  .intro {
+    max-width: 720px;
+    margin-bottom: clamp(36px, 5vw, 52px);
+  }
+  .intro .lead {
+    margin-bottom: 14px;
+  }
+  .sub {
+    margin: 0;
+  }
+
+  /* Two independent column stacks so an open row pushes only its own column. */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    border-top: 1px solid var(--line);
+  }
+  .col .row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 4px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--serif);
+    font-size: clamp(17px, 1.9vw, 20px);
+    color: var(--ink);
+    transition: color 0.25s var(--ease);
+  }
+  .row > summary::-webkit-details-marker {
+    display: none;
+  }
+  .row:hover > summary,
+  .row[open] > summary {
+    color: var(--brand);
+  }
+  .row[open] > summary .t {
+    font-style: italic;
+  }
+
+  /* +/− built from two bars so it rotates into a minus instead of swapping glyph. */
+  .sign {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .sign .bar {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--brand-light);
+    transition: transform 0.42s var(--ease), opacity 0.3s var(--ease);
+  }
+  .sign .bar:first-child {
+    transform: translateY(-50%);
+  }
+  .sign .bar:last-child {
+    transform: translateY(-50%) rotate(90deg);
+  }
+  .row[open] .sign .bar:last-child {
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .row[open] .sign .bar:first-child {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .body {
+    overflow: hidden;
+  }
+  .body p {
+    margin: 0 0 18px;
+    padding-right: 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+
+  .cta {
+    margin-top: clamp(32px, 5vw, 48px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .soft {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    /* Second column's first row would double the border against the first
+       column's last row; drop it so the single stack reads as one list. */
+    .col + .col .row:first-child {
+      border-top: 0;
+    }
+  }
+</style>
+
+<script>
+  // Same smooth expand as the FAQ: a bare <details> snaps in one frame. Animate
+  // height + opacity on the compositor, and never measure while closed (the
+  // browser leaves content-visibility:hidden descendants reporting their open
+  // size, which would make the opening tween a no-op).
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduced) {
+    document.querySelectorAll<HTMLDetailsElement>('.ci details.row').forEach((d) => {
+      const summary = d.querySelector('summary')!;
+      const body = d.querySelector<HTMLElement>('.body')!;
+      let running: Animation | null = null;
+      const EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        running?.cancel();
+        running = null;
+        body.style.height = '';
+
+        if (d.open) {
+          const start = body.offsetHeight;
+          running = body.animate(
+            [
+              { height: `${start}px`, opacity: 1 },
+              { height: '0px', opacity: 0 },
+            ],
+            { duration: 240, easing: EASE }
+          );
+          running.onfinish = () => {
+            d.open = false;
+            body.style.height = '';
+            running = null;
+          };
+        } else {
+          d.open = true;
+          const end = body.scrollHeight;
+          running = body.animate(
+            [
+              { height: '0px', opacity: 0 },
+              { height: `${end}px`, opacity: 1 },
+            ],
+            { duration: 340, easing: EASE }
+          );
+          running.onfinish = () => {
+            body.style.height = '';
+            running = null;
+          };
+        }
+      });
+    });
+  }
+</script>

@@ -386,6 +386,20 @@ a.card:hover {
   gap: 24px;
 }
 
+/* Three service cards across. Stays 3-up on tablets (the cards are narrow text
+   cards, they take it fine) and collapses straight to one column on phones —
+   the same 720px cut-off the four-card grid uses. */
+.grid-svc {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  .grid-svc {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Numbered / ruled step columns (Proceso, Cómo trabajo, Razones). */
 .step {
   border-top: 1px solid var(--line-2);

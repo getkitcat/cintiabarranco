@@ -89,17 +89,17 @@ const formLive = site.web3formsKey.length > 0;
 
     <!-- ------------------------------------------------------------ form -- -->
     <div class="card formcard" data-rv>
-      <h2 class="h2-sm">Escríbeme</h2>
+      <h2 class="h2-sm">Agenda tu cita</h2>
       <p class="note intro-note">
-        Cuéntame brevemente tu situación y te responderé lo antes posible para agendar tu primera
-        cita.
+        Tres pasos rápidos y sin compromiso. Cuando lo envíes, te escribo en menos de 24 horas para
+        cerrar tu primera consulta informativa gratuita.
       </p>
 
       {
         formLive ? (
-          <form class="lead-form" novalidate>
+          <form class="lead-form book" novalidate>
             <input type="hidden" name="access_key" value={site.web3formsKey} />
-            <input type="hidden" name="subject" value="Nueva consulta desde la web" />
+            <input type="hidden" name="subject" value="Nueva petición de cita desde la web" />
             <input type="hidden" name="from_name" value="Web Cintia Barranco" />
             {/* Honeypot — bots fill it, people never see it. */}
             <input
@@ -111,53 +111,123 @@ const formLive = site.web3formsKey.length > 0;
               aria-hidden="true"
             />
 
-            <div class="two">
-              <div class="field">
-                <label for="f-nombre">Nombre *</label>
-                <input id="f-nombre" name="nombre" type="text" required placeholder="Tu nombre" />
+            {/* Progress — three numbered steps, current one filled. */}
+            <ol class="steps" aria-hidden="true">
+              <li class="dot on" data-dot="1"><span>1</span></li>
+              <li class="dot" data-dot="2"><span>2</span></li>
+              <li class="dot" data-dot="3"><span>3</span></li>
+            </ol>
+
+            {/* ---------------------------------------------------- paso 1 -- */}
+            <fieldset class="step" data-step="1">
+              <legend class="step-h">Datos de contacto</legend>
+              <div class="two">
+                <div class="field">
+                  <label for="f-nombre">Nombre *</label>
+                  <input id="f-nombre" name="nombre" type="text" required placeholder="Tu nombre" />
+                </div>
+                <div class="field">
+                  <label for="f-apellidos">Apellidos *</label>
+                  <input id="f-apellidos" name="apellidos" type="text" required placeholder="Tus apellidos" />
+                </div>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="f-email">Email *</label>
+                  <input id="f-email" name="email" type="email" required placeholder="tu@email.com" />
+                </div>
+                <div class="field">
+                  <label for="f-wa">WhatsApp (con prefijo) *</label>
+                  <input id="f-wa" name="whatsapp" type="tel" required placeholder="+34 600 000 000" />
+                </div>
               </div>
               <div class="field">
-                <label for="f-email">Email *</label>
-                <input id="f-email" name="email" type="email" required placeholder="tu@email.com" />
+                <span class="group-label">Franja horaria que te vendría mejor</span>
+                <div class="chips">
+                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Mañanas (10–13h)" /> Mañanas</label>
+                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Mediodía (13–16h)" /> Mediodía</label>
+                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Tardes (16–20h)" /> Tardes</label>
+                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Indiferente" /> Me da igual</label>
+                </div>
               </div>
-            </div>
+              <div class="booknav">
+                <button type="button" class="btn btn-solid next" data-next>Siguiente →</button>
+              </div>
+            </fieldset>
 
-            <div class="field">
-              <label for="f-tel">Teléfono (opcional)</label>
-              <input id="f-tel" name="telefono" type="tel" placeholder="600 000 000" />
-            </div>
+            {/* ---------------------------------------------------- paso 2 -- */}
+            <fieldset class="step" data-step="2" hidden>
+              <legend class="step-h">Sobre tu consulta</legend>
+              <div class="two">
+                <div class="field">
+                  <label for="f-tipo">¿Qué tipo de sesión buscas? *</label>
+                  <select id="f-tipo" name="tipo" required>
+                    <option value="" disabled selected>Elige una opción</option>
+                    <option>Terapia individual</option>
+                    <option>Terapia de pareja</option>
+                    <option>Terapia familiar</option>
+                    <option>Aún no lo sé</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <span class="group-label">Modalidad *</span>
+                  <div class="chips">
+                    <label class="chip"><input type="radio" name="modalidad" value="Presencial" required /> Presencial</label>
+                    <label class="chip"><input type="radio" name="modalidad" value="Online" /> Online</label>
+                    <label class="chip"><input type="radio" name="modalidad" value="Me da igual" /> Me da igual</label>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <span class="group-label">¿Es tu primera vez en terapia? (opcional)</span>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="primera_vez" value="Sí" /> Sí</label>
+                  <label class="chip"><input type="radio" name="primera_vez" value="No" /> No, ya he ido antes</label>
+                </div>
+              </div>
+              <div class="booknav two-btn">
+                <button type="button" class="btn btn-ghost back" data-back>← Atrás</button>
+                <button type="button" class="btn btn-solid next" data-next>Siguiente →</button>
+              </div>
+            </fieldset>
 
-            <div class="field">
-              <label for="f-msg">Mensaje *</label>
-              <textarea
-                id="f-msg"
-                name="mensaje"
-                rows="5"
-                required
-                placeholder="Cuéntame brevemente qué te trae por aquí…"
-              />
-            </div>
+            {/* ---------------------------------------------------- paso 3 -- */}
+            <fieldset class="step" data-step="3" hidden>
+              <legend class="step-h">Un último paso</legend>
+              <div class="field">
+                <label for="f-msg">Si te apetece, cuéntame en una línea qué te trae por aquí (opcional)</label>
+                <textarea
+                  id="f-msg"
+                  name="mensaje"
+                  rows="4"
+                  placeholder="No hace falta entrar en detalle — con el motivo basta."
+                />
+              </div>
 
-            <label class="consent">
-              <input type="checkbox" name="consentimiento" required />
-              <span>
-                He leído y acepto la <a href="/politica-de-privacidad">política de privacidad</a>.
-              </span>
-            </label>
+              {/*
+                A booking form on a psychologist's site invites people to describe
+                why they need therapy — health data under Art. 9 RGPD. Saying so
+                plainly is both the honest thing and the compliant one.
+              */}
+              <p class="warn">
+                Por tu privacidad, no incluyas detalles clínicos o de salud aquí. El resto lo hablamos
+                en la consulta informativa.
+              </p>
 
-            {/*
-              A contact form on a psychologist's site invites people to describe
-              why they need therapy — health data under Art. 9 RGPD. Saying so
-              plainly is both the honest thing and the compliant one.
-            */}
-            <p class="warn">
-              Por tu privacidad, no incluyas detalles clínicos o de salud en este formulario. Con
-              contarme brevemente el motivo basta — el resto lo hablamos en consulta.
-            </p>
+              <label class="consent">
+                <input type="checkbox" name="consentimiento" required />
+                <span>
+                  He leído y acepto la <a href="/politica-de-privacidad">política de privacidad</a>.
+                </span>
+              </label>
 
-            <button type="submit" class="btn btn-solid submit">Enviar mensaje →</button>
-            <p class="status" role="status" aria-live="polite" hidden />
-            <div class="fineprint">Tu mensaje es privado y solo lo leo yo. No comparto tus datos.</div>
+              <div class="booknav two-btn">
+                <button type="button" class="btn btn-ghost back" data-back>← Atrás</button>
+                <button type="submit" class="btn btn-solid submit">Enviar y pedir cita →</button>
+              </div>
+              <p class="status" role="status" aria-live="polite" hidden />
+              <div class="fineprint">Tu mensaje es privado y solo lo leo yo. No comparto tus datos.</div>
+            </fieldset>
           </form>
         ) : (
           <div class="nokey">
@@ -495,12 +565,162 @@ const formLive = site.web3formsKey.length > 0;
     margin: 0;
   }
 
+  /* ----------------------------------------------- multi-step booking -- */
+  .steps {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0 0 32px;
+    padding: 0;
+  }
+  .dot {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .dot span {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1.5px solid var(--edge-2);
+    color: var(--muted);
+    background: var(--surface);
+    transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  /* Connector line after every dot but the last. */
+  .dot:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: var(--line-2);
+    margin: 0 8px;
+    transition: background 0.3s var(--ease);
+  }
+  .dot.on span {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+  }
+  .dot.done span {
+    background: var(--tint);
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+  .dot.done::after {
+    background: var(--brand-light);
+  }
+
+  .step {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-inline-size: 0;
+    display: grid;
+    gap: 20px;
+    /* Each step animates in when it becomes the active one. */
+    animation: stepIn 0.4s var(--ease) both;
+  }
+  .step[hidden] {
+    display: none;
+  }
+  @keyframes stepIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  .step-h {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: -4px;
+  }
+
+  .group-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  select {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    font-size: 15px;
+    font-family: var(--sans);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+  }
+  select:focus {
+    border-color: var(--brand-light);
+  }
+
+  /* Selectable chips for the checkbox / radio groups. */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--body);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .chip:hover {
+    border-color: var(--edge-2);
+  }
+  .chip input {
+    accent-color: var(--brand);
+    margin: 0;
+  }
+  /* Filled look when checked, via :has (supported in all current browsers). */
+  .chip:has(input:checked) {
+    border-color: var(--brand);
+    background: var(--tint);
+    color: var(--brand);
+  }
+
+  .booknav {
+    display: flex;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .booknav .next,
+  .booknav .submit {
+    margin-left: auto;
+  }
+  .booknav.two-btn .back {
+    margin-right: auto;
+  }
+
   @media (max-width: 860px) {
     .grid {
       grid-template-columns: 1fr;
     }
   }
-  @media (max-width: 480px) {
+  /* 600, not 480: large phones report ~481–500 CSS px and two inputs side by side
+     get cramped there. Forms crowd earlier than cards do. */
+  @media (max-width: 600px) {
     .two {
       grid-template-columns: 1fr;
     }
@@ -509,6 +729,15 @@ const formLive = site.web3formsKey.length > 0;
     }
     .submit {
       justify-self: stretch;
+    }
+    .booknav {
+      flex-direction: column-reverse;
+    }
+    .booknav .next,
+    .booknav .submit,
+    .booknav.two-btn .back {
+      margin: 0;
+      width: 100%;
     }
   }
 </style>
@@ -527,13 +756,16 @@ const formLive = site.web3formsKey.length > 0;
     map.replaceChildren(frame);
   });
 
-  // ---- contact form ---------------------------------------------------------
-  const form = document.querySelector<HTMLFormElement>('form.lead-form');
+  // ---- multi-step booking form ----------------------------------------------
+  const form = document.querySelector<HTMLFormElement>('form.lead-form.book');
 
   if (form) {
-    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const steps = [...form.querySelectorAll<HTMLElement>('.step')];
+    const dots = [...form.querySelectorAll<HTMLElement>('.dot')];
     const status = form.querySelector<HTMLParagraphElement>('.status')!;
-    const label = btn.textContent;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const submitLabel = submit.textContent;
+    let current = 0;
 
     const say = (msg: string, ok: boolean) => {
       status.hidden = false;
@@ -542,17 +774,65 @@ const formLive = site.web3formsKey.length > 0;
       status.classList.toggle('bad', !ok);
     };
 
+    const show = (i: number) => {
+      current = i;
+      steps.forEach((s, n) => (s.hidden = n !== i));
+      dots.forEach((d, n) => {
+        d.classList.toggle('on', n === i);
+        d.classList.toggle('done', n < i);
+      });
+      // Bring the form top into view so the next step starts where the eye is.
+      form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Focus the first control of the new step for keyboard users.
+      steps[i].querySelector<HTMLElement>('input, select, textarea')?.focus({ preventScroll: true });
+    };
+
+    // Validate only the fields inside the current step before advancing.
+    const stepValid = (i: number) => {
+      const fields = steps[i].querySelectorAll<HTMLInputElement>('input, select, textarea');
+      for (const f of fields) {
+        if (!f.checkValidity()) {
+          f.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    };
+
+    form.querySelectorAll<HTMLButtonElement>('[data-next]').forEach((b) =>
+      b.addEventListener('click', () => {
+        if (stepValid(current)) show(Math.min(current + 1, steps.length - 1));
+      })
+    );
+    form.querySelectorAll<HTMLButtonElement>('[data-back]').forEach((b) =>
+      b.addEventListener('click', () => show(Math.max(current - 1, 0)))
+    );
+
+    // Enter on a text field advances the step instead of submitting early.
+    form.addEventListener('keydown', (e) => {
+      const t = e.target as HTMLElement;
+      if (e.key === 'Enter' && t.tagName === 'INPUT' && current < steps.length - 1) {
+        e.preventDefault();
+        if (stepValid(current)) show(current + 1);
+      }
+    });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      // novalidate is set so we control the message; run the check ourselves.
       if (!form.checkValidity()) {
+        // Jump to the first step that still has an invalid field.
+        const bad = steps.findIndex((s) =>
+          [...s.querySelectorAll<HTMLInputElement>('input, select, textarea')].some(
+            (f) => !f.checkValidity()
+          )
+        );
+        if (bad !== -1 && bad !== current) show(bad);
         form.reportValidity();
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Enviando…';
+      submit.disabled = true;
+      submit.textContent = 'Enviando…';
 
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
@@ -560,18 +840,21 @@ const formLive = site.web3formsKey.length > 0;
           body: new FormData(form),
         });
         const data = await res.json();
-
         if (data.success) {
-          form.reset();
-          say('Mensaje enviado. Gracias por escribir — te responderé en menos de 24 horas.', true);
+          say(
+            'Recibido. Gracias por dar el paso — te escribo en menos de 24 horas para cerrar tu consulta gratuita.',
+            true
+          );
+          // Hide the fields, leave the confirmation.
+          form.querySelectorAll('.booknav').forEach((n) => ((n as HTMLElement).hidden = true));
         } else {
           say('No se ha podido enviar. Escríbeme por WhatsApp o llámame al 644 21 45 95.', false);
         }
       } catch {
         say('No se ha podido enviar. Escríbeme por WhatsApp o llámame al 644 21 45 95.', false);
       } finally {
-        btn.disabled = false;
-        btn.textContent = label;
+        submit.disabled = false;
+        submit.textContent = submitLabel;
       }
     });
   }

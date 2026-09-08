@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ServiceBlock from '../../components/ServiceBlock.astro';
+import ConcernList from '../../components/ConcernList.astro';
 import { site, services } from '../../data/site';
 import { serviceSchema, breadcrumbSchema } from '../../data/schema';
 
@@ -47,6 +48,10 @@ const others = services.filter((o) => o.slug !== s.slug);
   </nav>
 
   <ServiceBlock service={s} as="h1" linkOut={false} label={`Servicio ${s.n}`} />
+
+  {/* The individual page is the practice's focus — give it the full concern list
+      so a visitor can find their own motivo, not just read a description. */}
+  {s.slug === 'terapia-individual' && <ConcernList heading="¿Con qué puedo ayudarte?" />}
 
   <!-- ---------------------------------------------------------------- cta -- -->
   <section class="shell sect-sm" data-rv>

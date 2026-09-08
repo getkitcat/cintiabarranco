@@ -48,9 +48,9 @@ export const practiceSchema = () => ({
     'Autoestima',
     'Duelo',
     'Trauma',
+    'Dependencia emocional',
     'Terapia de pareja',
     'Terapia familiar',
-    'Psicología infantil',
   ],
 });
 

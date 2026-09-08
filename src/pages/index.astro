@@ -5,6 +5,7 @@ import Photo from '../components/Photo.astro';
 import Faq from '../components/Faq.astro';
 import Ambient from '../components/Ambient.astro';
 import WhatsappBand from '../components/WhatsappBand.astro';
+import ConcernList from '../components/ConcernList.astro';
 import { site, services } from '../data/site';
 import { faqSchema, serviceSchema } from '../data/schema';
 import { fmtDate } from '../lib/format';
@@ -45,7 +46,7 @@ const marquee = [
 
 <Base
   title="Psicóloga en Granada | Cintia Barranco González"
-  description="Psicóloga general sanitaria en Granada. Terapia individual, de pareja, infantil y familiar, presencial y online. Primera consulta informativa gratuita."
+  description="Psicóloga general sanitaria en Granada. Terapia individual, de pareja y familiar, presencial y online. Primera consulta informativa gratuita."
   path="/"
   jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
 >
@@ -120,7 +121,7 @@ const marquee = [
       </p>
     </div>
 
-    <div class="grid-4">
+    <div class="grid-svc">
       {
         services.map((s) => (
           <a class="card" href={s.path} data-rv>
@@ -138,13 +139,16 @@ const marquee = [
   <section class="shell trip" data-rv>
     <Photo name="terapia-pareja" alt="Sesión de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
     <Photo
-      name="terapia-infantil"
-      alt="Consulta de Cintia Barranco"
+      name="cintia-trabajando"
+      alt="Cintia Barranco en su consulta de Granada"
       sizes="(max-width: 760px) 100vw, 33vw"
       class="offset"
     />
-    <Photo name="terapia-familiar" alt="Terapia de pareja en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+    <Photo name="terapia-familiar" alt="Terapia familiar en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
   </section>
+
+  <!-- ---------------------------------------------- consulta individual -- -->
+  <ConcernList />
 
   <WhatsappBand />
 
