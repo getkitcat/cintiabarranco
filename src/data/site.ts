@@ -56,73 +56,38 @@ export const nav = [
   { href: '/contacto', label: 'Contacto' },
 ];
 
-/** The therapies, used by the home cards, the footer and the services page.
- *  Terapia Infantil was retired 2026-09 — the practice now focuses on individual
- *  work, with pareja and familiar alongside. */
-export const services = [
-  {
-    slug: 'terapia-individual',
-    // Ranking URL inherited from the Framer site — must not change.
-    path: '/servicios/terapia-individual-en-granada',
-    n: '01',
-    title: 'Terapia Individual',
-    kicker: 'Tu espacio para reencontrarte',
-    short: 'Trabaja posibles traumas y afronta la vida con nuevos recursos y herramientas.',
-    who: 'Por mí',
-    whoText: 'Quiero trabajar conmigo misma/o — mi ansiedad, mi autoestima, mi proceso personal.',
-    body: 'Un acompañamiento personalizado donde trabajamos en lo que tú necesitas: ansiedad, autoestima, traumas, decisiones importantes o simplemente conocerte mejor. A tu ritmo, sin juicios.',
-    signs: [
-      'Sientes ansiedad, tristeza o agobio sin saber bien por qué',
-      'Te cuesta poner límites o decir que no',
-      'Estás pasando por un duelo, una ruptura o un cambio vital',
-      'Quieres trabajar tu autoestima o tu autoconocimiento',
-    ],
-    meta: '50 min · Semanal o quincenal · Presencial u online',
-    photo: 'cintia-retrato',
-    alt: 'Terapia individual en Granada',
-  },
-  {
-    slug: 'terapia-pareja',
-    // Ranking URL inherited from the Framer site — must not change.
-    path: '/servicios/terapia-de-parejas-en-granada',
-    n: '02',
-    title: 'Terapia de Pareja',
-    kicker: 'Reconectar, comunicar y crecer juntos',
-    short: 'Da un paso adelante en tu relación y aprende a comprender mejor a tu pareja.',
-    who: 'Por mi pareja y yo',
-    whoText: 'Queremos cuidar la relación, mejorar la comunicación o atravesar un momento difícil juntos.',
-    body: 'Un espacio seguro donde ambos miembros pueden expresarse sin miedo y aprender herramientas para volver a entenderse. No es solo para crisis — también es valiosa cuando queréis cuidar lo que ya tenéis.',
-    signs: [
-      'Sentís que la comunicación se ha vuelto difícil o repetitiva',
-      'Hay conflictos que no lográis resolver por vuestra cuenta',
-      'Atravesáis un momento de cambio (mudanza, hijos, infidelidad)',
-      'Queréis fortalecer el vínculo antes de que aparezcan problemas',
-    ],
-    meta: '60–90 min · Presencial u online · Los dos miembros',
-    photo: 'terapia-pareja',
-    alt: 'Terapia de pareja en Granada',
-  },
-  {
-    slug: 'terapia-familiar',
-    // Ranking URL inherited from the Framer site — must not change.
-    path: '/servicios/terapia-familiar',
-    n: '03',
-    title: 'Terapia Familiar',
-    kicker: 'Cuidar el vínculo que os une',
-    short: 'Mejora la dinámica familiar, resuelve conflictos y crea un hogar más armonioso.',
-    who: 'Por nuestra familia',
-    whoText: 'Hay conflictos en casa o estamos atravesando un cambio que nos afecta a todos.',
-    body: 'Cuando algo se mueve en uno de los miembros, todos se ven afectados. Trabajo desde una mirada sistémica, ayudando a entender la dinámica y encontrar juntos nuevas formas de relacionarse y apoyarse.',
-    signs: [
-      'Los conflictos en casa se han vuelto frecuentes',
-      'Hay tensiones entre padres e hijos adolescentes',
-      'Atravesáis un cambio importante (divorcio, llegada de un miembro, pérdida)',
-      'Queréis mejorar la comunicación del día a día',
-    ],
-    meta: '60–90 min · Toda la familia o subgrupos · Presencial preferente',
-    photo: 'terapia-familiar',
-    alt: 'Terapia familiar en Granada',
-  },
+/**
+ * The practice offers ONE therapy: individual (decision 2026-09-08). Terapia de
+ * pareja, familiar and infantil were retired; their old ranking URLs 301 to
+ * /servicios (see public/_redirects). `service` is the single offering, used by
+ * the /servicios page and its schema.
+ */
+export const service = {
+  slug: 'terapia-individual',
+  path: '/servicios',
+  title: 'Terapia Individual',
+  kicker: 'Tu espacio para reencontrarte',
+  short: 'Trabaja lo que te pesa y afronta la vida con nuevos recursos y herramientas.',
+  body: 'Un acompañamiento personalizado donde trabajamos en lo que tú necesitas: ansiedad, autoestima, heridas del pasado, decisiones importantes o simplemente conocerte mejor. A tu ritmo, sin juicios.',
+  signs: [
+    'Sientes ansiedad, tristeza o agobio sin saber bien por qué',
+    'Te cuesta poner límites o decir que no',
+    'Estás pasando por un duelo, una ruptura o un cambio vital',
+    'Quieres trabajar tu autoestima o tu autoconocimiento',
+  ],
+  meta: '50 min · Semanal o quincenal · Presencial u online',
+  photo: 'cintia-retrato',
+  alt: 'Terapia individual en Granada',
+} as const;
+
+/** A short set of areas she works with, for the pills on the About page. */
+export const focusAreas = [
+  'Ansiedad',
+  'Autoestima',
+  'Duelo',
+  'Dependencia emocional',
+  'Vínculos y relaciones',
+  'Cambios vitales',
 ] as const;
 
 /**

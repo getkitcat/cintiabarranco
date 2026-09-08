@@ -6,7 +6,7 @@ import Faq from '../components/Faq.astro';
 import Ambient from '../components/Ambient.astro';
 import WhatsappBand from '../components/WhatsappBand.astro';
 import ConcernList from '../components/ConcernList.astro';
-import { site, services } from '../data/site';
+import { site, service, focusAreas } from '../data/site';
 import { faqSchema, serviceSchema } from '../data/schema';
 import { fmtDate } from '../lib/format';
 
@@ -35,20 +35,20 @@ const faqs = [
 
 const marquee = [
   'Ansiedad',
-  'Terapia de pareja',
-  'Infancia',
-  'Trauma',
   'Autoestima',
   'Duelo',
+  'Dependencia emocional',
+  'Vínculos',
+  'Cambios vitales',
   'Bienestar emocional',
 ];
 ---
 
 <Base
   title="Psicóloga en Granada | Cintia Barranco González"
-  description="Psicóloga general sanitaria en Granada. Terapia individual, de pareja y familiar, presencial y online. Primera consulta informativa gratuita."
+  description="Psicóloga general sanitaria en Granada. Terapia individual presencial y online para la ansiedad, la autoestima, el duelo y tus relaciones. Primera consulta gratuita."
   path="/"
-  jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
+  jsonld={[faqSchema(faqs), serviceSchema(service)]}
 >
   <!-- ------------------------------------------------------------- hero -- -->
   <div class="hero-wrap">
@@ -107,44 +107,18 @@ const marquee = [
     </div>
   </div>
 
-  <!-- -------------------------------------------------------- servicios -- -->
-  <section class="shell sect amb" id="servicios">
-    <Ambient />
-    <div class="sect-head" data-rv>
-      <div>
-        <div class="kicker">Mis servicios</div>
-        <h2 class="h2">Terapias de psicología en Granada</h2>
-      </div>
-      <p class="sect-note">
-        Que todas las personas que den el primer paso tengan la oportunidad de construir una vida
-        plena, en consulta o desde casa.
-      </p>
-    </div>
-
-    <div class="grid-svc">
-      {
-        services.map((s) => (
-          <a class="card" href={s.path} data-rv>
-            <div class="num">{s.n}</div>
-            <h3>{s.title}</h3>
-            <p>{s.short}</p>
-            <span class="arrow">Saber más →</span>
-          </a>
-        ))
-      }
-    </div>
-  </section>
-
   <!-- -------------------------------------------------------- triptych -- -->
+  {/* Ambient band of consulta photography — a breath between the hero and the
+      concern list, which is where the actual "what I do" now lives. */}
   <section class="shell trip" data-rv>
-    <Photo name="terapia-pareja" alt="Sesión de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+    <Photo name="terapia-pareja" alt="Consulta de Cintia Barranco en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
     <Photo
       name="cintia-trabajando"
       alt="Cintia Barranco en su consulta de Granada"
       sizes="(max-width: 760px) 100vw, 33vw"
       class="offset"
     />
-    <Photo name="terapia-familiar" alt="Terapia familiar en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+    <Photo name="terapia-familiar" alt="Espacio de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
   </section>
 
   <!-- ---------------------------------------------- consulta individual -- -->
@@ -179,7 +153,7 @@ const marquee = [
         </p>
 
         <div class="pills mb">
-          {services.map((s) => <span class="pill">{s.title}</span>)}
+          {focusAreas.map((a) => <span class="pill">{a}</span>)}
         </div>
 
         <div class="creds">

@@ -44,13 +44,13 @@ export const practiceSchema = () => ({
   availableLanguage: { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
   sameAs: [site.instagram],
   knowsAbout: [
+    'Terapia individual',
     'Ansiedad',
     'Autoestima',
     'Duelo',
-    'Trauma',
+    'Heridas del pasado',
     'Dependencia emocional',
-    'Terapia de pareja',
-    'Terapia familiar',
+    'Vínculos y relaciones',
   ],
 });
 

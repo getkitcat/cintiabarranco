@@ -7,7 +7,22 @@ Build verde: 13 páginas. `npm run build` antes de cada push.
 
 ---
 
-## Cambios 2026-09-08 (rediseño estilo Julia Moreno)
+## Cambios 2026-09-08 (2) — solo terapia individual
+
+Cintia solo ofrece **terapia individual**. Retiradas pareja y familiar (infantil ya
+lo estaba). Restauración previa: tag `v2-three-services` (estado con 3 terapias).
+
+- **Una sola página de servicio** en `/servicios` = la página de terapia individual
+  (hero + bloque de motivos + razones + FAQ). Fuera el hub, las páginas por terapia
+  (`/servicios/[...slug]` eliminada) y el selector "¿quién necesita el espacio?".
+- **301** de todas las URLs antiguas `/servicios/*` (individual-en-granada, parejas,
+  familiar, infantil) → `/servicios`, para no tirar el SEO local heredado.
+- Home: fuera la rejilla de 3 tarjetas de servicios (el bloque de motivos ya cubre
+  individual). Marquee y píldoras de "Sobre mí" pasan a áreas de trabajo individuales.
+- Footer, schema (`knowsAbout`, `serviceSchema`), `llms.txt` y meta descripciones:
+  solo individual. `site.ts` ahora exporta `service` (uno) + `focusAreas`, no `services`.
+
+## Cambios 2026-09-08 (1) — rediseño estilo Julia Moreno
 
 Punto de restauración antes de estos cambios (por si hay que volver atrás):
 `git reset --hard v1-pre-julia-redesign` — también la rama `backup/pre-julia-redesign`.

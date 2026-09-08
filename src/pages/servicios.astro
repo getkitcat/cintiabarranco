@@ -2,25 +2,32 @@
 import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import ServiceBlock from '../components/ServiceBlock.astro';
-import { services } from '../data/site';
+import ConcernList from '../components/ConcernList.astro';
+import { site, service } from '../data/site';
 import { faqSchema, serviceSchema, breadcrumbSchema } from '../data/schema';
+
+/**
+ * The single service page. The practice offers only individual therapy, so this
+ * IS "Servicios" — no hub, no per-therapy pages, no "which one is for you?"
+ * chooser. The old /servicios/* URLs 301 here (public/_redirects).
+ */
 
 const faqs = [
   {
-    q: '¿Cuánto dura cada sesión de terapia?',
-    a: 'Las sesiones tienen una duración de 50 a 60 minutos, pensadas para trabajar en profundidad sin que resulte agotador.',
+    q: '¿Cuánto dura cada sesión?',
+    a: 'Las sesiones duran unos 50 minutos, pensadas para trabajar en profundidad sin que resulte agotador.',
   },
   {
     q: '¿Cuántas sesiones necesitaré?',
-    a: 'Depende de cada persona y de los objetivos que establezcamos juntas. Algunas personas notan mejoras significativas en 8–12 sesiones.',
+    a: 'Depende de cada persona y de los objetivos que establezcamos juntas. Algunas personas notan mejoras significativas en 8–12 sesiones; otras prefieren un acompañamiento más largo. Lo vamos viendo a tu ritmo.',
   },
   {
     q: '¿Presencial u online, qué diferencia hay?',
-    a: 'La calidad terapéutica es la misma en ambos formatos. La terapia online se realiza por videollamada segura.',
+    a: 'La calidad terapéutica es la misma en ambos formatos. La terapia online se realiza por videollamada segura, y es una buena opción si vives fuera de Granada o te resulta más cómodo desde casa.',
   },
   {
-    q: '¿Cómo sé qué tipo de terapia necesito?',
-    a: 'No te preocupes por elegir antes de venir. En la primera sesión evaluaremos juntas tu situación y te recomendaré el enfoque más adecuado.',
+    q: '¿Cada cuánto son las sesiones?',
+    a: 'Lo habitual es una sesión semanal o quincenal, según lo que necesites en cada momento del proceso.',
   },
   {
     q: '¿Trabajas con seguros médicos?',
@@ -61,101 +68,71 @@ const reasons = [
 ---
 
 <Base
-  title="Tipos de Terapia Psicológica en Granada | Cintia Barranco"
-  description="Terapia individual, de pareja y familiar en Granada, presencial y online. Elige el acompañamiento que encaja contigo. Primera consulta informativa gratuita."
+  title="Terapia individual en Granada | Cintia Barranco, Psicóloga"
+  description="Terapia psicológica individual en Granada, presencial y online. Un espacio para trabajar la ansiedad, la autoestima, el duelo y tus relaciones. Primera consulta gratuita."
   path="/servicios"
-  loaderName="Servicios"
+  loaderName="Terapia individual"
   jsonld={[
+    serviceSchema(service),
     faqSchema(faqs),
-    ...services.map((s) => serviceSchema(s)),
     breadcrumbSchema([
       { name: 'Inicio', path: '/' },
-      { name: 'Servicios', path: '/servicios' },
+      { name: 'Terapia individual', path: '/servicios' },
     ]),
   ]}
 >
   <header class="shell-narrow head">
     <div data-rv>
       <div class="kicker">Primera consulta gratuita · 15 min</div>
-      <h1 class="h1-sm">Terapias de psicología en Granada</h1>
+      <h1 class="h1-sm">Terapia individual en Granada</h1>
       <p class="lead">
-        ¿Te sientes triste y no sabes por qué? ¿Estás atravesando una situación personal o laboral
-        que te genera malestar? Ofrezco terapias presenciales y online adaptadas a ti.
+        ¿Te sientes triste y no sabes por qué? ¿Atraviesas una situación personal que te genera
+        malestar? Un espacio para conocerte, entender lo que te pasa y recuperar tu equilibrio —
+        presencial u online.
       </p>
       <div class="btns btns-center">
         <a href="/contacto" class="btn btn-solid">Empieza hoy →</a>
-        <a href="#terapias" class="btn btn-ghost">Ver terapias</a>
+        <a href="#motivos" class="btn btn-ghost">¿Con qué puedo ayudarte?</a>
       </div>
     </div>
   </header>
 
-  <!-- ------------------------------------------------------ "who is it for" -- -->
-  <section class="shell chooser">
+  <!-- ----------------------------------------------------- qué es / cómo -- -->
+  <section class="band-top">
+    <ServiceBlock service={service} as="h2" linkOut={false} label="El acompañamiento" />
+  </section>
+
+  <!-- --------------------------------------------------- motivos (lista) -- -->
+  <ConcernList heading="¿Con qué puedo ayudarte?" />
+
+  <!-- ------------------------------------------------------------ razones -- -->
+  <section class="shell sect">
     <div class="center-head" data-rv>
-      <div class="kicker">¿No sabes por dónde empezar?</div>
-      <h2 class="h2-sm">Cuéntame quién necesita el espacio</h2>
+      <div class="kicker">¿Por qué la terapia?</div>
+      <h2 class="h2-sm">Razones por las que puede cambiar tu vida</h2>
       <p class="note center-note">
-        Elige la situación con la que más te identificas y te llevo a la terapia que mejor encaja. Si
-        dudas entre varias, <a href="/contacto">contáctame directamente</a>.
+        La terapia no es solo para momentos de crisis. Es una herramienta poderosa para entenderse
+        mejor, gestionar las emociones y vivir con más plenitud.
       </p>
     </div>
 
-    <div class="grid-svc" data-rv>
+    <div class="grid-3 reasons" data-rv>
       {
-        services.map((s) => (
-          <a class="card who" href={s.path}>
-            <div class="italic who-t">{s.who}</div>
-            <p>{s.whoText}</p>
-            <span class="arrow">Ver detalles →</span>
-          </a>
+        reasons.map((r) => (
+          <div class="step no-num">
+            <h3 class="h3">{r.h}</h3>
+            <p>{r.p}</p>
+          </div>
         ))
       }
     </div>
   </section>
 
-  <!-- ----------------------------------------------------------- the four -- -->
-  <div id="terapias">
-    {
-      services.map((s, i) => (
-        <section
-          id={s.slug}
-          class:list={[i % 2 === 0 ? 'band-top' : '']}
-          style={i % 2 === 0 ? '' : 'background: var(--bg)'}
-        >
-          <ServiceBlock service={s} flip={i % 2 === 1} label={`Servicio ${s.n}`} />
-        </section>
-      ))
-    }
-  </div>
-
-  <!-- ------------------------------------------------------------ reasons -- -->
-  <section class="band">
-    <div class="shell sect">
-      <div class="center-head" data-rv>
-        <div class="kicker">¿Por qué la terapia?</div>
-        <h2 class="h2-sm">Razones por las que puede cambiar tu vida</h2>
-        <p class="note center-note">
-          La terapia no es solo para momentos de crisis. Es una herramienta poderosa para entenderse
-          mejor, gestionar las emociones y vivir con más plenitud.
-        </p>
-      </div>
-
-      <div class="grid-3 reasons" data-rv>
-        {
-          reasons.map((r) => (
-            <div class="step no-num">
-              <h3 class="h3">{r.h}</h3>
-              <p>{r.p}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <!-- --------------------------------------------------------------- faq -- -->
-  <section class="shell-narrow sect">
-    <Faq items={faqs} heading="Todo lo que necesitas saber antes de empezar" />
+  <section class="band-top">
+    <div class="shell-narrow sect">
+      <Faq items={faqs} heading="Todo lo que necesitas saber antes de empezar" />
+    </div>
   </section>
 </Base>
 
@@ -163,16 +140,13 @@ const reasons = [
   .head {
     text-align: center;
     padding-top: clamp(56px, 8vw, 86px);
-    padding-bottom: clamp(36px, 5vw, 70px);
+    padding-bottom: clamp(36px, 5vw, 60px);
   }
   .head .lead {
     max-width: 640px;
     margin-inline: auto;
   }
 
-  .chooser {
-    padding-bottom: clamp(48px, 7vw, 80px);
-  }
   .center-head {
     text-align: center;
     margin-bottom: 44px;
@@ -184,14 +158,6 @@ const reasons = [
     max-width: 640px;
     margin-inline: auto;
     font-size: 16px;
-  }
-
-  .who-t {
-    font-size: 17px;
-    margin-bottom: 10px;
-  }
-  .who p {
-    margin-bottom: 18px;
   }
 
   .reasons {
@@ -211,9 +177,7 @@ const reasons = [
       gap: 28px 32px;
     }
   }
-  /* Same phone cut-off as .grid-4 in global.css — 560px left large phones with a
-     cramped 2-up. */
-  @media (max-width: 720px) {
+  @media (max-width: 600px) {
     .reasons {
       grid-template-columns: 1fr;
     }
