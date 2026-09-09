@@ -6,8 +6,11 @@ import Faq from '../components/Faq.astro';
 import Ambient from '../components/Ambient.astro';
 import WhatsappBand from '../components/WhatsappBand.astro';
 import ConcernList from '../components/ConcernList.astro';
-import { site, service, focusAreas } from '../data/site';
+import { site, services, focusAreas } from '../data/site';
 import { faqSchema, serviceSchema } from '../data/schema';
+
+// pareja is the second service; used for the couples teaser below the concern list.
+const pareja = services.find((s) => s.slug === 'terapia-pareja')!;
 import { fmtDate } from '../lib/format';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -48,7 +51,7 @@ const marquee = [
   title="Psicóloga en Granada | Cintia Barranco González"
   description="Psicóloga general sanitaria en Granada. Terapia individual presencial y online para la ansiedad, la autoestima, el duelo y tus relaciones. Escríbeme sin compromiso."
   path="/"
-  jsonld={[faqSchema(faqs), serviceSchema(service)]}
+  jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
 >
   <!-- ------------------------------------------------------------- hero -- -->
   <div class="hero-wrap">
@@ -123,6 +126,24 @@ const marquee = [
 
   <!-- ---------------------------------------------- consulta individual -- -->
   <ConcernList />
+
+  <!-- ------------------------------------------------- terapia de pareja -- -->
+  <section class="shell sect duo duo-flip pareja">
+    <div data-rv>
+      <div class="kicker">También terapia de pareja</div>
+      <h2 class="h2">{pareja.kicker}</h2>
+      <p class="prose mb">{pareja.body}</p>
+      <a href={pareja.path} class="btn btn-solid btn-sm">Ver terapia de pareja →</a>
+    </div>
+    <div data-rv>
+      <Photo
+        name={pareja.photo}
+        alt={pareja.alt}
+        variant="photo-svc"
+        sizes="(max-width: 760px) 100vw, 46vw"
+      />
+    </div>
+  </section>
 
   <WhatsappBand />
 

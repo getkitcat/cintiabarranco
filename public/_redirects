@@ -17,15 +17,9 @@
 /blog/duelo-cuánto-tiempo-es-normal-sentirse-así             /blog   301
 /blog/building-resilience-in-challenging-times               /blog   301
 
-# Individual-only (2026-09). The practice retired pareja, familiar and infantil.
-# Every old per-therapy ranking URL — including the individual one, whose content
-# now lives at /servicios itself — consolidates into the single /servicios page so
-# none of the inherited Granada SEO is dropped. Trailing-slash form matches the
-# site's trailingSlash:'always'.
-/servicios/terapia-individual-en-granada     /servicios/   301
-/servicios/terapia-individual-en-granada/    /servicios/   301
-/servicios/terapia-de-parejas-en-granada     /servicios/   301
-/servicios/terapia-de-parejas-en-granada/    /servicios/   301
+# Services (2026-09-09): individual and pareja are real pages at their Granada
+# ranking URLs. Only the two retired therapies — familiar and infantil — redirect,
+# and they go to the Servicios hub. Trailing-slash form matches trailingSlash:'always'.
 /servicios/terapia-infantil-en-granada       /servicios/   301
 /servicios/terapia-infantil-en-granada/      /servicios/   301
 /servicios/terapia-familiar                  /servicios/   301

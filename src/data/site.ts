@@ -57,28 +57,54 @@ export const nav = [
 ];
 
 /**
- * The practice offers ONE therapy: individual (decision 2026-09-08). Terapia de
- * pareja, familiar and infantil were retired; their old ranking URLs 301 to
- * /servicios (see public/_redirects). `service` is the single offering, used by
- * the /servicios page and its schema.
+ * Two therapies (2026-09-09): individual — her specialty, with the full concern
+ * list — and pareja. Familiar and infantil stay retired (their URLs 301 to the
+ * hub, see public/_redirects). `/servicios` is now a HUB listing both; each has a
+ * detail page at its Granada ranking URL. `service` remains an alias for the
+ * individual object so the home page and its schema keep working.
+ *
+ * NOTE: the pareja copy below is a solid draft, not Cintia's verified words —
+ * flag it for her review like the rest.
  */
-export const service = {
-  slug: 'terapia-individual',
-  path: '/servicios',
-  title: 'Terapia Individual',
-  kicker: 'Tu espacio para reencontrarte',
-  short: 'Trabaja lo que te pesa y afronta la vida con nuevos recursos y herramientas.',
-  body: 'Un acompañamiento personalizado donde trabajamos en lo que tú necesitas: ansiedad, autoestima, heridas del pasado, decisiones importantes o simplemente conocerte mejor. A tu ritmo, sin juicios.',
-  signs: [
-    'Sientes ansiedad, tristeza o agobio sin saber bien por qué',
-    'Te cuesta poner límites o decir que no',
-    'Estás pasando por un duelo, una ruptura o un cambio vital',
-    'Quieres trabajar tu autoestima o tu autoconocimiento',
-  ],
-  meta: '50 min · Semanal o quincenal · Presencial u online',
-  photo: 'cintia-retrato',
-  alt: 'Terapia individual en Granada',
-} as const;
+export const services = [
+  {
+    slug: 'terapia-individual',
+    path: '/servicios/terapia-individual-en-granada',
+    title: 'Terapia Individual',
+    kicker: 'Tu espacio para reencontrarte',
+    short: 'Trabaja lo que te pesa y afronta la vida con nuevos recursos y herramientas.',
+    body: 'Un acompañamiento personalizado donde trabajamos en lo que tú necesitas: ansiedad, autoestima, heridas del pasado, decisiones importantes o simplemente conocerte mejor. A tu ritmo, sin juicios.',
+    signs: [
+      'Sientes ansiedad, tristeza o agobio sin saber bien por qué',
+      'Te cuesta poner límites o decir que no',
+      'Estás pasando por un duelo, una ruptura o un cambio vital',
+      'Quieres trabajar tu autoestima o tu autoconocimiento',
+    ],
+    meta: '50 min · Semanal o quincenal · Presencial u online',
+    photo: 'cintia-retrato',
+    alt: 'Terapia individual en Granada',
+  },
+  {
+    slug: 'terapia-pareja',
+    path: '/servicios/terapia-de-parejas-en-granada',
+    title: 'Terapia de Pareja',
+    kicker: 'Reconectar, comunicar y crecer juntos',
+    short: 'Recuperad la comunicación, resolved lo que se ha enquistado y decidid desde otro lugar.',
+    body: 'Un espacio donde los dos podéis expresaros sin miedo y entender qué se ha ido desgastando. No es solo para crisis: también es valiosa cuando queréis cuidar lo que tenéis, atravesáis un cambio o notáis que la distancia crece. Trabajamos la relación y lo que se activa en cada uno.',
+    signs: [
+      'La comunicación se ha vuelto difícil o siempre acaba en lo mismo',
+      'Hay conflictos que no lográis resolver por vuestra cuenta',
+      'Atravesáis un momento de cambio (convivencia, hijos, una infidelidad)',
+      'Os queréis, pero sentís que algo esencial se ha ido desgastando',
+    ],
+    meta: '60–90 min · Presencial u online · Los dos miembros',
+    photo: 'terapia-pareja',
+    alt: 'Terapia de pareja en Granada',
+  },
+] as const;
+
+/** Individual is the practice's focus — kept as a named alias for the home page. */
+export const service = services[0];
 
 /** A short set of areas she works with, for the pills on the About page. */
 export const focusAreas = [

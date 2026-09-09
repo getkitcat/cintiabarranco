@@ -7,6 +7,24 @@ Build verde: 13 páginas. `npm run build` antes de cada push.
 
 ---
 
+## Cambios 2026-09-09 (2) — se añade terapia de pareja
+
+Cintia vuelve a ofrecer **terapia de pareja** (además de individual; familiar e
+infantil siguen retiradas). Restauración previa: tag `v5-before-pareja`.
+
+- **`/servicios` pasa a ser un HUB** con dos tarjetas (Individual y Pareja), cada
+  una a su página de detalle. Nav "Servicios" apunta al hub (sin cambios).
+- **Páginas de detalle** en `src/pages/servicios/[...slug].astro` (recreada):
+  - `/servicios/terapia-individual-en-granada` — con la lista de motivos completa.
+  - `/servicios/terapia-de-parejas-en-granada` — con sus propias señales y FAQ.
+  - Razones compartidas, FAQ por servicio, enlace cruzado a la otra terapia.
+- **301 retirados** para las dos URLs que vuelven a ser páginas reales; solo
+  familiar e infantil siguen redirigiendo → `/servicios/`.
+- Home: teaser de pareja tras la lista de motivos. Footer, schema (`knowsAbout`
+  + `serviceSchema` x2), llms.txt y FAQ de "Sobre mí" actualizados a dos servicios.
+- `site.ts`: vuelve `services` (array de 2) + `service = services[0]` (alias para
+  la home). **La copia de la página de pareja es un borrador mío — que Cintia la revise.**
+
 ## Cambios 2026-09-08 (3) — WhatsApp como CTA + copia real de motivos
 
 Restauración previa: tag `v3-before-whatsapp-cta`.

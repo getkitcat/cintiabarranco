@@ -1,10 +1,10 @@
 ---
 import Photo from './Photo.astro';
 import { site } from '../data/site';
-import type { service as serviceType } from '../data/site';
+import type { services } from '../data/site';
 
 interface Props {
-  service: typeof serviceType;
+  service: (typeof services)[number];
   /** Photo on the left (default) or right — the hub alternates them. */
   flip?: boolean;
   /** Hub links out to the detail page; the detail page itself doesn't. */

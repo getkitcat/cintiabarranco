@@ -45,10 +45,10 @@ export const practiceSchema = () => ({
   sameAs: [site.instagram],
   knowsAbout: [
     'Terapia individual',
+    'Terapia de pareja',
     'Ansiedad',
     'Autoestima',
     'Duelo',
-    'Heridas del pasado',
     'Dependencia emocional',
     'Vínculos y relaciones',
   ],

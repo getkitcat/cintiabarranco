@@ -1,5 +1,5 @@
 ---
-import { site } from '../data/site';
+import { site, services } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
@@ -23,9 +23,8 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="col">
-      <div class="col-label">La consulta</div>
-      <a href="/servicios">Terapia individual</a>
-      <a href="/servicios#motivos">¿Con qué te ayudo?</a>
+      <div class="col-label">Terapias</div>
+      {services.map((s) => <a href={s.path}>{s.title}</a>)}
       <a href="/contacto">Pedir cita</a>
     </div>
 

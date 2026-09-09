@@ -1,137 +1,72 @@
 ---
 import Base from '../layouts/Base.astro';
-import Faq from '../components/Faq.astro';
-import ServiceBlock from '../components/ServiceBlock.astro';
-import ConcernList from '../components/ConcernList.astro';
-import { site, service } from '../data/site';
-import { faqSchema, serviceSchema, breadcrumbSchema } from '../data/schema';
+import Photo from '../components/Photo.astro';
+import { site, services } from '../data/site';
+import { serviceSchema, breadcrumbSchema } from '../data/schema';
 
 /**
- * The single service page. The practice offers only individual therapy, so this
- * IS "Servicios" — no hub, no per-therapy pages, no "which one is for you?"
- * chooser. The old /servicios/* URLs 301 here (public/_redirects).
+ * Servicios hub. The practice offers two therapies — individual (her specialty)
+ * and pareja — each with its own detail page. This page is the overview that
+ * links to both. Kept deliberately light so it doesn't compete with the detail
+ * pages for the "terapia X en Granada" searches.
  */
-
-const faqs = [
-  {
-    q: '¿Cuánto dura cada sesión?',
-    a: 'Las sesiones duran unos 50 minutos, pensadas para trabajar en profundidad sin que resulte agotador.',
-  },
-  {
-    q: '¿Cuántas sesiones necesitaré?',
-    a: 'Depende de cada persona y de los objetivos que establezcamos juntas. Algunas personas notan mejoras significativas en 8–12 sesiones; otras prefieren un acompañamiento más largo. Lo vamos viendo a tu ritmo.',
-  },
-  {
-    q: '¿Presencial u online, qué diferencia hay?',
-    a: 'La calidad terapéutica es la misma en ambos formatos. La terapia online se realiza por videollamada segura, y es una buena opción si vives fuera de Granada o te resulta más cómodo desde casa.',
-  },
-  {
-    q: '¿Cada cuánto son las sesiones?',
-    a: 'Lo habitual es una sesión semanal o quincenal, según lo que necesites en cada momento del proceso.',
-  },
-  {
-    q: '¿Trabajas con seguros médicos?',
-    a: 'Actualmente trabajo como profesional privada. Puedo proporcionarte facturas que algunos seguros reembolsan.',
-  },
-  {
-    q: '¿Qué pasa si necesito cancelar una cita?',
-    a: 'Solo te pido que me avises con al menos 24 horas de antelación para poder reorganizar la agenda.',
-  },
-] as const;
-
-const reasons = [
-  {
-    h: 'Claridad emocional',
-    p: 'Entiende qué sientes, por qué lo sientes y cómo esas emociones influyen en tu día a día.',
-  },
-  {
-    h: 'Herramientas prácticas',
-    p: 'Técnicas basadas en evidencia que puedes aplicar en tu vida cotidiana para gestionar el estrés y la ansiedad.',
-  },
-  {
-    h: 'Relaciones más sanas',
-    p: 'Mejora tu comunicación, establece límites saludables y construye vínculos más auténticos.',
-  },
-  {
-    h: 'Autoconocimiento',
-    p: 'Descubre patrones que te limitan y desarrolla una relación más amable y compasiva contigo.',
-  },
-  {
-    h: 'Espacio seguro',
-    p: 'Un lugar libre de juicios donde puedes ser tú con total honestidad, a tu ritmo.',
-  },
-  {
-    h: 'Cambio duradero',
-    p: 'No buscamos soluciones rápidas: construimos un bienestar que se mantenga en el tiempo.',
-  },
-];
 ---
 
 <Base
-  title="Terapia individual en Granada | Cintia Barranco, Psicóloga"
-  description="Terapia psicológica individual en Granada, presencial y online. Un espacio para trabajar la ansiedad, la autoestima, el duelo y tus relaciones. Escríbeme sin compromiso."
+  title="Servicios | Terapia psicológica en Granada — Cintia Barranco"
+  description="Terapia individual y de pareja en Granada, presencial y online. Elige el acompañamiento que encaja contigo. Escríbeme sin compromiso."
   path="/servicios"
-  loaderName="Terapia individual"
+  loaderName="Servicios"
   jsonld={[
-    serviceSchema(service),
-    faqSchema(faqs),
+    ...services.map((s) => serviceSchema(s)),
     breadcrumbSchema([
       { name: 'Inicio', path: '/' },
-      { name: 'Terapia individual', path: '/servicios' },
+      { name: 'Servicios', path: '/servicios' },
     ]),
   ]}
 >
   <header class="shell-narrow head">
     <div data-rv>
-      <div class="kicker">Terapia individual · Presencial y online</div>
-      <h1 class="h1-sm">Terapia individual en Granada</h1>
+      <div class="kicker"><span class="rule"></span>Terapia psicológica · Granada</div>
+      <h1 class="h1-sm">Un acompañamiento para cada momento</h1>
       <p class="lead">
-        ¿Te sientes triste y no sabes por qué? ¿Atraviesas una situación personal que te genera
-        malestar? Un espacio para conocerte, entender lo que te pasa y recuperar tu equilibrio —
-        presencial u online.
+        Trabajo la terapia individual —mi especialidad, centrada en los vínculos y las
+        relaciones— y la terapia de pareja. Elige por dónde quieres empezar; si dudas, escríbeme y
+        lo vemos juntas.
       </p>
-      <div class="btns btns-center">
-        <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">Escríbeme por WhatsApp</a>
-        <a href="#motivos" class="btn btn-ghost">¿Con qué puedo ayudarte?</a>
-      </div>
     </div>
   </header>
 
-  <!-- ----------------------------------------------------- qué es / cómo -- -->
-  <section class="band-top">
-    <ServiceBlock service={service} as="h2" linkOut={false} label="El acompañamiento" />
-  </section>
-
-  <!-- --------------------------------------------------- motivos (lista) -- -->
-  <ConcernList heading="¿Con qué puedo ayudarte?" />
-
-  <!-- ------------------------------------------------------------ razones -- -->
-  <section class="shell sect">
-    <div class="center-head" data-rv>
-      <div class="kicker">¿Por qué la terapia?</div>
-      <h2 class="h2-sm">Razones por las que puede cambiar tu vida</h2>
-      <p class="note center-note">
-        La terapia no es solo para momentos de crisis. Es una herramienta poderosa para entenderse
-        mejor, gestionar las emociones y vivir con más plenitud.
-      </p>
-    </div>
-
-    <div class="grid-3 reasons" data-rv>
+  <section class="shell hub">
+    <div class="grid-2" data-rv>
       {
-        reasons.map((r) => (
-          <div class="step no-num">
-            <h3 class="h3">{r.h}</h3>
-            <p>{r.p}</p>
-          </div>
+        services.map((s) => (
+          <a class="scard" href={s.path}>
+            <div class="scard-media">
+              <Photo
+                name={s.photo}
+                alt={s.alt}
+                variant="photo-wide"
+                sizes="(max-width: 760px) 100vw, 46vw"
+              />
+            </div>
+            <div class="scard-body">
+              <div class="italic scard-kicker">{s.kicker}</div>
+              <h2>{s.title}</h2>
+              <p>{s.short}</p>
+              <span class="pill-meta">{s.meta}</span>
+              <span class="arrow scard-cta">Ver más →</span>
+            </div>
+          </a>
         ))
       }
     </div>
-  </section>
 
-  <!-- --------------------------------------------------------------- faq -- -->
-  <section class="band-top">
-    <div class="shell-narrow sect">
-      <Faq items={faqs} heading="Todo lo que necesitas saber antes de empezar" />
+    <div class="hub-cta" data-rv>
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">
+        Escríbeme por WhatsApp
+      </a>
+      <a href="/contacto" class="soft">¿Prefieres el formulario? Pide cita aquí →</a>
     </div>
   </section>
 </Base>
@@ -140,46 +75,81 @@ const reasons = [
   .head {
     text-align: center;
     padding-top: clamp(56px, 8vw, 86px);
-    padding-bottom: clamp(36px, 5vw, 60px);
+    padding-bottom: clamp(32px, 5vw, 56px);
   }
   .head .lead {
     max-width: 640px;
     margin-inline: auto;
+    margin-bottom: 0;
   }
 
-  .center-head {
-    text-align: center;
-    margin-bottom: 44px;
+  .hub {
+    padding-bottom: clamp(68px, 10vw, 128px);
   }
-  .center-head .h2-sm {
-    margin-bottom: 16px;
+
+  .scard {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid rgba(153, 111, 252, 0.2);
+    box-shadow: var(--lift);
+    border-radius: var(--card-lg);
+    overflow: hidden;
+    color: var(--ink);
+    transition:
+      transform 0.42s var(--ease),
+      box-shadow 0.42s var(--ease),
+      border-color 0.42s var(--ease);
   }
-  .center-note {
-    max-width: 640px;
-    margin-inline: auto;
+  .scard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--lift-hi);
+    border-color: var(--edge-2);
+    color: var(--ink);
+  }
+  .scard-media :global(.photo) {
+    border-radius: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .scard-body {
+    padding: clamp(26px, 3vw, 34px) clamp(24px, 2.8vw, 32px) clamp(28px, 3vw, 34px);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .scard-kicker {
     font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .scard h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(24px, 2.8vw, 30px);
+    margin: 0 0 12px;
+  }
+  .scard p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body);
+    margin: 0 0 18px;
+  }
+  .scard .pill-meta {
+    align-self: flex-start;
+    margin-bottom: 22px;
+  }
+  .scard-cta {
+    margin-top: auto;
   }
 
-  .reasons {
-    gap: 40px 48px;
+  .hub-cta {
+    margin-top: clamp(40px, 6vw, 56px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
   }
-  .no-num {
-    padding-top: 22px;
-  }
-  .no-num h3 {
-    font-size: clamp(19px, 1.8vw, 21px);
-    margin-bottom: 10px;
-  }
-
-  @media (max-width: 900px) {
-    .reasons {
-      grid-template-columns: 1fr 1fr;
-      gap: 28px 32px;
-    }
-  }
-  @media (max-width: 600px) {
-    .reasons {
-      grid-template-columns: 1fr;
-    }
+  .soft {
+    font-size: 15px;
+    font-weight: 600;
   }
 </style>
