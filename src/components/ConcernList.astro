@@ -6,7 +6,7 @@ import { individualConcerns, site } from '../data/site';
  * (see individualConcerns in site.ts). Structure follows her brief: the five she
  * wants to be known for lead as a highlighted "especialidad" (vínculos y
  * relaciones), always visible; the rest sit below in an expandable two-column
- * list. Warm cream + aubergine, not the reference's monochrome.
+ * list. In Cintia's lavender palette, not the reference's monochrome.
  *
  * `as` controls the heading level so this can lead a page (h1) or sit inside one.
  */
@@ -106,10 +106,10 @@ const columns = [rest.slice(0, half), rest.slice(half)];
 
   .intro {
     max-width: 720px;
-    margin-bottom: clamp(32px, 5vw, 48px);
+    margin-bottom: clamp(44px, 6vw, 68px);
   }
   .intro .lead {
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
   .sub {
     margin: 0;
@@ -117,7 +117,7 @@ const columns = [rest.slice(0, half), rest.slice(half)];
 
   /* ----------------------------------------------------- especialidad -- */
   .spec-head {
-    margin-bottom: 20px;
+    margin-bottom: 28px;
   }
   .tag {
     display: inline-block;
@@ -125,11 +125,11 @@ const columns = [rest.slice(0, half), rest.slice(half)];
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--brand);
+    color: var(--brand-dark);
     background: var(--tint);
     border-radius: 999px;
     padding: 6px 14px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .spec-title {
     font-family: var(--serif);
@@ -141,21 +141,21 @@ const columns = [rest.slice(0, half), rest.slice(half)];
   .feat {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: clamp(16px, 2vw, 22px);
-    margin-bottom: clamp(44px, 7vw, 72px);
+    gap: clamp(18px, 2.2vw, 24px);
+    margin-bottom: clamp(48px, 7vw, 78px);
   }
   .fcard {
     background: var(--tint);
-    border: 1px solid rgba(68, 60, 143, 0.14);
+    border: 1px solid rgba(153, 111, 252, 0.18);
     border-left: 3px solid var(--brand);
     border-radius: 16px;
-    padding: clamp(22px, 2.6vw, 28px);
+    padding: clamp(24px, 2.8vw, 30px);
   }
   .fcard h4 {
     font-family: var(--serif);
     font-weight: 600;
     font-size: clamp(18px, 1.9vw, 21px);
-    color: var(--brand);
+    color: var(--brand-dark);
     margin: 0 0 10px;
   }
   .fcard p {
@@ -167,7 +167,7 @@ const columns = [rest.slice(0, half), rest.slice(half)];
 
   /* ---------------------------------------------------------- también -- */
   .rest-head {
-    margin-bottom: 8px;
+    margin-bottom: 18px;
   }
   .rest-title {
     font-family: var(--serif);
@@ -213,7 +213,7 @@ const columns = [rest.slice(0, half), rest.slice(half)];
   }
   .row:hover > summary,
   .row[open] > summary {
-    color: var(--brand);
+    color: var(--brand-dark);
   }
   .row[open] > summary .t {
     font-style: italic;
@@ -260,7 +260,7 @@ const columns = [rest.slice(0, half), rest.slice(half)];
   }
 
   .cta {
-    margin-top: clamp(32px, 5vw, 48px);
+    margin-top: clamp(40px, 6vw, 56px);
     display: flex;
     align-items: center;
     gap: 24px;
