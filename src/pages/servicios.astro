@@ -37,6 +37,18 @@ import { serviceSchema, breadcrumbSchema } from '../data/schema';
     </div>
   </header>
 
+  {/* Session photography — moved here from the home page at Cintia's request. */}
+  <section class="shell trip" data-rv>
+    <Photo name="terapia-pareja" alt="Sesión de terapia de pareja en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+    <Photo
+      name="cintia-trabajando"
+      alt="Cintia Barranco en su consulta de Granada"
+      sizes="(max-width: 760px) 100vw, 33vw"
+      class="offset"
+    />
+    <Photo name="terapia-familiar" alt="Sesión de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
+  </section>
+
   <section class="shell hub">
     <div class="grid-2" data-rv>
       {
@@ -151,5 +163,35 @@ import { serviceSchema, breadcrumbSchema } from '../data/schema';
   .soft {
     font-size: 15px;
     font-weight: 600;
+  }
+
+  /* Session photography band. */
+  .trip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-bottom: clamp(40px, 6vw, 64px);
+  }
+  .trip :global(.offset) {
+    margin-top: 32px;
+  }
+  @media (max-width: 760px) {
+    .trip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .trip :global(picture:last-child) {
+      display: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .trip {
+      grid-template-columns: 1fr;
+    }
+    .trip :global(.offset) {
+      margin-top: 0;
+    }
+    .trip :global(picture:last-child) {
+      display: block;
+    }
   }
 </style>

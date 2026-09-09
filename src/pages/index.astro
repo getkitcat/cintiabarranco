@@ -59,10 +59,10 @@ const marquee = [
     <header class="shell hero">
     <div>
       <div class="kicker"><span class="rule"></span>Psicóloga General Sanitaria · Granada</div>
-      <h1 class="h1">Un espacio seguro donde iniciar el camino hacia el cambio</h1>
+      <h1 class="h1">Un espacio seguro para empezar a entenderte y construir el cambio</h1>
       <p class="lead hero-lead">
-        Terapia psicológica presencial y online. Aprende a conocerte, gestionar lo que sientes y dar
-        sentido a tu vida — a tu ritmo y con acompañamiento profesional.
+        Terapia psicológica presencial y online. Aprende a conocerte, gestionar tus relaciones y dar
+        sentido a tu vida — a tu ritmo, y con un acompañamiento profesional, cercano y empático.
       </p>
       <div class="btns">
         <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">Escríbeme por WhatsApp</a>
@@ -86,7 +86,7 @@ const marquee = [
     </header>
 
     {/* Now that the hero is shorter, the page can look like it ends at the fold. */}
-    <a class="cue" href="#servicios">
+    <a class="cue" href="#sobre-mi">
       <span class="cue-txt">Descubre más</span>
       <span class="cue-line" aria-hidden="true"></span>
     </a>
@@ -110,45 +110,12 @@ const marquee = [
     </div>
   </div>
 
-  <!-- -------------------------------------------------------- triptych -- -->
-  {/* Ambient band of consulta photography — a breath between the hero and the
-      concern list, which is where the actual "what I do" now lives. */}
-  <section class="shell trip" data-rv>
-    <Photo name="terapia-pareja" alt="Consulta de Cintia Barranco en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
-    <Photo
-      name="cintia-trabajando"
-      alt="Cintia Barranco en su consulta de Granada"
-      sizes="(max-width: 760px) 100vw, 33vw"
-      class="offset"
-    />
-    <Photo name="terapia-familiar" alt="Espacio de terapia en Granada" sizes="(max-width: 760px) 100vw, 33vw" />
-  </section>
-
-  <!-- ---------------------------------------------- consulta individual -- -->
-  <ConcernList />
-
-  <!-- ------------------------------------------------- terapia de pareja -- -->
-  <section class="shell sect duo duo-flip pareja">
-    <div data-rv>
-      <div class="kicker">También terapia de pareja</div>
-      <h2 class="h2">{pareja.kicker}</h2>
-      <p class="prose mb">{pareja.body}</p>
-      <a href={pareja.path} class="btn btn-solid btn-sm">Ver terapia de pareja →</a>
-    </div>
-    <div data-rv>
-      <Photo
-        name={pareja.photo}
-        alt={pareja.alt}
-        variant="photo-svc"
-        sizes="(max-width: 760px) 100vw, 46vw"
-      />
-    </div>
-  </section>
-
-  <WhatsappBand />
-
-  <!-- --------------------------------------------------------- sobre mí -- -->
-  <section class="band amb" id="sobre-mi">
+  <!-- --------------------------------------------------- conoce a tu ... -- -->
+  {/* Cintia asked to lead with "Conoce a tu psicóloga" before the concern list —
+      people meet her first, then read what she works with. Sits on the page
+      background (not a white band) so it contrasts with the white marquee above
+      and the white concern list below. */}
+  <section class="amb about-top" id="sobre-mi">
     <Ambient />
     <div class="shell sect duo">
       <div data-rv>
@@ -182,10 +149,33 @@ const marquee = [
           <div><span class="dot" aria-hidden="true">✓</span>Máster en Psicología General Sanitaria</div>
         </div>
 
-        <a href="/contacto" class="btn btn-solid btn-sm">Hablemos de tu proceso</a>
+        <a href="/sobre-mi" class="btn btn-solid btn-sm">Conóceme mejor</a>
       </div>
     </div>
   </section>
+
+  <!-- ---------------------------------------------- consulta individual -- -->
+  <ConcernList />
+
+  <!-- ------------------------------------------------- terapia de pareja -- -->
+  <section class="shell sect duo duo-flip pareja">
+    <div data-rv>
+      <div class="kicker">También terapia de pareja</div>
+      <h2 class="h2">{pareja.kicker}</h2>
+      <p class="prose mb">{pareja.body}</p>
+      <a href={pareja.path} class="btn btn-solid btn-sm">Ver terapia de pareja →</a>
+    </div>
+    <div data-rv>
+      <Photo
+        name={pareja.photo}
+        alt={pareja.alt}
+        variant="photo-svc"
+        sizes="(max-width: 760px) 100vw, 46vw"
+      />
+    </div>
+  </section>
+
+  <WhatsappBand />
 
   <!-- ---------------------------------------------------------- proceso -- -->
   <section class="shell sect" id="proceso">
