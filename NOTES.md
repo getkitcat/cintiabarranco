@@ -7,6 +7,27 @@ Build verde: 13 páginas. `npm run build` antes de cada push.
 
 ---
 
+## Cambios 2026-09-20 — 3 servicios + bloque señales/ganancias
+
+Feedback de Cintia. Restauración previa: tag `v6-before-signals-familiar`.
+
+- **Vuelve terapia familiar** → 3 servicios (individual + pareja + familiar).
+  Cada uno con su página en el hub `/servicios`; solo infantil sigue con 301.
+- **Página de individual**: se sustituye el desglose de 18 motivos por el estilo
+  de la referencia que le gusta (3cerospsicologia): tarjetas de **señales en
+  primera persona** ("¿te reconoces?") + lista de **"lo que puedes ganar"** + CTA
+  (`TherapySignals.astro`, datos `individualSignals`/`individualGains` en site.ts).
+  La lista de 18 motivos (`individualConcerns`) y `ConcernList.astro` quedan sin
+  usar pero se conservan como fuente. La ficha de individual oculta sus "signs"
+  (ServiceBlock `showSigns={false}`) y no repite la rejilla de razones.
+- **Home más ligera**: fuera el desglose profundo; overview de 3 tarjetas
+  (individual con etiqueta "Especialidad"), enlazando a cada página. La profundidad
+  vive en las fichas, como pidió.
+- Pareja y familiar: ficha con signs + razones + FAQ propias (más ligeras que
+  individual). Copia de familiar = borrador mío, a revisar por Cintia.
+- Limpieza: borrados 3 ficheros basura de 0 bytes que un comando con fuga de `>`
+  había commiteado antes.
+
 ## Cambios 2026-09-09 (2) — se añade terapia de pareja
 
 Cintia vuelve a ofrecer **terapia de pareja** (además de individual; familiar e

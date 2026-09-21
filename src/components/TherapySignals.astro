@@ -1,0 +1,181 @@
+---
+import { individualSignals, individualGains, site } from '../data/site';
+
+/**
+ * "¿Te reconoces en esto?" + "Es posible sentirse mejor" — the reference-style
+ * block Cintia asked for (2026-09-20): first-person signal phrases that connect,
+ * then what you gain in therapy. Replaces the long motivos desglose on the
+ * individual page. Warm lavender palette, not the reference's monochrome.
+ */
+---
+
+<section class="ts" id="motivos">
+  <div class="shell inner">
+    {/* ---------------------------------------------------- señales -- */}
+    <div class="head" data-rv>
+      <div class="kicker"><span class="rule"></span>¿Te reconoces en esto?</div>
+      <h2 class="h2">A veces cuesta ponerle nombre a lo que sentimos</h2>
+      <p class="lead">
+        No hace falta estar en crisis para empezar. Si alguna de estas frases resuena contigo, la
+        terapia puede ayudarte a entender qué hay detrás y cómo cambiarlo.
+      </p>
+    </div>
+
+    <ul class="signals" data-rv>
+      {
+        individualSignals.map((s) => (
+          <li class="signal">
+            <span class="mark" aria-hidden="true">“</span>
+            <p>{s}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* ------------------------------------------------------ ganas -- */}
+    <div class="gains" data-rv>
+      <div class="gains-copy">
+        <div class="kicker">Es posible sentirse mejor</div>
+        <h2 class="h2-sm">Lo que puedes ganar en terapia</h2>
+        <p class="prose">
+          No trabajamos para tapar los síntomas, sino para comprender qué los mantiene y construir
+          una vida más tuya. Esto es parte de lo que podemos lograr juntas:
+        </p>
+      </div>
+
+      <ul class="gains-list">
+        {
+          individualGains.map((g) => (
+            <li>
+              <span class="tick" aria-hidden="true">✓</span>
+              <span>{g}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="cta" data-rv>
+      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">
+        Escríbeme por WhatsApp
+      </a>
+      <a href="/contacto" class="soft">¿Prefieres el formulario? Pide cita aquí →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ts {
+    background: var(--surface);
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    padding-block: clamp(68px, 10vw, 128px);
+  }
+
+  .head {
+    max-width: 720px;
+    margin-bottom: clamp(36px, 5vw, 52px);
+  }
+  .head .lead {
+    margin-bottom: 0;
+    margin-top: 4px;
+  }
+
+  /* First-person signal cards. */
+  .signals {
+    list-style: none;
+    margin: 0 0 clamp(56px, 8vw, 88px);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(16px, 2vw, 22px);
+  }
+  .signal {
+    position: relative;
+    background: var(--tint);
+    border: 1px solid rgba(153, 111, 252, 0.18);
+    border-radius: 18px;
+    padding: clamp(22px, 2.6vw, 28px) clamp(22px, 2.6vw, 28px) clamp(22px, 2.6vw, 28px);
+  }
+  .signal .mark {
+    position: absolute;
+    top: 6px;
+    left: 18px;
+    font-family: var(--serif);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--brand-light);
+  }
+  .signal p {
+    margin: 18px 0 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(17px, 1.9vw, 20px);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  /* "Lo que ganas" — copy beside a checked list. */
+  .gains {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+    background: var(--tint-2);
+    border: 1px solid var(--line);
+    border-radius: var(--card-lg);
+    padding: clamp(32px, 4.5vw, 56px);
+  }
+  .gains-copy .kicker {
+    color: var(--brand-dark);
+  }
+  .gains-copy .prose {
+    margin-top: 14px;
+  }
+  .gains-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .gains-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: clamp(15px, 1.5vw, 16px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .tick {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+
+  .cta {
+    margin-top: clamp(40px, 6vw, 56px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .soft {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .gains {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

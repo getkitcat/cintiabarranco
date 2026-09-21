@@ -57,14 +57,14 @@ export const nav = [
 ];
 
 /**
- * Two therapies (2026-09-09): individual — her specialty, with the full concern
- * list — and pareja. Familiar and infantil stay retired (their URLs 301 to the
- * hub, see public/_redirects). `/servicios` is now a HUB listing both; each has a
- * detail page at its Granada ranking URL. `service` remains an alias for the
- * individual object so the home page and its schema keep working.
+ * Three therapies (2026-09-20): individual — her specialty, presented with the
+ * signals + "lo que ganas" block — plus pareja and familiar (lighter). Infantil
+ * stays retired (its URL 301s to the hub). `/servicios` is a HUB listing all
+ * three; each has a detail page at its Granada ranking URL. `service` remains an
+ * alias for the individual object so the home page and its schema keep working.
  *
- * NOTE: the pareja copy below is a solid draft, not Cintia's verified words —
- * flag it for her review like the rest.
+ * NOTE: the pareja and familiar copy is a solid draft, not Cintia's verified
+ * words — flag it for her review like the rest.
  */
 export const services = [
   {
@@ -101,6 +101,23 @@ export const services = [
     photo: 'terapia-pareja',
     alt: 'Terapia de pareja en Granada',
   },
+  {
+    slug: 'terapia-familiar',
+    path: '/servicios/terapia-familiar',
+    title: 'Terapia Familiar',
+    kicker: 'Cuidar el vínculo que os une',
+    short: 'Mejorad la dinámica en casa, resolved conflictos y construid un hogar más sereno.',
+    body: 'Cuando algo se mueve en uno de los miembros, toda la familia se ve afectada. Trabajo desde una mirada sistémica: entender la dinámica que se repite, dar espacio a cada voz y encontrar juntos nuevas formas de relacionaros y apoyaros.',
+    signs: [
+      'Los conflictos en casa se han vuelto frecuentes',
+      'Hay tensión entre padres e hijos adolescentes',
+      'Atravesáis un cambio importante (una separación, una pérdida, una mudanza)',
+      'Queréis mejorar cómo os comunicáis en el día a día',
+    ],
+    meta: '60–90 min · Toda la familia o subgrupos · Presencial preferente',
+    photo: 'terapia-familiar',
+    alt: 'Terapia familiar en Granada',
+  },
 ] as const;
 
 /** Individual is the practice's focus — kept as a named alias for the home page. */
@@ -114,6 +131,31 @@ export const focusAreas = [
   'Dependencia emocional',
   'Vínculos y relaciones',
   'Cambios vitales',
+] as const;
+
+/**
+ * Reference-style block for the individual page (Cintia's brief, 2026-09-20):
+ * first-person "signals" that a visitor recognises in themselves, then what they
+ * gain in therapy — instead of the long motivos desglose. Draft copy in her
+ * relational focus; flag for her review. `individualConcerns` below is kept as the
+ * source her signals were drawn from, in case she wants the full list again.
+ */
+export const individualSignals = [
+  'Siento que mi valor depende demasiado de la aprobación de los demás.',
+  'Vuelvo una y otra vez a los mismos patrones en mis relaciones.',
+  'Sé que una relación no me hace bien y, aun así, me cuesta soltar.',
+  'Me cuesta poner límites y acabo cargando con lo que no me toca.',
+  'Vivo con una preocupación o una tristeza que no sé de dónde viene.',
+  'Estoy atravesando un cambio o una pérdida y no sé cómo seguir.',
+] as const;
+
+export const individualGains = [
+  'Entender qué hay detrás de lo que sientes, sin quedarte en la etiqueta.',
+  'Relacionarte contigo y con los demás desde la elección, no desde el miedo.',
+  'Recuperar la confianza en tu propio criterio y en tus decisiones.',
+  'Poner límites y cuidar tus vínculos sin dejarte a un lado.',
+  'Herramientas concretas para sostener los momentos difíciles.',
+  'Avanzar a tu ritmo, con un acompañamiento cercano y sin juicios.',
 ] as const;
 
 /**

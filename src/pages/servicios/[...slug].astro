@@ -1,16 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ServiceBlock from '../../components/ServiceBlock.astro';
-import ConcernList from '../../components/ConcernList.astro';
+import TherapySignals from '../../components/TherapySignals.astro';
 import Faq from '../../components/Faq.astro';
 import { site, services } from '../../data/site';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../data/schema';
 
 /**
  * One page per therapy, at the Granada ranking URLs the Framer site used
- * (/servicios/terapia-individual-en-granada, /servicios/terapia-de-parejas-en-granada).
- * /servicios itself is the hub that links here. Individual carries the full
- * concern list (her specialty); pareja gets its own signs + FAQ.
+ * (/servicios/terapia-individual-en-granada, …). /servicios is the hub that links
+ * here. Individual (her focus) gets the signals + "lo que ganas" block; pareja and
+ * familiar get their own signs list + reasons + FAQ.
  */
 export function getStaticPaths() {
   return services.map((s) => ({
@@ -20,7 +20,7 @@ export function getStaticPaths() {
 }
 
 const { service: s } = Astro.props;
-const other = services.find((o) => o.slug !== s.slug)!;
+const others = services.filter((o) => o.slug !== s.slug);
 const isIndividual = s.slug === 'terapia-individual';
 
 // Shared — the case for therapy applies to both.
@@ -78,6 +78,28 @@ const faqsBySlug: Record<string, readonly { q: string; a: string }[]> = {
       a: 'Ambas. Podéis venir a la consulta en Granada o hacer las sesiones por videollamada segura, con la misma calidad terapéutica.',
     },
   ],
+  'terapia-familiar': [
+    {
+      q: '¿Tiene que venir toda la familia?',
+      a: 'No siempre. A veces trabajamos con toda la familia y otras con subgrupos (por ejemplo, madres/padres e hijos), según lo que necesite cada caso. Lo vamos ajustando durante el proceso.',
+    },
+    {
+      q: '¿Sirve si el problema parece ser solo de una persona?',
+      a: 'Sí. Desde una mirada sistémica, lo que le pasa a un miembro suele estar conectado con la dinámica de toda la familia. Trabajar juntos ayuda a que el cambio se sostenga.',
+    },
+    {
+      q: '¿Trabajáis con adolescentes?',
+      a: 'Sí. La terapia familiar es especialmente útil cuando hay tensión entre padres e hijos adolescentes o dificultades de comunicación en casa.',
+    },
+    {
+      q: '¿Cuánto dura cada sesión?',
+      a: 'Entre 60 y 90 minutos, para dar espacio a las distintas voces de la familia sin prisa.',
+    },
+    {
+      q: '¿Presencial u online?',
+      a: 'La terapia familiar funciona mejor de forma presencial en la consulta de Granada, aunque podemos valorar sesiones online si la situación lo requiere.',
+    },
+  ],
 };
 const faqs = faqsBySlug[s.slug];
 ---
@@ -105,52 +127,56 @@ const faqs = faqsBySlug[s.slug];
     <span class="here">{s.title}</span>
   </nav>
 
-  <ServiceBlock service={s} as="h1" linkOut={false} label="El acompañamiento" />
+  <ServiceBlock service={s} as="h1" linkOut={false} label="El acompañamiento" showSigns={!isIndividual} />
 
-  {/* The individual page is the practice's focus — give it the full concern list. */}
-  {isIndividual && <ConcernList heading="¿Con qué puedo ayudarte?" />}
+  {/* Individual (her focus) gets the reference-style signals + gains block instead
+      of a reasons grid. Pareja/familiar get the shared reasons grid below. */}
+  {isIndividual && <TherapySignals />}
 
-  <!-- ------------------------------------------------------------ razones -- -->
-  <section class="band-top">
-    <div class="shell sect">
-      <div class="center-head" data-rv>
-        <div class="kicker">¿Por qué la terapia?</div>
-        <h2 class="h2-sm">
-          {isIndividual ? 'Razones por las que puede cambiar tu vida' : 'Lo que podéis ganar'}
-        </h2>
-      </div>
-      <div class="grid-3 reasons" data-rv>
-        {
-          reasons.map((r) => (
-            <div class="step no-num">
-              <h3 class="h3">{r.h}</h3>
-              <p>{r.p}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+  {
+    !isIndividual && (
+      <section class="band-top">
+        <div class="shell sect">
+          <div class="center-head" data-rv>
+            <div class="kicker">¿Por qué la terapia?</div>
+            <h2 class="h2-sm">Lo que podéis ganar</h2>
+          </div>
+          <div class="grid-3 reasons" data-rv>
+            {reasons.map((r) => (
+              <div class="step no-num">
+                <h3 class="h3">{r.h}</h3>
+                <p>{r.p}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <!-- --------------------------------------------------------------- faq -- -->
   <section class="shell-narrow sect">
     <Faq items={faqs} heading="Todo lo que necesitas saber antes de empezar" />
   </section>
 
-  <!-- ------------------------------------------------------------- otra -- -->
+  <!-- ------------------------------------------------------------ otras -- -->
   <section class="band-top">
     <div class="shell sect-sm">
       <div class="center-head" data-rv>
-        <div class="kicker">Otra terapia</div>
+        <div class="kicker">Otras terapias</div>
         <h2 class="h2-sm">¿Buscabas otra cosa?</h2>
       </div>
-      <div class="other" data-rv>
-        <a class="card" href={other.path}>
-          <div class="italic o-kicker">{other.kicker}</div>
-          <h3>{other.title}</h3>
-          <p>{other.short}</p>
-          <span class="arrow">Ver {other.title} →</span>
-        </a>
+      <div class="grid-2 others" data-rv>
+        {
+          others.map((o) => (
+            <a class="card" href={o.path}>
+              <div class="italic o-kicker">{o.kicker}</div>
+              <h3>{o.title}</h3>
+              <p>{o.short}</p>
+              <span class="arrow">Ver {o.title} →</span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -192,8 +218,8 @@ const faqs = faqsBySlug[s.slug];
     margin-bottom: 10px;
   }
 
-  .other {
-    max-width: 560px;
+  .others {
+    max-width: 820px;
     margin-inline: auto;
   }
   .o-kicker {
