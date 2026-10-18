@@ -104,7 +104,7 @@ const columns = [listed.slice(0, half), listed.slice(half)];
         columns.map((col) => (
           <div class="col">
             {col.map((c) => (
-              <details class="row">
+              <details class:list={['row', { feat: isTable && 'featured' in c && c.featured }]}>
                 <summary>
                   <span class="t">{c.t}</span>
                   <span class="sign" aria-hidden="true">
@@ -232,6 +232,17 @@ const columns = [listed.slice(0, half), listed.slice(half)];
   }
   .col .row:last-child {
     border-bottom: 1px solid var(--line);
+  }
+
+  /* Featured motivos (her relational specialty) — subtly set apart in the table
+     with a brand left accent + a tinted title, without re-adding the full cards. */
+  .row.feat {
+    border-left: 2px solid var(--brand);
+    padding-left: 14px;
+    background: linear-gradient(90deg, rgba(153, 111, 252, 0.06), transparent 55%);
+  }
+  .row.feat > summary .t {
+    color: var(--brand-dark);
   }
 
   .row > summary {
