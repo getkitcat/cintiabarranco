@@ -83,7 +83,7 @@ const columns = [listed.slice(0, half), listed.slice(half)];
             <div class="tag">Mi especialidad</div>
             <h3 class="spec-title">Vínculos y relaciones</h3>
           </div>
-          <div class="feat" data-rv>
+          <div class="feat-grid" data-rv>
             {featured.map((c) => (
               <article class="fcard">
                 <h4>{c.t}</h4>
@@ -177,7 +177,7 @@ const columns = [listed.slice(0, half), listed.slice(half)];
     color: var(--ink);
   }
 
-  .feat {
+  .feat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: clamp(18px, 2.2vw, 24px);
