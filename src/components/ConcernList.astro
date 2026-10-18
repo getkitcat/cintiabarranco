@@ -234,74 +234,98 @@ const columns = [listed.slice(0, half), listed.slice(half)];
     border-bottom: 1px solid var(--line);
   }
 
-  /* Featured motivos (her relational specialty) — set apart only by a tinted
-     title so every row keeps the same height and the two columns stay balanced.
-     (The earlier tinted half-width gradient left the rows looking half-empty.) */
-  .row.feat > summary .t {
-    color: var(--brand-dark);
-  }
-
+  /* Every row reads the same at rest (neutral ink title) — colour is reserved
+     for hover/open so nothing looks "already clicked". The relational specialty
+     is signalled on the home page chips instead. */
   .row > summary {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 18px 4px;
+    gap: 16px;
+    padding: 16px 14px 16px 20px;
     cursor: pointer;
     list-style: none;
     font-family: var(--serif);
     font-size: clamp(16px, 1.8vw, 19px);
     color: var(--ink);
-    transition: color 0.25s var(--ease);
+    border-radius: 12px;
+    transition: background 0.3s var(--ease), color 0.25s var(--ease);
   }
   .row > summary::-webkit-details-marker {
     display: none;
   }
+  /* A brand accent that grows in from the left on hover/open. */
+  .row > summary::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    border-radius: 3px;
+    background: var(--brand);
+    transform: translateY(-50%);
+    transition: height 0.32s var(--ease);
+  }
   .row:hover > summary,
   .row[open] > summary {
     color: var(--brand-dark);
+    background: var(--tint-2);
+  }
+  .row:hover > summary::before,
+  .row[open] > summary::before {
+    height: 56%;
   }
   .row[open] > summary .t {
     font-style: italic;
   }
 
+  /* +/− inside a soft chip that fills with brand on hover/open. */
   .sign {
     position: relative;
-    width: 16px;
-    height: 16px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--tint);
+    transition: background 0.3s var(--ease);
   }
   .sign .bar {
     position: absolute;
     top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1.5px;
+    left: 50%;
+    width: 12px;
+    height: 2px;
     border-radius: 2px;
-    background: var(--brand-light);
-    transition: transform 0.42s var(--ease), opacity 0.3s var(--ease);
-  }
-  .sign .bar:first-child {
-    transform: translateY(-50%);
+    background: var(--brand-dark);
+    transform: translate(-50%, -50%);
+    transition: transform 0.42s var(--ease), background 0.3s var(--ease);
   }
   .sign .bar:last-child {
-    transform: translateY(-50%) rotate(90deg);
+    transform: translate(-50%, -50%) rotate(90deg);
   }
+  .row:hover > summary .sign,
+  .row[open] > summary .sign {
+    background: var(--brand);
+  }
+  .row:hover > summary .sign .bar,
+  .row[open] > summary .sign .bar {
+    background: #fff;
+  }
+  /* Vertical stroke collapses so the icon reads as a minus when open. */
   .row[open] .sign .bar:last-child {
-    transform: translateY(-50%) rotate(180deg);
-  }
-  .row[open] .sign .bar:first-child {
-    transform: translateY(-50%) rotate(180deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
 
   .body {
     overflow: hidden;
   }
   .body p {
-    margin: 0 0 18px;
-    padding-right: 24px;
+    margin: 0;
+    padding: 2px 22px 18px 20px;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--body);
   }
 
