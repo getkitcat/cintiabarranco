@@ -234,13 +234,9 @@ const columns = [listed.slice(0, half), listed.slice(half)];
     border-bottom: 1px solid var(--line);
   }
 
-  /* Featured motivos (her relational specialty) — subtly set apart in the table
-     with a brand left accent + a tinted title, without re-adding the full cards. */
-  .row.feat {
-    border-left: 2px solid var(--brand);
-    padding-left: 14px;
-    background: linear-gradient(90deg, rgba(153, 111, 252, 0.06), transparent 55%);
-  }
+  /* Featured motivos (her relational specialty) — set apart only by a tinted
+     title so every row keeps the same height and the two columns stay balanced.
+     (The earlier tinted half-width gradient left the rows looking half-empty.) */
   .row.feat > summary .t {
     color: var(--brand-dark);
   }
