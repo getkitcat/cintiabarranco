@@ -10,6 +10,11 @@ import { individualConcerns, site } from '../data/site';
  *
  * `as` controls the heading level so this can lead a page (h1) or sit inside one.
  */
+interface Concern {
+  t: string;
+  d: string;
+  featured?: boolean;
+}
 interface Props {
   as?: 'h1' | 'h2';
   kicker?: string;
@@ -19,11 +24,15 @@ interface Props {
    *           in an accordion + CTA.
    * 'table' = just the detailed table — every motivo in a two-column expandable
    *           list, with a short intro, no featured cards, no CTA. Used on the
-   *           individual service page below the signals/gains block.
+   *           service detail pages below the signals/gains block.
    */
   variant?: 'full' | 'table';
   /** Section anchor id. Kept unique when another block on the page already uses #motivos. */
   anchorId?: string;
+  /** The motivos to list. Defaults to the individual-therapy set. */
+  concerns?: readonly Concern[];
+  /** Intro line in table mode (tú vs vosotros wording changes per service). */
+  intro?: string;
 }
 const {
   as = 'h2',
@@ -31,15 +40,17 @@ const {
   heading = 'Un espacio para volver a ti',
   variant = 'full',
   anchorId = 'motivos',
+  concerns = individualConcerns,
+  intro = 'Estos son algunos de los motivos por los que puedes empezar. Toca cada uno para ver cómo lo trabajamos — y no te preocupes si el tuyo no está en la lista: escríbeme y lo vemos.',
 } = Astro.props;
 const Heading = as;
 const isTable = variant === 'table';
 
-const featured = individualConcerns.filter((c) => 'featured' in c && c.featured);
-const rest = individualConcerns.filter((c) => !('featured' in c && c.featured));
+const featured = concerns.filter((c) => 'featured' in c && c.featured);
+const rest = concerns.filter((c) => !('featured' in c && c.featured));
 
 // Table mode lists every motivo; full mode keeps featured separate and lists the rest.
-const listed = isTable ? individualConcerns : rest;
+const listed = isTable ? concerns : rest;
 
 // Two independent column stacks for the accordion — NOT CSS `columns` (opening a
 // <details> inside a multicolumn makes the browser re-balance and report a bogus
@@ -55,10 +66,7 @@ const columns = [listed.slice(0, half), listed.slice(half)];
       <Heading class={as === 'h1' ? 'h1-sm' : 'h2'}>{heading}</Heading>
       {
         isTable ? (
-          <p class="prose sub">
-            Estos son algunos de los motivos por los que puedes empezar. Toca cada uno para ver cómo
-            lo trabajamos — y no te preocupes si el tuyo no está en la lista: escríbeme y lo vemos.
-          </p>
+          <p class="prose sub">{intro}</p>
         ) : (
           <>
             <p class="lead">

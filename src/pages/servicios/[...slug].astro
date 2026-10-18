@@ -4,7 +4,7 @@ import ServiceBlock from '../../components/ServiceBlock.astro';
 import TherapySignals from '../../components/TherapySignals.astro';
 import ConcernList from '../../components/ConcernList.astro';
 import Faq from '../../components/Faq.astro';
-import { site, services } from '../../data/site';
+import { site, services, parejaConcerns, familiarConcerns } from '../../data/site';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../data/schema';
 
 /**
@@ -23,6 +23,23 @@ export function getStaticPaths() {
 const { service: s } = Astro.props;
 const others = services.filter((o) => o.slug !== s.slug);
 const isIndividual = s.slug === 'terapia-individual';
+
+// Motivos accordion per service (pareja/familiar use vosotros wording).
+const concernsBySlug = {
+  'terapia-pareja': {
+    concerns: parejaConcerns,
+    heading: '¿En qué os puedo acompañar?',
+    intro:
+      'Estos son algunos de los motivos por los que las parejas empiezan terapia. Tocad cada uno para ver cómo lo trabajamos — y si el vuestro no está en la lista, escribidme y lo vemos.',
+  },
+  'terapia-familiar': {
+    concerns: familiarConcerns,
+    heading: '¿En qué os puedo acompañar?',
+    intro:
+      'Estos son algunos de los motivos por los que las familias empiezan terapia. Tocad cada uno para ver cómo lo trabajamos — y si el vuestro no está en la lista, escribidme y lo vemos.',
+  },
+} as const;
+const pageConcerns = isIndividual ? null : concernsBySlug[s.slug as keyof typeof concernsBySlug];
 
 // Shared — the case for therapy applies to both.
 const reasons = [
@@ -141,6 +158,20 @@ const faqs = faqsBySlug[s.slug];
         anchorId="tabla-motivos"
         kicker="Motivos de consulta"
         heading="¿Con qué puedo ayudarte?"
+      />
+    )
+  }
+
+  {/* Pareja/familiar get the same motivos accordion as the individual page. */}
+  {
+    pageConcerns && (
+      <ConcernList
+        variant="table"
+        anchorId="tabla-motivos"
+        kicker="Motivos de consulta"
+        heading={pageConcerns.heading}
+        intro={pageConcerns.intro}
+        concerns={pageConcerns.concerns}
       />
     )
   }

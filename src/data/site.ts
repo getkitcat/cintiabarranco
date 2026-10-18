@@ -248,3 +248,63 @@ export const individualConcerns = [
     d: 'Hay experiencias que pueden dejarnos una huella profunda y hacer que determinadas situaciones, recuerdos o emociones sigan generando malestar incluso cuando ha pasado tiempo desde lo ocurrido. Juntos/as entenderemos cómo esa experiencia sigue influyendo en tu forma de sentir, pensar y relacionarte con lo que te rodea, y exploraremos nuevas formas de relacionarte con lo vivido para recuperar poco a poco seguridad, bienestar y libertad en tu día a día.',
   },
 ] as const;
+
+/**
+ * Motivos de consulta para terapia de pareja y familiar. ⚠️ BORRADOR de KitCat
+ * (expande los `signs` y el `body` de cada servicio en el registro de Cintia) —
+ * PENDIENTE de revisión/aprobación de Cintia antes de darlo por definitivo.
+ * Misma estructura {t, d} que individualConcerns para reutilizar ConcernList.
+ */
+export const parejaConcerns = [
+  {
+    t: 'La comunicación se ha atascado',
+    d: 'Cuando cada conversación acaba en el mismo punto, en un reproche o en silencio, es fácil sentir que ya no sabéis hablaros. Trabajaremos para romper esos bucles y recuperar una forma de comunicaros en la que los dos os sintáis escuchados y entendidos.',
+  },
+  {
+    t: 'Conflictos que no se resuelven',
+    d: 'Hay discusiones que vuelven una y otra vez sin llegar a ningún sitio. Miraremos qué hay debajo de esos conflictos —lo que cada uno necesita y teme— para que podáis abordarlos juntos en lugar de uno contra el otro.',
+  },
+  {
+    t: 'Celos e inseguridad',
+    d: 'Los celos o la inseguridad pueden ir generando control, tensión y una sensación constante de amenaza en la relación. Exploraremos qué los activa y cómo relacionaros con esa inseguridad sin que termine dañando lo que tenéis.',
+  },
+  {
+    t: 'Infidelidad y confianza rota',
+    d: 'Una infidelidad remueve la confianza y la imagen que teníais de la relación. En terapia encontraréis un espacio para hablar de lo ocurrido con calma y decidir juntos, sin presión, si queréis reconstruir y cómo hacerlo.',
+  },
+  {
+    t: 'Distancia y desgaste',
+    d: 'A veces no hay un gran conflicto, sino una distancia que ha ido creciendo sin daros cuenta: rutina, poco tiempo, menos complicidad. Miraremos qué se ha ido desgastando y cómo volver a acercaros.',
+  },
+  {
+    t: 'Momentos de cambio',
+    d: 'Empezar a convivir, la llegada de un hijo o una etapa difícil pueden poner la relación a prueba. Trabajaremos para atravesar ese cambio como equipo, de manera que os una en lugar de alejaros.',
+  },
+] as const;
+
+export const familiarConcerns = [
+  {
+    t: 'Conflictos en casa',
+    d: 'Cuando las discusiones se vuelven el tono habitual del hogar, el malestar termina afectando a todos. Buscaremos entender qué está alimentando esos conflictos y cómo recuperar una convivencia más tranquila.',
+  },
+  {
+    t: 'Padres e hijos adolescentes',
+    d: 'La adolescencia suele traer choques, silencios y distancias que desgastan. Trabajaremos para que volváis a entenderos y para que cada uno encuentre su lugar sin tanta pelea.',
+  },
+  {
+    t: 'Cuesta comunicarse',
+    d: 'Cuando es difícil hablar sin malentenderse o cada uno va por su lado, el día a día se vuelve más cuesta arriba. Exploraremos formas de comunicaros más claras y cercanas, en las que todos podáis expresaros.',
+  },
+  {
+    t: 'Cambios y pérdidas',
+    d: 'Una separación, una pérdida o una mudanza remueven a toda la familia. Os acompaño a atravesar ese cambio juntos y a sosteneros mientras encontráis un nuevo equilibrio.',
+  },
+  {
+    t: 'Dinámicas que se repiten',
+    d: 'Desde una mirada sistémica, lo que le ocurre a un miembro suele estar conectado con la dinámica de toda la familia. Entenderla nos ayuda a que el cambio se mantenga en el tiempo y no recaiga sobre una sola persona.',
+  },
+  {
+    t: 'Reconstruir la convivencia',
+    d: 'Cuando el ambiente en casa se ha tensado durante mucho tiempo, cuesta imaginar que pueda ser de otra manera. Trabajaremos para recuperar el respeto, el cuidado y un hogar en el que de verdad os sintáis a gusto.',
+  },
+] as const;
