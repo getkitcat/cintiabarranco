@@ -14,56 +14,91 @@ interface Props {
   as?: 'h1' | 'h2';
   kicker?: string;
   heading?: string;
+  /**
+   * 'full'  = the original: intro + "Mi especialidad" featured cards + the rest
+   *           in an accordion + CTA.
+   * 'table' = just the detailed table — every motivo in a two-column expandable
+   *           list, with a short intro, no featured cards, no CTA. Used on the
+   *           individual service page below the signals/gains block.
+   */
+  variant?: 'full' | 'table';
+  /** Section anchor id. Kept unique when another block on the page already uses #motivos. */
+  anchorId?: string;
 }
-const { as = 'h2', kicker = 'Consulta individual', heading = 'Un espacio para volver a ti' } =
-  Astro.props;
+const {
+  as = 'h2',
+  kicker = 'Consulta individual',
+  heading = 'Un espacio para volver a ti',
+  variant = 'full',
+  anchorId = 'motivos',
+} = Astro.props;
 const Heading = as;
+const isTable = variant === 'table';
 
 const featured = individualConcerns.filter((c) => 'featured' in c && c.featured);
 const rest = individualConcerns.filter((c) => !('featured' in c && c.featured));
 
+// Table mode lists every motivo; full mode keeps featured separate and lists the rest.
+const listed = isTable ? individualConcerns : rest;
+
 // Two independent column stacks for the accordion — NOT CSS `columns` (opening a
 // <details> inside a multicolumn makes the browser re-balance and report a bogus
 // scrollHeight). Two real stacks also let a row push only its own column.
-const half = Math.ceil(rest.length / 2);
-const columns = [rest.slice(0, half), rest.slice(half)];
+const half = Math.ceil(listed.length / 2);
+const columns = [listed.slice(0, half), listed.slice(half)];
 ---
 
-<section class="ci" id="motivos">
+<section class="ci" id={anchorId}>
   <div class="shell inner">
     <div class="intro" data-rv>
       <div class="kicker"><span class="rule"></span>{kicker}</div>
       <Heading class={as === 'h1' ? 'h1-sm' : 'h2'}>{heading}</Heading>
-      <p class="lead">
-        Un espacio íntimo para explorar tu historia, aprender a relacionarte de otra manera con lo
-        que sientes y recuperar tu fuerza interna.
-      </p>
-      <p class="prose sub">
-        Trabajamos sin quedarnos en la etiqueta: lo importante no es el nombre del problema, sino
-        qué función cumple lo que te pasa y cómo está influyendo en tu vida y en tus relaciones.
-      </p>
-    </div>
-
-    {/* -------------------------------------------------- especialidad -- */}
-    <div class="spec-head" data-rv>
-      <div class="tag">Mi especialidad</div>
-      <h3 class="spec-title">Vínculos y relaciones</h3>
-    </div>
-    <div class="feat" data-rv>
       {
-        featured.map((c) => (
-          <article class="fcard">
-            <h4>{c.t}</h4>
-            <p>{c.d}</p>
-          </article>
-        ))
+        isTable ? (
+          <p class="prose sub">
+            Estos son algunos de los motivos por los que puedes empezar. Toca cada uno para ver cómo
+            lo trabajamos — y no te preocupes si el tuyo no está en la lista: escríbeme y lo vemos.
+          </p>
+        ) : (
+          <>
+            <p class="lead">
+              Un espacio íntimo para explorar tu historia, aprender a relacionarte de otra manera con
+              lo que sientes y recuperar tu fuerza interna.
+            </p>
+            <p class="prose sub">
+              Trabajamos sin quedarnos en la etiqueta: lo importante no es el nombre del problema,
+              sino qué función cumple lo que te pasa y cómo está influyendo en tu vida y en tus
+              relaciones.
+            </p>
+          </>
+        )
       }
     </div>
 
-    {/* -------------------------------------------------------- también -- */}
-    <div class="rest-head" data-rv>
-      <h3 class="rest-title">También te acompaño en</h3>
-    </div>
+    {
+      !isTable && (
+        <>
+          {/* ---------------------------------------------- especialidad -- */}
+          <div class="spec-head" data-rv>
+            <div class="tag">Mi especialidad</div>
+            <h3 class="spec-title">Vínculos y relaciones</h3>
+          </div>
+          <div class="feat" data-rv>
+            {featured.map((c) => (
+              <article class="fcard">
+                <h4>{c.t}</h4>
+                <p>{c.d}</p>
+              </article>
+            ))}
+          </div>
+
+          {/* ---------------------------------------------------- también -- */}
+          <div class="rest-head" data-rv>
+            <h3 class="rest-title">También te acompaño en</h3>
+          </div>
+        </>
+      )
+    }
     <div class="grid" data-rv>
       {
         columns.map((col) => (
@@ -87,12 +122,16 @@ const columns = [rest.slice(0, half), rest.slice(half)];
       }
     </div>
 
-    <div class="cta" data-rv>
-      <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">
-        Escríbeme por WhatsApp
-      </a>
-      <a href="/contacto" class="soft">¿Prefieres el formulario? Pide cita aquí →</a>
-    </div>
+    {
+      !isTable && (
+        <div class="cta" data-rv>
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">
+            Escríbeme por WhatsApp
+          </a>
+          <a href="/contacto" class="soft">¿Prefieres el formulario? Pide cita aquí →</a>
+        </div>
+      )
+    }
   </div>
 </section>
 

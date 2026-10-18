@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ServiceBlock from '../../components/ServiceBlock.astro';
 import TherapySignals from '../../components/TherapySignals.astro';
+import ConcernList from '../../components/ConcernList.astro';
 import Faq from '../../components/Faq.astro';
 import { site, services } from '../../data/site';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../data/schema';
@@ -129,9 +130,20 @@ const faqs = faqsBySlug[s.slug];
 
   <ServiceBlock service={s} as="h1" linkOut={false} label="El acompañamiento" showSigns={!isIndividual} />
 
-  {/* Individual (her focus) gets the reference-style signals + gains block instead
-      of a reasons grid. Pareja/familiar get the shared reasons grid below. */}
+  {/* Individual (her focus): the reference-style signals + gains hook, then the
+      detailed table of motivos (expand each for specifics). Pareja/familiar get
+      the shared reasons grid below instead. */}
   {isIndividual && <TherapySignals />}
+  {
+    isIndividual && (
+      <ConcernList
+        variant="table"
+        anchorId="tabla-motivos"
+        kicker="Motivos de consulta"
+        heading="¿Con qué puedo ayudarte?"
+      />
+    )
+  }
 
   {
     !isIndividual && (
