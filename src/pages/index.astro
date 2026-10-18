@@ -13,39 +13,57 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
+// FAQ copy from Cintia (PDF, 2026-10). Answer #2 carries an inline link to the
+// blog post — rendered via set:html in Faq.astro.
 const faqs = [
   {
     q: '¿Cómo empiezo la terapia?',
-    a: 'Muy fácil: escríbeme por WhatsApp, llámame o usa el formulario de contacto y cuéntame brevemente qué te preocupa. Hablamos y decidimos juntas el mejor camino.',
+    a: 'Escríbeme por WhatsApp y cuéntame, con tus palabras, qué te preocupa. Te respondo personalmente y resolvemos tus dudas antes de empezar. Después, en la primera sesión, hablamos con calma de lo que te ha traído hasta aquí.',
+  },
+  {
+    q: '¿Cómo sé si necesito ir al psicólogo?',
+    a: 'No hace falta estar en un momento de crisis. Si algo te hace sufrir, te pesa o se repite en tu vida y no consigues resolverlo solo o sola, merece la pena hablarlo. Si tienes dudas, en <a href="/blog/cuando-ir-al-psicologo/">este artículo te cuento las señales que no conviene ignorar</a>.',
+  },
+  {
+    q: '¿Puedo ir a terapia por una ruptura?',
+    a: 'Sí, es uno de los motivos más habituales. Una ruptura no es solo perder a una persona: también remueve tu autoestima, tu forma de vincularte y tu idea de futuro. En terapia te acompaño a entender qué ha pasado, a procesarlo y a reconstruirte a tu ritmo.',
   },
   {
     q: '¿Las sesiones son presenciales u online?',
-    a: 'Ambas. Puedes venir a mi consulta en el barrio de Beiro (Granada) o hacer las sesiones por videollamada segura, con la misma calidad terapéutica.',
+    a: 'Ambas. Puedes venir a mi consulta en C/ El Guerra, 17, Beiro (Granada) o hacer las sesiones por videollamada segura. La terapia online funciona igual de bien y te permite hacerla desde donde te sientas cómodo/a.',
   },
   {
-    q: '¿Cuánto cuesta una sesión?',
-    a: 'Escríbeme sin compromiso y te explico las tarifas y modalidades, para que decidas con toda la información antes de empezar.',
+    q: '¿Cuánto cuesta una sesión de psicología?',
+    a: 'La sesión individual cuesta 65 € y dura aproximadamente unos 75-90 minutos. Si lo prefieres, escríbeme sin compromiso y de manera gratuita, y te explico las modalidades para que decidas con toda la información.',
+  },
+  {
+    q: '¿Cuántas sesiones necesitaré?',
+    a: 'Depende de lo que quieras trabajar y de tu situación; no hay un número fijo. Al principio marcamos unos objetivos juntos y los vamos revisando. Cuando sientas que ya no necesitas que sigamos, lo dejamos, y siempre que lo necesites puedes volver.',
+  },
+  {
+    q: '¿Qué son las terapias conductuales-contextuales?',
+    a: 'Es un enfoque que entiende lo que haces, sientes y piensas en relación con tu historia de vida y con lo que ocurre a tu alrededor. No te etiqueta ni busca «qué tienes mal»: mira qué te ha llevado a actuar como actúas y qué mantiene eso hoy. Por ejemplo, te ayuda a entender por qué sigues en un vínculo que te hace daño o por qué te cuesta priorizarte. No se trata de juzgarte, sino de entender qué te sirve y qué te aleja de lo que te importa, para que puedas elegir cómo quieres vivir tus relaciones. Entenderlo es lo que permite cambiarlo, y que lo trabajado en consulta se note en tu vida diaria.',
   },
   {
     q: '¿Es confidencial lo que hablamos?',
-    a: 'Totalmente. Todo lo que compartas está protegido por el secreto profesional y el código deontológico del Colegio Oficial de Psicología.',
+    a: 'Totalmente. Todo lo que compartas está protegido por el secreto profesional y por el código deontológico del Colegio Oficial de Psicología.',
   },
 ] as const;
 
 const marquee = [
-  'Ansiedad',
+  'Rupturas',
+  'Vínculos y relaciones',
   'Autoestima',
-  'Duelo',
   'Dependencia emocional',
-  'Vínculos',
+  'Ansiedad',
+  'Duelo',
   'Cambios vitales',
-  'Bienestar emocional',
 ];
 ---
 
 <Base
-  title="Psicóloga en Granada | Cintia Barranco González"
-  description="Psicóloga general sanitaria en Granada. Terapia individual presencial y online para la ansiedad, la autoestima, el duelo y tus relaciones. Escríbeme sin compromiso."
+  title="Psicóloga en Granada y online | Rupturas, vínculos y autoestima"
+  description="Terapia psicológica en Granada y online. Te acompaño en tus relaciones, rupturas y autoestima, a tu ritmo y sin juicios, desde un enfoque conductual-contextual. Escríbeme sin compromiso."
   path="/"
   jsonld={[faqSchema(faqs), ...services.map((s) => serviceSchema(s))]}
 >
@@ -54,11 +72,12 @@ const marquee = [
     <Ambient variant="hero" />
     <header class="shell hero">
     <div>
-      <div class="kicker"><span class="rule"></span>Psicóloga General Sanitaria · Granada</div>
+      <div class="kicker"><span class="rule"></span>Psicóloga General Sanitaria · Granada y online</div>
       <h1 class="h1">Un espacio seguro para empezar a entenderte y construir el cambio</h1>
       <p class="lead hero-lead">
-        Terapia psicológica presencial y online. Aprende a conocerte, gestionar tus relaciones y dar
-        sentido a tu vida — a tu ritmo, y con un acompañamiento profesional, cercano y empático.
+        Te acompaño a entenderte, superar rupturas y construir relaciones más sanas, empezando por la
+        que tienes contigo mismo/a. A tu ritmo, sin juicios pero con el acompañamiento de una
+        psicóloga general sanitaria.
       </p>
       <div class="btns">
         <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-solid">Escríbeme por WhatsApp</a>
@@ -125,15 +144,18 @@ const marquee = [
 
       <div data-rv>
         <div class="kicker">Conoce a tu psicóloga</div>
-        <h2 class="h2 mb">Soy Cintia Barranco González</h2>
+        <h2 class="h2 mb">Soy Cintia Barranco</h2>
         <p class="prose mb-sm">
-          Psicóloga sanitaria colegiada en Granada. Creo firmemente que todas las personas merecen un
-          espacio seguro donde hablar, sanar y crecer. Acompaño a quienes quieren superar la
-          ansiedad, mejorar sus relaciones y encontrar claridad emocional.
+          Psicóloga general sanitaria, especializada en rupturas, vínculos y autoestima. Ayudo a
+          personas que atraviesan una ruptura, que repiten los mismos patrones en sus relaciones con
+          los demás haciéndoles sufrir o que quieren recuperar la confianza en sí mismas. Consulta en
+          Granada y también online.
         </p>
         <p class="prose mb">
-          Mi enfoque integra técnicas cognitivo-conductuales con una base humanista, adaptándome
-          siempre a lo que necesitas en cada momento de tu proceso.
+          Trabajo desde el enfoque conductual-contextual: en lugar de centrarnos solo en qué te pasa,
+          miramos cómo y por qué te relacionas con los demás y contigo de la manera en que lo haces,
+          para que puedas elegir cómo quieres vivir tus relaciones y avanzar hacia lo que de verdad te
+          importa. Para que lo que trabajamos en consulta se note en tu vida real.
         </p>
 
         <div class="pills mb">
@@ -141,8 +163,9 @@ const marquee = [
         </div>
 
         <div class="creds">
-          <div><span class="dot" aria-hidden="true">✓</span>Psicóloga Sanitaria Colegiada</div>
+          <div><span class="dot" aria-hidden="true">✓</span>Psicóloga General Sanitaria colegiada (nº {site.colegiada})</div>
           <div><span class="dot" aria-hidden="true">✓</span>Máster en Psicología General Sanitaria</div>
+          <div><span class="dot" aria-hidden="true">✓</span>Especialista en terapias conductuales y contextuales</div>
         </div>
 
         <a href="/sobre-mi" class="btn btn-solid btn-sm">Conóceme mejor</a>
@@ -158,10 +181,11 @@ const marquee = [
     <Ambient />
     <div class="center-head" data-rv>
       <div class="kicker">Mis servicios</div>
-      <h2 class="h2">En qué puedo acompañarte</h2>
+      <h2 class="h2">¿En qué puedo acompañarte?</h2>
       <p class="note center-note">
-        Mi especialidad es la terapia individual, centrada en los vínculos y las relaciones. También
-        acompaño en terapia de pareja y familiar.
+        Mi especialidad es la terapia individual, centrada en rupturas, vínculos y autoestima.
+        También acompaño a parejas y familias cuando lo que se necesita es cuidar el vínculo entre
+        ellas.
       </p>
     </div>
 
@@ -170,7 +194,6 @@ const marquee = [
         services.map((s, i) => (
           <a class="card svc-card" href={s.path}>
             {i === 0 && <span class="tagline">Especialidad</span>}
-            <div class="italic svc-kicker">{s.kicker}</div>
             <h3>{s.title}</h3>
             <p>{s.short}</p>
             <span class="arrow">Ver más →</span>
@@ -185,33 +208,43 @@ const marquee = [
   <!-- ---------------------------------------------------------- proceso -- -->
   <section class="shell sect" id="proceso">
     <div class="center-head" data-rv>
-      <div class="kicker">Cómo trabajamos</div>
-      <h2 class="h2">Cercano, cuidado y a tu ritmo</h2>
+      <div class="kicker">Cómo trabajaremos</div>
+      <h2 class="h2">Así es la terapia conmigo, paso a paso</h2>
     </div>
 
-    <div class="grid-3">
+    <div class="grid-2 proceso-grid">
       <div class="step" data-rv>
         <div class="num">01<span class="emo" aria-hidden="true">👋</span></div>
-        <h3 class="h3">Contacto inicial</h3>
+        <h3 class="h3">Primer contacto</h3>
         <p>
-          Escríbeme por WhatsApp o por el formulario y cuéntame lo que te preocupa. Sin presión —
-          solo una primera conversación.
+          Cuéntame con tus palabras qué te trae por aquí. Te respondo personalmente y resolvemos tus
+          dudas antes de empezar. Sin presión.
         </p>
       </div>
       <div class="step" data-rv>
-        <div class="num">02<span class="emo" aria-hidden="true">🎯</span></div>
-        <h3 class="h3">Plan personalizado</h3>
+        <div class="num">02<span class="emo" aria-hidden="true">💬</span></div>
+        <h3 class="h3">Primera sesión</h3>
         <p>
-          Crearé un plan alineado con tus objetivos, ya sea gestionar la ansiedad, mejorar tu
-          relación o encontrar claridad emocional.
+          Me cuentas con mayor profundidad qué te ha motivado a pedir ayuda. Ya en este primer
+          encuentro vamos empezando a entender qué te está pasando. En mi consulta de Granada o por
+          videollamada, donde te sientas más cómodo/a.
         </p>
       </div>
       <div class="step" data-rv>
-        <div class="num">03<span class="emo" aria-hidden="true">💬</span></div>
-        <h3 class="h3">Sesiones presenciales u online</h3>
+        <div class="num">03<span class="emo" aria-hidden="true">🎯</span></div>
+        <h3 class="h3">Proceso terapéutico</h3>
         <p>
-          Desde cualquier lugar o en mi consulta de Granada. Juntas superaremos los retos, paso a
-          paso.
+          Fijamos unos objetivos a tu medida y trabajamos hacia ellos sesión a sesión, para aliviar
+          lo que te hace sufrir y que los cambios se noten en tu día a día.
+        </p>
+      </div>
+      <div class="step" data-rv>
+        <div class="num">04<span class="emo" aria-hidden="true">🤝</span></div>
+        <h3 class="h3">Cierre del proceso</h3>
+        <p>
+          Cuando hayamos conseguido lo que nos propusimos y sientas que ya no necesitas que sigamos,
+          damos por cerrado el proceso. No es una despedida definitiva: si más adelante la vida te
+          trae un momento difícil, aquí estaré para retomar el trabajo juntos/as.
         </p>
       </div>
     </div>
@@ -248,10 +281,10 @@ const marquee = [
   <section class="shell sect" id="contacto" data-rv>
     <div class="slab slab-duo">
       <div>
-        <h2>Da el primer paso. Escríbeme y lo vemos juntas.</h2>
+        <h2>Si algo te duele, no tienes que cargarlo en silencio.</h2>
         <p>
-          Una primera conversación para conocernos, resolver tus dudas y decidir el mejor camino. Sin
-          compromiso.
+          Una primera conversación para conocernos y resolver tus dudas. Después, tú decides si
+          seguimos adelante.
         </p>
         <div class="btns">
           <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-light">
@@ -281,7 +314,7 @@ const marquee = [
   <!-- ---------------------------------------------------------------faq -- -->
   <section class="band-top">
     <div class="shell-narrow sect-sm">
-      <Faq items={faqs} />
+      <Faq items={faqs} kicker="Preguntas frecuentes" heading="Preguntas frecuentes sobre la terapia" />
     </div>
   </section>
 </Base>
@@ -425,6 +458,11 @@ const marquee = [
     }
   }
 
+  /* 4-step process as a 2×2 grid (step 4 is long; a row of 4 would be lopsided). */
+  .proceso-grid {
+    gap: clamp(32px, 4vw, 52px) clamp(32px, 5vw, 64px);
+  }
+
   /* ----------------------------------------------------------- blocks -- */
   .sect-head {
     display: flex;
@@ -538,8 +576,7 @@ const marquee = [
 
   .creds {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 12px;
     margin-bottom: 32px;
     font-size: 15px;
     font-weight: 500;

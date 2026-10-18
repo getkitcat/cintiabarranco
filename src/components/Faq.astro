@@ -38,9 +38,10 @@ const {
           </span>
         </summary>
         {/* Wrapper exists purely to be measurable — you cannot animate the height
-            of <details>' anonymous content box directly. */}
+            of <details>' anonymous content box directly. set:html lets an answer
+            carry an inline link (trusted, hand-authored strings only). */}
         <div class="body">
-          <p>{i.a}</p>
+          <p set:html={i.a}></p>
         </div>
       </details>
     ))

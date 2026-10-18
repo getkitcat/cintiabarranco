@@ -43,15 +43,21 @@ export const practiceSchema = () => ({
   ],
   availableLanguage: { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
   sameAs: [site.instagram],
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'Número de colegiada',
+    value: site.colegiada,
+  },
   knowsAbout: [
     'Terapia individual',
     'Terapia de pareja',
     'Terapia familiar',
-    'Ansiedad',
-    'Autoestima',
-    'Duelo',
-    'Dependencia emocional',
+    'Rupturas',
     'Vínculos y relaciones',
+    'Autoestima',
+    'Dependencia emocional',
+    'Ansiedad',
+    'Duelo',
   ],
 });
 
@@ -71,6 +77,12 @@ export const personSchema = () => ({
     '@type': 'CollegeOrUniversity',
     name: 'Universidad de Granada',
   },
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'Colegiación profesional',
+    identifier: site.colegiada,
+    recognizedBy: { '@type': 'Organization', name: 'Colegio Oficial de Psicología' },
+  },
 });
 
 export const websiteSchema = () => ({
@@ -87,6 +99,7 @@ export const serviceSchema = (s: {
   title: string;
   body: string;
   path: string;
+  price?: string;
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -96,6 +109,16 @@ export const serviceSchema = (s: {
   url: `${site.url}${s.path}`,
   provider: { '@id': `${site.url}/#practice` },
   areaServed: { '@type': 'City', name: 'Granada' },
+  ...(s.price
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: s.price,
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+        },
+      }
+    : {}),
   availableChannel: [
     { '@type': 'ServiceChannel', name: 'Presencial', servicePostalAddress: address },
     { '@type': 'ServiceChannel', name: 'Online', serviceUrl: site.url },

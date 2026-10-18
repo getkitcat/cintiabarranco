@@ -12,6 +12,7 @@ export const site = {
   name: 'Cintia Barranco González',
   shortName: 'Cintia Barranco',
   role: 'Psicóloga General Sanitaria',
+  colegiada: 'CE-00266',
   tagline: 'Un espacio seguro para cuidar tu bienestar emocional con cercanía y profesionalidad.',
   url: 'https://cintiabarranco.es',
   logo: '/assets/logo.png',
@@ -71,7 +72,9 @@ export const services = [
     slug: 'terapia-individual',
     path: '/servicios/terapia-individual-en-granada',
     title: 'Terapia Individual',
-    kicker: 'Tu espacio para reencontrarte',
+    // Price shown in the FAQ + Service schema (Cintia, 2026-10). Only individual
+    // has a published price.
+    price: '65',
     short: 'Trabaja lo que te pesa y afronta la vida con nuevos recursos y herramientas.',
     body: 'Un acompañamiento personalizado donde trabajamos en lo que tú necesitas: ansiedad, autoestima, heridas del pasado, decisiones importantes o simplemente conocerte mejor. A tu ritmo, sin juicios.',
     signs: [
@@ -88,8 +91,7 @@ export const services = [
     slug: 'terapia-pareja',
     path: '/servicios/terapia-de-parejas-en-granada',
     title: 'Terapia de Pareja',
-    kicker: 'Reconectar, comunicar y crecer juntos',
-    short: 'Recuperad la comunicación, resolved lo que se ha enquistado y decidid desde otro lugar.',
+    short: 'Para salir de bucles que os hacen sufrir, recuperar la comunicación y decidir con claridad cómo queréis seguir.',
     body: 'Un espacio donde los dos podéis expresaros sin miedo y entender qué se ha ido desgastando. No es solo para crisis: también es valiosa cuando queréis cuidar lo que tenéis, atravesáis un cambio o notáis que la distancia crece. Trabajamos la relación y lo que se activa en cada uno.',
     signs: [
       'La comunicación se ha vuelto difícil o siempre acaba en lo mismo',
@@ -105,8 +107,7 @@ export const services = [
     slug: 'terapia-familiar',
     path: '/servicios/terapia-familiar',
     title: 'Terapia Familiar',
-    kicker: 'Cuidar el vínculo que os une',
-    short: 'Mejorad la dinámica en casa, resolved conflictos y construid un hogar más sereno.',
+    short: 'Para mejorar la convivencia, entender qué pasa entre vosotros y construir un hogar más sereno.',
     body: 'Cuando algo se mueve en uno de los miembros, toda la familia se ve afectada. Trabajo desde una mirada sistémica: entender la dinámica que se repite, dar espacio a cada voz y encontrar juntos nuevas formas de relacionaros y apoyaros.',
     signs: [
       'Los conflictos en casa se han vuelto frecuentes',
@@ -123,13 +124,16 @@ export const services = [
 /** Individual is the practice's focus — kept as a named alias for the home page. */
 export const service = services[0];
 
-/** A short set of areas she works with, for the pills on the About page. */
+/** Areas she works with, for the pills on the home About block (Cintia, 2026-10). */
 export const focusAreas = [
-  'Ansiedad',
-  'Autoestima',
-  'Duelo',
-  'Dependencia emocional',
+  'Rupturas',
   'Vínculos y relaciones',
+  'Autoestima',
+  'Inseguridad',
+  'Dependencia emocional',
+  'Miedo al abandono',
+  'Ansiedad',
+  'Duelo',
   'Cambios vitales',
 ] as const;
 

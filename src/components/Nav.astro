@@ -1,11 +1,16 @@
 ---
-import { nav, site } from '../data/site';
+import { nav, site, services } from '../data/site';
 
 interface Props {
   /** Pathname of the current page, so its nav item lights up. */
   current?: string;
 }
 const { current = '' } = Astro.props;
+
+// Cintia asked for a dropdown under "Servicios" listing the therapies, while the
+// word itself still goes to the /servicios hub. We special-case that one item.
+const isServicesActive = (href: string) =>
+  current === href || current.startsWith('/servicios');
 ---
 
 <nav class="bar" aria-label="Navegación principal">
@@ -20,15 +25,48 @@ const { current = '' } = Astro.props;
 
   <div class="menu" id="menu">
     {
-      nav.map((item) => (
-        <a
-          href={item.href}
-          class:list={['link', { on: current === item.href }]}
-          aria-current={current === item.href ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      ))
+      nav.map((item) =>
+        item.href === '/servicios' ? (
+          <div class="has-sub">
+            <div class="sub-head">
+              <a
+                href={item.href}
+                class:list={['link', { on: isServicesActive(item.href) }]}
+                aria-current={current === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+              {/* Mobile-only accordion toggle; on desktop the panel opens on hover. */}
+              <button
+                class="sub-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="submenu-servicios"
+              >
+                <span class="sr">Ver servicios</span>
+                <span class="caret" aria-hidden="true"></span>
+              </button>
+            </div>
+            <ul class="submenu" id="submenu-servicios">
+              {services.map((s) => (
+                <li>
+                  <a href={s.path} class:list={['sub-link', { on: current === s.path }]}>
+                    {s.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class:list={['link', { on: current === item.href }]}
+            aria-current={current === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        )
+      )
     }
     <a href="/contacto" class="btn btn-solid btn-sm cta">Pedir cita</a>
   </div>
@@ -73,6 +111,106 @@ const { current = '' } = Astro.props;
   .link:hover,
   .link.on {
     color: var(--brand-light);
+  }
+
+  /* --- Servicios dropdown --------------------------------------------- */
+  .has-sub {
+    position: relative;
+  }
+  .sub-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .caret {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.28s var(--ease);
+    opacity: 0.7;
+  }
+
+  .submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .sub-link {
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .sub-link:hover,
+  .sub-link.on {
+    color: var(--brand-light);
+  }
+
+  @media (min-width: 861px) {
+    /* The accordion toggle is for phones; on desktop the caret rides with the
+       word and the panel opens on hover / keyboard focus. */
+    .sub-toggle {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      cursor: default;
+      color: inherit;
+    }
+    .has-sub:hover .sub-head .link,
+    .has-sub:focus-within .sub-head .link {
+      color: var(--brand-light);
+    }
+    .has-sub:hover .caret,
+    .has-sub:focus-within .caret {
+      transform: rotate(225deg);
+    }
+
+    .submenu {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 50%;
+      transform: translate(-50%, -8px);
+      min-width: 232px;
+      padding: 10px;
+      background: var(--surface, #fff);
+      border: 1px solid var(--hair);
+      border-radius: 16px;
+      box-shadow: 0 24px 44px -28px rgba(43, 40, 64, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s var(--ease), transform 0.22s var(--ease), visibility 0.22s;
+    }
+    /* A hover bridge so the pointer can cross the gap without the panel closing. */
+    .submenu::before {
+      content: '';
+      position: absolute;
+      inset: -14px 0 auto 0;
+      height: 14px;
+    }
+    .has-sub:hover .submenu,
+    .has-sub:focus-within .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+    .submenu li + li {
+      margin-top: 2px;
+    }
+    .sub-link {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14.5px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .sub-link:hover,
+    .sub-link:focus-visible {
+      background: var(--tint);
+      color: var(--brand-dark);
+    }
   }
 
   .burger {
@@ -148,8 +286,55 @@ const { current = '' } = Astro.props;
     }
     .link {
       padding: 16px 4px;
-      border-bottom: 1px solid var(--hair);
       font-size: 17px;
+    }
+
+    /* Servicios row: the word links to the hub, the toggle expands the list. */
+    .has-sub {
+      border-bottom: 1px solid var(--hair);
+    }
+    .sub-head {
+      justify-content: space-between;
+      gap: 0;
+    }
+    .sub-head .link {
+      flex: 1;
+      border-bottom: 0;
+    }
+    .sub-toggle {
+      width: 48px;
+      align-self: stretch;
+      border: 0;
+      background: transparent;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .sub-toggle[aria-expanded='true'] .caret {
+      transform: rotate(225deg);
+    }
+    .submenu {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s var(--ease);
+    }
+    .submenu.open {
+      max-height: 320px;
+    }
+    .sub-link {
+      display: block;
+      padding: 13px 4px 13px 18px;
+      font-size: 15.5px;
+      color: var(--body);
+    }
+    .sub-link:not(:last-child) {
+      border-bottom: 1px solid var(--hair);
+    }
+
+    /* The non-dropdown links still need their own separators. */
+    .menu > .link {
+      border-bottom: 1px solid var(--hair);
     }
     .cta {
       margin-top: 18px;
@@ -171,11 +356,22 @@ const { current = '' } = Astro.props;
     burger.addEventListener('click', () =>
       setOpen(burger.getAttribute('aria-expanded') !== 'true')
     );
-    // Tapping a link navigates; close so the panel isn't left open behind a
-    // same-page anchor jump.
+    // Tapping a real navigation link closes the panel; the submenu toggle does not.
     menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  // Mobile accordion: the caret button expands the Servicios sublist. On desktop
+  // the panel is hover-driven and this toggle sits inert (cursor:default).
+  const subToggle = document.querySelector<HTMLButtonElement>('.sub-toggle');
+  const submenu = document.querySelector<HTMLElement>('#submenu-servicios');
+  if (subToggle && submenu) {
+    subToggle.addEventListener('click', () => {
+      const open = subToggle.getAttribute('aria-expanded') !== 'true';
+      subToggle.setAttribute('aria-expanded', String(open));
+      submenu.classList.toggle('open', open);
     });
   }
 </script>
