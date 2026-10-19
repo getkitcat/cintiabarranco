@@ -35,7 +35,9 @@ const Heading = as;
 
   <div data-rv>
     {label && <div class="kicker">{label}</div>}
-    <Heading class={as === 'h1' ? 'h1-sm tight' : 'h2 tight'}>{s.title}</Heading>
+    <Heading class={as === 'h1' ? 'h1-sm tight' : 'h2 tight'}>
+      {as === 'h1' ? `${s.title} en Granada` : s.title}
+    </Heading>
 
     <p class="prose body">{s.body}</p>
 
