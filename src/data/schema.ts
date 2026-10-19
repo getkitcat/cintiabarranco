@@ -42,6 +42,8 @@ export const practiceSchema = () => ({
     { '@type': 'AdministrativeArea', name: 'Andalucía' },
   ],
   availableLanguage: { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
+  priceRange: '€€',
+  hasMap: site.mapsLink,
   sameAs: [site.instagram],
   identifier: {
     '@type': 'PropertyValue',
