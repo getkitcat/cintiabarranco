@@ -47,7 +47,7 @@ import { individualSignals, individualGains, site } from '../data/site';
         {
           individualGains.map((g) => (
             <li>
-              <span class="tick" aria-hidden="true">✓</span>
+              <span class="gain-check" aria-hidden="true">✓</span>
               <span>{g}</span>
             </li>
           ))
@@ -147,7 +147,7 @@ import { individualSignals, individualGains, site } from '../data/site';
     line-height: 1.5;
     color: var(--ink);
   }
-  .tick {
+  .gain-check {
     width: 26px;
     height: 26px;
     flex-shrink: 0;
