@@ -174,9 +174,9 @@ const marquee = [
   </section>
 
   <!-- --------------------------------------------------- servicios (light) -- -->
-  {/* Home only introduces the services; the depth lives on each detail page
-      (Cintia: "en la página principal también hablaría de pareja y familiar,
-      aunque no se indague tanto como en la individual"). */}
+  {/* Home only introduces the services; the depth lives on each detail page.
+      Individual is the specialty; pareja sits lighter below (familiar retired
+      2026-11-09). */}
   <section class="shell sect amb servicios-home" id="servicios">
     <Ambient />
     <div class="center-head" data-rv>
@@ -184,8 +184,8 @@ const marquee = [
       <h2 class="h2">¿En qué puedo acompañarte?</h2>
       <p class="note center-note">
         Mi especialidad es la terapia individual, centrada en rupturas, vínculos y autoestima.
-        También acompaño a parejas y familias cuando lo que se necesita es cuidar el vínculo entre
-        ellas.
+        También acompaño a parejas cuando lo que se necesita es cuidar el vínculo entre las dos
+        personas.
       </p>
     </div>
 
@@ -207,14 +207,14 @@ const marquee = [
     </div>
   </section>
 
-  {/* The other two therapies, lighter, in their own section below. */}
+  {/* The other therapy (pareja), lighter, in its own section below. */}
   <section class="shell sect otras" id="mas-servicios">
     <div class="center-head" data-rv>
-      <div class="kicker">Otros acompañamientos</div>
-      <h2 class="h2">Terapia de pareja y familiar</h2>
+      <div class="kicker">Otro acompañamiento</div>
+      <h2 class="h2">Terapia de pareja</h2>
     </div>
 
-    <div class="grid-2 otras-grid" data-rv>
+    <div class="otras-grid" data-rv>
       {
         services.slice(1).map((s) => (
           <a class="card svc-card" href={s.path}>
@@ -618,9 +618,9 @@ const marquee = [
     margin-top: 2px;
   }
 
-  /* Pareja + familiar: two lighter cards, centred under their own heading. */
+  /* Pareja: a single lighter card, centred under its own heading. */
   .otras-grid {
-    max-width: 760px;
+    max-width: 460px;
     margin-inline: auto;
   }
 

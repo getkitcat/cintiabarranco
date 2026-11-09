@@ -17,8 +17,10 @@
 /blog/duelo-cuánto-tiempo-es-normal-sentirse-así             /blog   301
 /blog/building-resilience-in-challenging-times               /blog   301
 
-# Services (2026-09-20): individual, pareja and familiar are all real pages at
-# their Granada ranking URLs. Only infantil stays retired and redirects to the
-# hub. Trailing-slash form matches trailingSlash:'always'.
+# Services: individual and pareja are the real pages at their Granada ranking
+# URLs. Infantil and familiar (retired 2026-11-09, Cintia's call) redirect to the
+# hub so their indexed URLs don't 404. Trailing-slash form matches trailingSlash:'always'.
 /servicios/terapia-infantil-en-granada       /servicios/   301
 /servicios/terapia-infantil-en-granada/      /servicios/   301
+/servicios/terapia-familiar                  /servicios/   301
+/servicios/terapia-familiar/                 /servicios/   301

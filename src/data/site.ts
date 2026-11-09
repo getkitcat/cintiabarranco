@@ -58,14 +58,14 @@ export const nav = [
 ];
 
 /**
- * Three therapies (2026-09-20): individual — her specialty, presented with the
- * signals + "lo que ganas" block — plus pareja and familiar (lighter). Infantil
- * stays retired (its URL 301s to the hub). `/servicios` is a HUB listing all
- * three; each has a detail page at its Granada ranking URL. `service` remains an
- * alias for the individual object so the home page and its schema keep working.
+ * Two therapies (familiar retired 2026-11-09, Cintia's call — she doesn't want
+ * to work it): individual — her specialty, presented with the signals + "lo que
+ * ganas" block — plus pareja (lighter). Infantil + familiar stay retired (their
+ * URLs 301 to the hub). `/servicios` is a HUB; each has a detail page at its
+ * Granada ranking URL. `service` remains an alias for the individual object.
  *
- * NOTE: the pareja and familiar copy is a solid draft, not Cintia's verified
- * words — flag it for her review like the rest.
+ * NOTE: the pareja copy is a solid draft, not Cintia's verified words — flag it
+ * for her review like the rest.
  */
 export const services = [
   {
@@ -83,7 +83,7 @@ export const services = [
       'Estás pasando por un duelo, una ruptura o un cambio vital',
       'Quieres trabajar tu autoestima o tu autoconocimiento',
     ],
-    meta: '50 min · Semanal o quincenal · Presencial u online',
+    meta: '75–90 min · Presencial u online',
     photo: 'cintia-retrato',
     alt: 'Terapia individual en Granada',
   },
@@ -102,22 +102,6 @@ export const services = [
     meta: '60–90 min · Presencial u online · Los dos miembros',
     photo: 'terapia-pareja',
     alt: 'Terapia de pareja en Granada',
-  },
-  {
-    slug: 'terapia-familiar',
-    path: '/servicios/terapia-familiar',
-    title: 'Terapia Familiar',
-    short: 'Para mejorar la convivencia, entender qué pasa entre vosotros y construir un hogar más sereno.',
-    body: 'Cuando algo se mueve en uno de los miembros, toda la familia se ve afectada. Trabajo desde una mirada sistémica: entender la dinámica que se repite, dar espacio a cada voz y encontrar juntos nuevas formas de relacionaros y apoyaros.',
-    signs: [
-      'Los conflictos en casa se han vuelto frecuentes',
-      'Hay tensión entre padres e hijos adolescentes',
-      'Atravesáis un cambio importante (una separación, una pérdida, una mudanza)',
-      'Queréis mejorar cómo os comunicáis en el día a día',
-    ],
-    meta: '60–90 min · Toda la familia o subgrupos · Presencial preferente',
-    photo: 'terapia-familiar',
-    alt: 'Terapia familiar en Granada',
   },
 ] as const;
 
@@ -159,7 +143,6 @@ export const individualGains = [
   'Recuperar la confianza en tu propio criterio y en tus decisiones.',
   'Poner límites y cuidar tus vínculos sin dejarte a un lado.',
   'Herramientas concretas para sostener los momentos difíciles.',
-  'Avanzar a tu ritmo, con un acompañamiento cercano y sin juicios.',
 ] as const;
 
 /**
@@ -250,8 +233,8 @@ export const individualConcerns = [
 ] as const;
 
 /**
- * Motivos de consulta para terapia de pareja y familiar. ⚠️ BORRADOR de KitCat
- * (expande los `signs` y el `body` de cada servicio en el registro de Cintia) —
+ * Motivos de consulta para terapia de pareja. ⚠️ BORRADOR de KitCat
+ * (expande los `signs` y el `body` del servicio en el registro de Cintia) —
  * PENDIENTE de revisión/aprobación de Cintia antes de darlo por definitivo.
  * Misma estructura {t, d} que individualConcerns para reutilizar ConcernList.
  */
@@ -279,32 +262,5 @@ export const parejaConcerns = [
   {
     t: 'Momentos de cambio',
     d: 'Empezar a convivir, la llegada de un hijo o una etapa difícil pueden poner la relación a prueba. Trabajaremos para atravesar ese cambio como equipo, de manera que os una en lugar de alejaros.',
-  },
-] as const;
-
-export const familiarConcerns = [
-  {
-    t: 'Conflictos en casa',
-    d: 'Cuando las discusiones se vuelven el tono habitual del hogar, el malestar termina afectando a todos. Buscaremos entender qué está alimentando esos conflictos y cómo recuperar una convivencia más tranquila.',
-  },
-  {
-    t: 'Padres e hijos adolescentes',
-    d: 'La adolescencia suele traer choques, silencios y distancias que desgastan. Trabajaremos para que volváis a entenderos y para que cada uno encuentre su lugar sin tanta pelea.',
-  },
-  {
-    t: 'Cuesta comunicarse',
-    d: 'Cuando es difícil hablar sin malentenderse o cada uno va por su lado, el día a día se vuelve más cuesta arriba. Exploraremos formas de comunicaros más claras y cercanas, en las que todos podáis expresaros.',
-  },
-  {
-    t: 'Cambios y pérdidas',
-    d: 'Una separación, una pérdida o una mudanza remueven a toda la familia. Os acompaño a atravesar ese cambio juntos y a sosteneros mientras encontráis un nuevo equilibrio.',
-  },
-  {
-    t: 'Dinámicas que se repiten',
-    d: 'Desde una mirada sistémica, lo que le ocurre a un miembro suele estar conectado con la dinámica de toda la familia. Entenderla nos ayuda a que el cambio se mantenga en el tiempo y no recaiga sobre una sola persona.',
-  },
-  {
-    t: 'Reconstruir la convivencia',
-    d: 'Cuando el ambiente en casa se ha tensado durante mucho tiempo, cuesta imaginar que pueda ser de otra manera. Trabajaremos para recuperar el respeto, el cuidado y un hogar en el que de verdad os sintáis a gusto.',
   },
 ] as const;

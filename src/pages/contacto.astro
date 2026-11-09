@@ -7,11 +7,11 @@ import { faqSchema, breadcrumbSchema } from '../data/schema';
 const faqs = [
   {
     q: '¿Cuánto tardas en responder?',
-    a: 'Respondo en menos de 24 horas laborables, tanto por email como por WhatsApp o el formulario.',
+    a: 'Respondo en menos de 24 horas laborables, tanto por email como por WhatsApp.',
   },
   {
     q: '¿Cómo reservo la primera cita?',
-    a: 'Escríbeme por WhatsApp, llámame o envía el formulario contándome brevemente tu situación, y buscamos un hueco para una primera conversación sin compromiso.',
+    a: 'Escríbeme por WhatsApp, llámame o mándame un email contándome brevemente tu situación, y buscamos un hueco para una primera conversación sin compromiso.',
   },
   {
     q: '¿Puedo cancelar o cambiar mi cita?',
@@ -30,7 +30,7 @@ const formLive = site.web3formsKey.length > 0;
 
 <Base
   title="Contacto | Cintia Barranco, Psicóloga en Granada"
-  description="Escríbeme sin compromiso por WhatsApp, teléfono o el formulario. Consulta en Cl. el Guerra 17, Granada, y sesiones online en toda España."
+  description="Escríbeme sin compromiso por WhatsApp, teléfono o email. Consulta en Cl. el Guerra 17, Granada, y sesiones online en toda España."
   path="/contacto"
   loaderName="Contacto"
   jsonld={[
@@ -91,8 +91,8 @@ const formLive = site.web3formsKey.length > 0;
     <div class="card formcard" data-rv>
       <h2 class="h2-sm">Agenda tu cita</h2>
       <p class="note intro-note">
-        Tres pasos rápidos y sin compromiso. Cuando lo envíes, te escribo en menos de 24 horas para
-        agendar tu primera cita. ¿Prefieres WhatsApp? También puedes escribirme directamente.
+        Cuéntame brevemente qué te pasa y te respondo en menos de 24 horas para buscar un hueco a
+        una primera cita, sin compromiso. Lo más fácil suele ser escribirme por WhatsApp.
       </p>
 
       {
@@ -165,7 +165,6 @@ const formLive = site.web3formsKey.length > 0;
                     <option value="" disabled selected>Elige una opción</option>
                     <option>Terapia individual</option>
                     <option>Terapia de pareja</option>
-                    <option>Terapia familiar</option>
                     <option>Aún no lo sé</option>
                   </select>
                 </div>
@@ -232,8 +231,8 @@ const formLive = site.web3formsKey.length > 0;
         ) : (
           <div class="nokey">
             <p class="note">
-              El formulario todavía no está conectado. Mientras tanto puedes escribirme
-              directamente — respondo igual de rápido por cualquiera de estas vías:
+              Escríbeme directamente y te respondo en menos de 24 horas por cualquiera de estas
+              vías:
             </p>
             <div class="btns">
               <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-wa">

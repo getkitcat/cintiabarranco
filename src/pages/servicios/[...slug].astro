@@ -4,14 +4,14 @@ import ServiceBlock from '../../components/ServiceBlock.astro';
 import TherapySignals from '../../components/TherapySignals.astro';
 import ConcernList from '../../components/ConcernList.astro';
 import Faq from '../../components/Faq.astro';
-import { site, services, parejaConcerns, familiarConcerns } from '../../data/site';
+import { site, services, parejaConcerns } from '../../data/site';
 import { serviceSchema, faqSchema, breadcrumbSchema } from '../../data/schema';
 
 /**
  * One page per therapy, at the Granada ranking URLs the Framer site used
  * (/servicios/terapia-individual-en-granada, …). /servicios is the hub that links
- * here. Individual (her focus) gets the signals + "lo que ganas" block; pareja and
- * familiar get their own signs list + reasons + FAQ.
+ * here. Individual (her focus) gets the signals + "lo que ganas" block; pareja
+ * gets its signs list + the motivos accordion + FAQ.
  */
 export function getStaticPaths() {
   return services.map((s) => ({
@@ -24,7 +24,7 @@ const { service: s } = Astro.props;
 const others = services.filter((o) => o.slug !== s.slug);
 const isIndividual = s.slug === 'terapia-individual';
 
-// Motivos accordion per service (pareja/familiar use vosotros wording).
+// Motivos accordion for pareja (vosotros wording).
 const concernsBySlug = {
   'terapia-pareja': {
     concerns: parejaConcerns,
@@ -32,30 +32,14 @@ const concernsBySlug = {
     intro:
       'Estos son algunos de los motivos por los que las parejas empiezan terapia. Tocad cada uno para ver cómo lo trabajamos — y si el vuestro no está en la lista, escribidme y lo vemos.',
   },
-  'terapia-familiar': {
-    concerns: familiarConcerns,
-    heading: '¿En qué os puedo acompañar?',
-    intro:
-      'Estos son algunos de los motivos por los que las familias empiezan terapia. Tocad cada uno para ver cómo lo trabajamos — y si el vuestro no está en la lista, escribidme y lo vemos.',
-  },
 } as const;
 const pageConcerns = isIndividual ? null : concernsBySlug[s.slug as keyof typeof concernsBySlug];
-
-// Shared — the case for therapy applies to both.
-const reasons = [
-  { h: 'Claridad', p: 'Entender qué sientes, por qué lo sientes y cómo influye en tu día a día.' },
-  { h: 'Herramientas prácticas', p: 'Recursos basados en evidencia que puedes aplicar en tu vida cotidiana.' },
-  { h: 'Relaciones más sanas', p: 'Comunicar mejor, poner límites y construir vínculos más auténticos.' },
-  { h: 'Espacio seguro', p: 'Un lugar libre de juicios donde poder ser con total honestidad, a tu ritmo.' },
-  { h: 'Autoconocimiento', p: 'Descubrir patrones que limitan y desarrollar una relación más amable contigo.' },
-  { h: 'Cambio duradero', p: 'No buscamos soluciones rápidas: construimos un bienestar que se mantenga.' },
-];
 
 const faqsBySlug: Record<string, readonly { q: string; a: string }[]> = {
   'terapia-individual': [
     {
       q: '¿Cuánto dura cada sesión?',
-      a: 'Las sesiones duran unos 50 minutos, pensadas para trabajar en profundidad sin que resulte agotador.',
+      a: 'Las sesiones duran entre 75 y 90 minutos, un tiempo pensado para trabajar en profundidad y sin prisa.',
     },
     {
       q: '¿Cuántas sesiones necesitaré?',
@@ -96,28 +80,6 @@ const faqsBySlug: Record<string, readonly { q: string; a: string }[]> = {
       a: 'Ambas. Podéis venir a la consulta en Granada o hacer las sesiones por videollamada segura, con la misma calidad terapéutica.',
     },
   ],
-  'terapia-familiar': [
-    {
-      q: '¿Tiene que venir toda la familia?',
-      a: 'No siempre. A veces trabajamos con toda la familia y otras con subgrupos (por ejemplo, madres/padres e hijos), según lo que necesite cada caso. Lo vamos ajustando durante el proceso.',
-    },
-    {
-      q: '¿Sirve si el problema parece ser solo de una persona?',
-      a: 'Sí. Desde una mirada sistémica, lo que le pasa a un miembro suele estar conectado con la dinámica de toda la familia. Trabajar juntos ayuda a que el cambio se sostenga.',
-    },
-    {
-      q: '¿Trabajáis con adolescentes?',
-      a: 'Sí. La terapia familiar es especialmente útil cuando hay tensión entre padres e hijos adolescentes o dificultades de comunicación en casa.',
-    },
-    {
-      q: '¿Cuánto dura cada sesión?',
-      a: 'Entre 60 y 90 minutos, para dar espacio a las distintas voces de la familia sin prisa.',
-    },
-    {
-      q: '¿Presencial u online?',
-      a: 'La terapia familiar funciona mejor de forma presencial en la consulta de Granada, aunque podemos valorar sesiones online si la situación lo requiere.',
-    },
-  ],
 };
 const faqs = faqsBySlug[s.slug];
 ---
@@ -148,8 +110,7 @@ const faqs = faqsBySlug[s.slug];
   <ServiceBlock service={s} as="h1" linkOut={false} label="El acompañamiento" showSigns={!isIndividual} />
 
   {/* Individual (her focus): the reference-style signals + gains hook, then the
-      detailed table of motivos (expand each for specifics). Pareja/familiar get
-      the shared reasons grid below instead. */}
+      detailed table of motivos. Pareja gets its own motivos accordion below. */}
   {isIndividual && <TherapySignals />}
   {
     isIndividual && (
@@ -162,7 +123,7 @@ const faqs = faqsBySlug[s.slug];
     )
   }
 
-  {/* Pareja/familiar get the same motivos accordion as the individual page. */}
+  {/* Pareja gets the same motivos accordion as the individual page. */}
   {
     pageConcerns && (
       <ConcernList
@@ -173,27 +134,6 @@ const faqs = faqsBySlug[s.slug];
         intro={pageConcerns.intro}
         concerns={pageConcerns.concerns}
       />
-    )
-  }
-
-  {
-    !isIndividual && (
-      <section class="band-top">
-        <div class="shell sect">
-          <div class="center-head" data-rv>
-            <div class="kicker">¿Por qué la terapia?</div>
-            <h2 class="h2-sm">Lo que podéis ganar</h2>
-          </div>
-          <div class="grid-3 reasons" data-rv>
-            {reasons.map((r) => (
-              <div class="step no-num">
-                <h3 class="h3">{r.h}</h3>
-                <p>{r.p}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     )
   }
 

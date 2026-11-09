@@ -53,7 +53,6 @@ export const practiceSchema = () => ({
   knowsAbout: [
     'Terapia individual',
     'Terapia de pareja',
-    'Terapia familiar',
     'Rupturas',
     'Vínculos y relaciones',
     'Autoestima',
