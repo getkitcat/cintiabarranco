@@ -22,10 +22,6 @@ const faqs = [
     a: 'En Cl. el Guerra, 17, barrio de Beiro, 18014 Granada — una zona tranquila y bien comunicada. También atiendo online desde cualquier lugar.',
   },
 ] as const;
-
-// No key configured → render the direct-contact panel instead of a form that
-// would accept a patient's message and silently discard it.
-const formLive = site.web3formsKey.length > 0;
 ---
 
 <Base
@@ -95,155 +91,22 @@ const formLive = site.web3formsKey.length > 0;
         una primera cita, sin compromiso. Lo más fácil suele ser escribirme por WhatsApp.
       </p>
 
-      {
-        formLive ? (
-          <form class="lead-form book" novalidate>
-            <input type="hidden" name="access_key" value={site.web3formsKey} />
-            <input type="hidden" name="subject" value="Nueva petición de cita desde la web" />
-            <input type="hidden" name="from_name" value="Web Cintia Barranco" />
-            {/* Honeypot — bots fill it, people never see it. */}
-            <input
-              type="checkbox"
-              name="botcheck"
-              class="sr"
-              tabindex="-1"
-              autocomplete="off"
-              aria-hidden="true"
-            />
-
-            {/* Progress — three numbered steps, current one filled. */}
-            <ol class="steps" aria-hidden="true">
-              <li class="dot on" data-dot="1"><span>1</span></li>
-              <li class="dot" data-dot="2"><span>2</span></li>
-              <li class="dot" data-dot="3"><span>3</span></li>
-            </ol>
-
-            {/* ---------------------------------------------------- paso 1 -- */}
-            <fieldset class="step" data-step="1">
-              <legend class="step-h">Datos de contacto</legend>
-              <div class="two">
-                <div class="field">
-                  <label for="f-nombre">Nombre *</label>
-                  <input id="f-nombre" name="nombre" type="text" required placeholder="Tu nombre" />
-                </div>
-                <div class="field">
-                  <label for="f-apellidos">Apellidos *</label>
-                  <input id="f-apellidos" name="apellidos" type="text" required placeholder="Tus apellidos" />
-                </div>
-              </div>
-              <div class="two">
-                <div class="field">
-                  <label for="f-email">Email *</label>
-                  <input id="f-email" name="email" type="email" required placeholder="tu@email.com" />
-                </div>
-                <div class="field">
-                  <label for="f-wa">WhatsApp (con prefijo) *</label>
-                  <input id="f-wa" name="whatsapp" type="tel" required placeholder="+34 600 000 000" />
-                </div>
-              </div>
-              <div class="field">
-                <span class="group-label">Franja horaria que te vendría mejor</span>
-                <div class="chips">
-                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Mañanas (10–13h)" /> Mañanas</label>
-                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Mediodía (13–16h)" /> Mediodía</label>
-                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Tardes (16–20h)" /> Tardes</label>
-                  <label class="chip"><input type="checkbox" name="disponibilidad" value="Indiferente" /> Me da igual</label>
-                </div>
-              </div>
-              <div class="booknav">
-                <button type="button" class="btn btn-solid next" data-next>Siguiente →</button>
-              </div>
-            </fieldset>
-
-            {/* ---------------------------------------------------- paso 2 -- */}
-            <fieldset class="step" data-step="2" hidden>
-              <legend class="step-h">Sobre tu consulta</legend>
-              <div class="two">
-                <div class="field">
-                  <label for="f-tipo">¿Qué tipo de sesión buscas? *</label>
-                  <select id="f-tipo" name="tipo" required>
-                    <option value="" disabled selected>Elige una opción</option>
-                    <option>Terapia individual</option>
-                    <option>Terapia de pareja</option>
-                    <option>Aún no lo sé</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <span class="group-label">Modalidad *</span>
-                  <div class="chips">
-                    <label class="chip"><input type="radio" name="modalidad" value="Presencial" required /> Presencial</label>
-                    <label class="chip"><input type="radio" name="modalidad" value="Online" /> Online</label>
-                    <label class="chip"><input type="radio" name="modalidad" value="Me da igual" /> Me da igual</label>
-                  </div>
-                </div>
-              </div>
-              <div class="field">
-                <span class="group-label">¿Es tu primera vez en terapia? (opcional)</span>
-                <div class="chips">
-                  <label class="chip"><input type="radio" name="primera_vez" value="Sí" /> Sí</label>
-                  <label class="chip"><input type="radio" name="primera_vez" value="No" /> No, ya he ido antes</label>
-                </div>
-              </div>
-              <div class="booknav two-btn">
-                <button type="button" class="btn btn-ghost back" data-back>← Atrás</button>
-                <button type="button" class="btn btn-solid next" data-next>Siguiente →</button>
-              </div>
-            </fieldset>
-
-            {/* ---------------------------------------------------- paso 3 -- */}
-            <fieldset class="step" data-step="3" hidden>
-              <legend class="step-h">Un último paso</legend>
-              <div class="field">
-                <label for="f-msg">Si te apetece, cuéntame en una línea qué te trae por aquí (opcional)</label>
-                <textarea
-                  id="f-msg"
-                  name="mensaje"
-                  rows="4"
-                  placeholder="No hace falta entrar en detalle — con el motivo basta."
-                />
-              </div>
-
-              {/*
-                A booking form on a psychologist's site invites people to describe
-                why they need therapy — health data under Art. 9 RGPD. Saying so
-                plainly is both the honest thing and the compliant one.
-              */}
-              <p class="warn">
-                Por tu privacidad, no incluyas detalles clínicos o de salud aquí. El resto lo hablamos
-                en la primera sesión.
-              </p>
-
-              <label class="consent">
-                <input type="checkbox" name="consentimiento" required />
-                <span>
-                  He leído y acepto la <a href="/politica-de-privacidad">política de privacidad</a>.
-                </span>
-              </label>
-
-              <div class="booknav two-btn">
-                <button type="button" class="btn btn-ghost back" data-back>← Atrás</button>
-                <button type="submit" class="btn btn-solid submit">Enviar y pedir cita →</button>
-              </div>
-              <p class="status" role="status" aria-live="polite" hidden />
-              <div class="fineprint">Tu mensaje es privado y solo lo leo yo. No comparto tus datos.</div>
-            </fieldset>
-          </form>
-        ) : (
-          <div class="nokey">
-            <p class="note">
-              Escríbeme directamente y te respondo en menos de 24 horas por cualquiera de estas
-              vías:
-            </p>
-            <div class="btns">
-              <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-wa">
-                Escríbeme por WhatsApp
-              </a>
-              <a href={`mailto:${site.email}`} class="btn btn-ghost">Enviar un email</a>
-              <a href={`tel:${site.phone}`} class="btn btn-ghost">{site.phoneDisplay}</a>
-            </div>
-          </div>
-        )
-      }
+      <div class="nokey">
+        <p class="note">
+          Escríbeme directamente y te respondo en menos de 24 horas, sin compromiso. Por aquí suele
+          ser lo más cómodo:
+        </p>
+        <div class="btns">
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn btn-wa">
+            Escríbeme por WhatsApp
+          </a>
+          <a href={`mailto:${site.email}`} class="btn btn-ghost">Enviar un email</a>
+        </div>
+        <div class="fineprint">
+          No hace falta que me cuentes nada en detalle: con el motivo basta. Lo que escribas es
+          privado y solo lo leo yo.
+        </div>
+      </div>
     </div>
   </section>
 
